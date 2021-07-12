@@ -15,7 +15,6 @@ class Usuario extends Conexion{
                 "username"=>$username,
                 "password"=>$password
             ]);
-            $consulta->fetchAll();
             if($consulta->rowCount()){ 
                 return ["existe"=>true];
             }else{

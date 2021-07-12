@@ -6,17 +6,15 @@ class controllerAutenticarUsuario{
 			include_once("../model/Usuario.php");
 			$objUsuario = new Usuario;
 			$respuesta = $objUsuario -> verificarUsuario($username,$password);
-			///if($objUsuario -> verificarUsuario($login,$password) == 1)
 			if($respuesta["existe"]){
-				echo "si existe";
-				// session_start();
-				// include_once("../model/usuarioPrivilegio.php");
-				// $objprivilegio = new usuarioPrivilegio;
-				// $listaPrivilegios = $objprivilegio -> obtenerPrivilegios($login);
-				// $_SESSION['login']= $login;
-				// include_once("formMenuPrincipal.php");
-				// $objMenu = new formMenuPrincipal($login);
-				// $objMenu -> formMenuPrincipalShow($listaPrivilegios);
+				session_start();
+				include_once("../model/UsuarioPrivilegio.php");
+				$objprivilegio = new UsuarioPrivilegio;
+				$listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
+				$_SESSION['username']= $username;
+				include_once("formMenuPrincipal.php");
+				$objMenu = new formMenuPrincipal($login);
+				$objMenu -> formMenuPrincipalShow($listaPrivilegios);
 			}
 			else
 			{
