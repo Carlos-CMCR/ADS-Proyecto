@@ -12,7 +12,7 @@ class formAutenticarUsuario extends formulario{
         ?>
     
             <div class="form-login" method="post" action="">
-                <h1 class="form-login__title">Inicias Sesión</h1>
+                <h1 class="form-login__title">Iniciar Sesión</h1>
                 <div class="form-login__inputs">
                     <input type="text" class="form-login__input" placeholder="Username" name="username">
                     <input type="text" class="form-login__input" placeholder="Password" name="password">
