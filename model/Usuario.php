@@ -9,9 +9,13 @@ class Usuario extends Conexion{
     public function verificarUsuario($username,$password){
         
         try{
-            $query = "SELECT * FROM usuarios WHERE username = '$username' AND password = '$password'";
-            $consulta = $this->bd->query($query);
-            $consulta->execute();
+            $query = "SELECT * FROM usuarios as u WHERE u.username =:username AND u.password = :password";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username,
+                "password"=>$password
+            ]);
+            $consulta->fetchAll();
             if($consulta->rowCount()){ 
                 return ["existe"=>true];
             }else{
