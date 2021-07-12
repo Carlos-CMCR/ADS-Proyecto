@@ -1,20 +1,17 @@
 <?php 
-// require __DIR__ . "/BD.php";
-// var_dump(__DIR__);
-include_once("conecta.php");
-class Usuario extends conecta{
+require_once __DIR__."/Conexion.php";
+class Usuario extends Conexion{
     private $connection = null;
     public function __construct(){
-        $this->connection = $this->connectar();
+        parent::__construct();
+        $this->bd = $this->conectar();
     }
     public function verificarUsuario($username,$password){
-        $query = "SELECT * FROM usuarios WHERE username = :username AND password = :password";
+        
         try{
-            $consulta = $this->connection->query($query);
-            $consulta->execute([
-                "username" => $username,
-                "password" => $password
-            ]);
+            $query = "SELECT * FROM usuarios WHERE username = '$username' AND password = '$password'";
+            $consulta = $this->bd->query($query);
+            $consulta->execute();
             if($consulta->rowCount()){ 
                 return ["existe"=>true];
             }else{
@@ -22,9 +19,10 @@ class Usuario extends conecta{
             }
         }catch(Exception $e){
             // TO DO manejar el error
+            return ["existe"=>false,"mensaje"=>$e->getMessage() ];
         }finally{
             // Conexion::closeConnection();
-            $this->connection = null;
+            $this->bd = null;
         }
 
     }
