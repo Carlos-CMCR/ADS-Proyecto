@@ -17,7 +17,10 @@ class formAutenticarUsuario extends formulario{
                     <input type="text" class="form-login__input" placeholder="Username" name="username">
                     <input type="text" class="form-login__input" placeholder="Password" name="password">
                 </div>
-                <input type="submit" class="form-login__action" value="Iniciar Session">
+                <button type="submit" class="form-login__action">
+                <i class="fas fa-sign-in-alt"></i>
+                    Iniciar Sesión
+                </button>
             </div>
         <?php 
         $this->piePaginaShow();

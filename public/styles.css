@@ -54,7 +54,7 @@ body{
 
 .form-login__input{
     margin-bottom: 1em;
-    padding:.5em 2em;
+    padding:.5em .6em;
     position: relative;
     font-size: 1.2em;
 }
