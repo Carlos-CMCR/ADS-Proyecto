@@ -5,7 +5,10 @@ if(isset($_POST["btnIngresar"])){
 	$password = trim($_POST['password']);
     
     if(strlen($username) >=4 and strlen($password)>=4 ){
-
+        $md5Password = md5($password);
+        include_once("./controllerAutenticarUsuario.php");
+        $nuevaValidacion = new controllerAutenticarUsuario;
+        $nuevaValidacion -> validarUsuario($username,$md5Password);
     }else{
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;
