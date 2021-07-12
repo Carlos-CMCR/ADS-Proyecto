@@ -14,6 +14,12 @@ body{
     background-color: #F6F6F6;
 }
 
+img{
+    display: block;
+    margin:auto;
+    max-width:100%;
+}
+
 .form-login{
     box-shadow: 2px 8px 34px -3px rgba(0,0,0,0.65);
     margin:6em auto;
@@ -75,9 +81,40 @@ body{
     background-color: rgb(13, 50, 112);
     transform: scale(1.1);
 }
+.form-message{
+    border:1px solid #C2C2C2;
+    width: 80%;
+    border-radius:10px;
+    margin:6em auto;
+    display: flex;
+    flex-direction: column;
+    background-color:white;
+    padding:2em;
+}
 
+.form-message__img{
+    width:50%;
+}
+
+.form-message__content{
+    font-size: 1.5em;
+    text-align: center;
+}
+.form-message__link{
+    border:none;
+    background-color:#B32F2D;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding:.8em 0;
+    cursor: pointer;
+}
 @media screen and (min-width:700px) {
     .form-login{
         width: 500px;
     }
+    .form-message{
+        width: 500px;
+    }
 }
+
