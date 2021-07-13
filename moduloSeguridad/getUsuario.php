@@ -15,6 +15,16 @@ if(isset($_POST["btnIngresar"])){
         $nuevoMensaje -> formMensajeSistemaShow("Los datos ingresados son invalidos, intetalo nuevamente !!!","<a href='../index.php' class='form-message__link'>Volver</a>");
     }
 
+}else if(isset($_POST["btnInicio"])){
+    session_start();
+    $username = $_SESSION['username'];
+    include_once("../model/UsuarioPrivilegio.php");
+    $objprivilegio = new UsuarioPrivilegio;
+    $listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
+    
+    include_once("formMenuPrincipal.php");
+    $objMenu = new formMenuPrincipal($username);
+    $objMenu -> formMenuPrincipalShow($listaPrivilegios);
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
