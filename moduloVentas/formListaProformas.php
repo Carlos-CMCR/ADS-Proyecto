@@ -16,8 +16,11 @@ class formListaProformas extends formulario{
         ?>
         <div class="lista-form">
             <h3>Seleccionar fecha:</h3>
-            <input type="date" class="form-date" value="<?php echo $today; ?>" >
-            <button type="button" class="buscar-form__button">Buscar</button>
+            <form action="getComprobantePago.php" method="post" >
+            <input type="date" class="form-date" value="<?php echo $today; ?>" name = "fecha">
+            <button type="submit" class="buscar-form__button" name="btnBuscar">Buscar</button>
+            </form>
+            
         </div>
         <table class="lista-form">
             <tr>
@@ -41,8 +44,10 @@ class formListaProformas extends formulario{
             
         </table>
         <div class="lista-form">
+        <form action='../moduloSeguridad/getUsuario.php'  method='post'>
+            <button class="volver-form__button" name="btnInicio" type="submit" >Volver</button>
+        <form>
             
-            <button type="button" class="volver-form__button">Volver</button>
         </div>
         <?php
         echo "</main>";
