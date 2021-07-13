@@ -10,7 +10,7 @@ class formMenuPrincipal extends formulario{
         echo "<main class='wrapper-actions'>";
         foreach ($listaPrivilegios as $privilegio) {
             ?>
-            <form action="" method="post" class="action-form">
+            <form action="<?php echo $privilegio['url']?>" method="post" class="action-form">
                 <button type="submit" name="<?php echo $privilegio['boton_proceso']?>" class="action-form__button">
                     <?php echo $privilegio["nombre_proceso"]?>
                 </button>

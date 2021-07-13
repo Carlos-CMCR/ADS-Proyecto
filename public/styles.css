@@ -121,7 +121,23 @@ img{
     padding:1.2em;
 }
 
+.formLista-actions{
+    border:1px solid #4c7fec;
+    width:80%;
+    max-width: 1200px;
+    
+    border-radius:10px;
+    margin:6em auto;
+    background-color:white;
+    padding:1.2em;
+}
+
 .action-form {
+    width:100%;
+    margin-bottom: 2em;
+
+}
+.lista-form {
     width:100%;
     margin-bottom: 2em;
 
@@ -145,6 +161,65 @@ img{
 .action-form__button:hover {
     background-color:#184c91;
 }
+.lista-form__button {
+    width:100%;
+    height:100%;
+    border-radius: 10px;
+    border: none;
+    background-color:#168525;
+    color: white;
+    cursor: pointer;
+    padding:.8em .5em;
+    font-size: 1.1rem;
+
+}
+.lista-form__button:hover {
+    background-color:#044e11;
+}
+
+.buscar-form__button {
+    width:20%;
+    border-radius: 10px;
+    border: none;
+    background-color:#168525;
+    color: white;
+    cursor: pointer;
+    padding:.8em .5em;
+    margin-left: 15px;
+    font-size: 1.1rem;
+
+}
+.buscar-form__button:hover {
+    background-color:#044e11;
+}
+
+.volver-form__button {
+    width:20%;
+    border-radius: 10px;
+    border: none;
+    background-color:#cf3838;
+    color: white;
+    cursor: pointer;
+    padding:.8em .5em;
+    margin-left: 15px;
+    font-size: 1.1rem;
+
+}
+
+.volver-form__button:hover {
+    background-color:#810404;
+}
+
+.form-date{
+    border:1px solid #C2C2C2;
+    width:20%;
+    max-width: 1200px;
+    
+    border-radius:10px;
+    background-color:white;
+    padding:1.2em;
+}
+
 
 @media screen and (min-width:700px) {
     .form-login{

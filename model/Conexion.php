@@ -1,11 +1,11 @@
 <?php 
 
 class Conexion{
-    private string $host;
-    private string $db;
-    private string $user;
-    private string $password;
-    private string $charset;
+    var $host;
+    var $db;
+    var $user;
+    var $password;
+    var $charset;
 
     public function __construct(){
         $this->host     = "localhost";
