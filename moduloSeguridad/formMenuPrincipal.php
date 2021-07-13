@@ -24,3 +24,5 @@ class formMenuPrincipal extends formulario{
 
 
 ?>
+
+php
