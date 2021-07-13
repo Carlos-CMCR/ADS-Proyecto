@@ -23,8 +23,8 @@ class controllerEmitirComprobantePago{
 				$nuevoMensaje = new formMensajeSistema;
 				$nuevoMensaje -> formMensajeSistemaShow(
                 $resultado["mensaje"],
-                    "<form action='getComprobantePago.php' class='form-message__link' method='post'>
-                        <input name='btnEmitirComprobante'  class='form-message__link' style='width:100%;font-size:1.5em;' value='volver' type='submit'>
+                    "<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnEmitirComprobante'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
                     </form>");
         }
         //var_dump($arrayProformas);
