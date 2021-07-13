@@ -13,7 +13,7 @@ class controllerAutenticarUsuario{
 				$listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
 				$_SESSION['username']= $username;
 				include_once("formMenuPrincipal.php");
-				$objMenu = new formMenuPrincipal($login);
+				$objMenu = new formMenuPrincipal($username);
 				$objMenu -> formMenuPrincipalShow($listaPrivilegios);
 			}
 			else

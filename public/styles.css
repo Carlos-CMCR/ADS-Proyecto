@@ -109,6 +109,33 @@ img{
     padding:.8em 0;
     cursor: pointer;
 }
+
+.wrapper-actions{
+    display: flex;
+    border:1px solid #C2C2C2;
+    justify-content: center;
+    width: 80%;
+    gap:1.2em;
+    border-radius:10px;
+    margin:6em auto;
+    background-color:white;
+    padding:1.2em;
+    flex-wrap: wrap;
+}
+
+.action-form {
+    width:40%;
+}
+.action-form__button {
+    width:100%;
+    border: none;
+    background-color:#1961C0;
+    color: white;
+    cursor: pointer;
+    padding:.8em .5em;
+    font-size: 1.1rem;
+
+}
 @media screen and (min-width:700px) {
     .form-login{
         width: 500px;
