@@ -31,6 +31,16 @@ class controllerEmitirComprobantePago{
         
     }
 
+    public function obtenerProforma($id_proforma){
+        include_once("../model/Proforma.php");
+        $objProforma = new Proforma;
+        $objProforma = new Proforma;
+        $arrayProforma = $objProforma->proformaSeleccionada($id_proforma);
+        include_once("formTipoComprobantePago.php");
+		$objTipoComprobantePago = new formTipoComprobantePago();
+		$objTipoComprobantePago -> formTipoComprobantePagoShow();
+    }
+
     }
     
 ?>

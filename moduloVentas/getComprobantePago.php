@@ -10,6 +10,12 @@ if(isset($_POST["btnEmitirComprobante"])){
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> obtenerProformasFecha($fecha_seleccionada);
 }
+elseif(isset($_POST["btnSeleccionar"])){
+    $id_proforma = ($_POST['idProforma']);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> obtenerProforma($id_proforma);
+}
 else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

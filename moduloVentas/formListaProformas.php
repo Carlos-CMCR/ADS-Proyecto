@@ -34,10 +34,13 @@ class formListaProformas extends formulario{
             foreach ($listarProformas as $proforma) {
                 ?>
                 <tr>
-                <td align="center"><?php echo $proforma["codigo_proforma"]?></td>
-                <td align="center"><?php echo $proforma["fecha_emision"]?></td>
-                <td align="center"><?php echo $proforma["nombres"];?> <?php echo $proforma["apellido_paterno"];?> <?php echo $proforma["apellido_materno"]?></td>
-                <td><button class="lista-form__button">Seleccionar</button></td>
+                <form action="getComprobantePago.php" method= "post">
+                    <td align="center" name="idProforma" value="<?php echo $proforma["id_proforma"];?>"><?php echo $proforma["codigo_proforma"]?></td>
+                    <td align="center"><?php echo $proforma["fecha_emision"]?></td>
+                    <td align="center"><?php echo $proforma["nombres"];?> <?php echo $proforma["apellido_paterno"];?> <?php echo $proforma["apellido_materno"]?></td>
+                    <td><button  type="submit" class="lista-form__button" name="btnSeleccionar">Seleccionar</button></td>
+                </form>
+                
                 </tr>
                 <?php 
             }?>

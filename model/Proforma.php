@@ -25,7 +25,7 @@ class Proforma extends Conexion{
 
     public function listarProformasFecha($fecha_seleccionada){
         try {
-            $query = "SELECT p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno FROM proformas p 
+            $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno FROM proformas p 
             INNER JOIN clientes c
              ON c.id_cliente = p.id_cliente
             WHERE  p.fecha_emision = :fecha_seleccionada and p.id_EstadoProforma = 1
@@ -41,6 +41,24 @@ class Proforma extends Conexion{
             }
 
             
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+    }
+
+    public function proformaSeleccionada($id_proforma){
+        try {
+            $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno FROM proformas p 
+            INNER JOIN clientes c
+             ON c.id_cliente = p.id_cliente
+            WHERE  p.id_proforma = :id_proforma and p.id_EstadoProforma = 1
+            ";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_proforma' => $id_proforma
+            ]);
+                       
 
         }catch(Exception $ex){
             return $ex->getMessage();
