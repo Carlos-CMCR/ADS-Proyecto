@@ -14,9 +14,16 @@ elseif(isset($_POST["btnSeleccionar"])){
     $id_proforma = ($_POST['idProforma']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> tipoComprobantePago($id_proforma);
+}else if(isset($_POST["btnFactura"])){
+    $id_proforma = ($_POST['idProforma']);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> obtenerProforma($id_proforma);
-}
-else{
+}else if(isset($_POST["btnBoleta"])){
+    $id_proforma = ($_POST['idProforma']);
+    echo $id_proforma;
+}else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
     $nuevoMensaje -> formMensajeSistemaShow("¡ACCESO NO PERMITIDO!","<a href='../index.php' class='form-message__link'>Volver</a>");

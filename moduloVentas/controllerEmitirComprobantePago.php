@@ -31,15 +31,22 @@ class controllerEmitirComprobantePago{
         
     }
 
+    public function tipoComprobantePago($id_proforma){
+        include_once("formTipoComprobantePago.php");
+		$objTipoComprobantePago = new formTipoComprobantePago();
+		$objTipoComprobantePago -> formTipoComprobantePagoShow($id_proforma);
+    }
+
     public function obtenerProforma($id_proforma){
         include_once("../model/Proforma.php");
         $objProforma = new Proforma;
-        $objProforma = new Proforma;
-        $arrayProforma = $objProforma->proformaSeleccionada($id_proforma);
-        include_once("formTipoComprobantePago.php");
-		$objTipoComprobantePago = new formTipoComprobantePago();
-		$objTipoComprobantePago -> formTipoComprobantePagoShow();
+        $datos = $objProforma->proformaSeleccionada($id_proforma);
+        include_once("formFacturaGenerada.php");
+        $objFacturaGenerada = new formFacturaGenerada();
+        $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma);
     }
+
+
 
     }
     

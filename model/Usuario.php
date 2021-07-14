@@ -29,6 +29,26 @@ class Usuario extends Conexion{
         }
 
     }
+    public function obtenerInformacionDelUsuario($username){
+        try{
+            $query = "SELECT CONCAT(u.apellido_paterno,' ',u.apellido_materno,' ',u.nombres,' ( ',u.username,' ) ',' - ',' ( ',UPPER(r.nombre_rol),' )') as informacion FROM usuarios as u 
+            INNER JOIN roles as r
+             ON r.id_rol = u.id_rol
+            WHERE u.username = :username";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username
+            ]);
+            return $consulta->fetch();
+            
+        }catch(Exception $e){
+            // TO DO manejar el error
+            return $e->getMessage();
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+    }
 }
 
 ?>
