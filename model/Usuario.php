@@ -9,6 +9,7 @@ class Usuario extends Conexion{
     public function verificarUsuario($username,$password){
         
         try{
+            $this->bd = $this->conectar();
             $query = "SELECT * FROM usuarios as u WHERE u.username =:username AND u.password = :password";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
@@ -31,6 +32,7 @@ class Usuario extends Conexion{
     }
     public function obtenerInformacionDelUsuario($username){
         try{
+            $this->bd = $this->conectar();
             $query = "SELECT CONCAT(u.apellido_paterno,' ',u.apellido_materno,' ',u.nombres,' ( ',u.username,' ) ',' - ',' ( ',UPPER(r.nombre_rol),' )') as informacion FROM usuarios as u 
             INNER JOIN roles as r
              ON r.id_rol = u.id_rol

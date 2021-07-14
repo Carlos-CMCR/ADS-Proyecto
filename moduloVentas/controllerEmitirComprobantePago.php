@@ -40,11 +40,29 @@ class controllerEmitirComprobantePago{
     public function obtenerProforma($id_proforma){
         include_once("../model/Proforma.php");
         $objProforma = new Proforma;
-        $datosProforma = $objProforma->proformaSeleccionada($id_proforma);
+        $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
+        $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         
         include_once("formFacturaGenerada.php");
         $objFacturaGenerada = new formFacturaGenerada();
-        $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma);
+        session_start();
+        $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[]];
+        $productos = [];
+        $servicios = [];
+        foreach ($datosProformaProductos as $dato){
+            $productos[$dato["id_producto"]] = $dato["cantidad"];
+        }
+
+        if($datosProformaServicios["existe"]){
+            foreach ($datosProformaServicios["data"] as $dato){
+                array_push($servicios,$dato["id_tiposervicio"]);
+            }
+        }
+        $_SESSION["lista_proforma"]["productos"] = $productos;
+        $_SESSION["lista_proforma"]["servicios"] = $servicios;
+        var_dump($_SESSION["lista_proforma"]);
+
+        $objFacturaGenerada -> formFacturaGeneradaShow($datosProformaProductos);
     }
 
 
