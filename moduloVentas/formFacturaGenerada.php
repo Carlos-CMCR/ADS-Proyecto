@@ -1,9 +1,9 @@
 <?php 
 include_once("../shared/formulario.php");
 class formFacturaGenerada extends formulario{
-    public function __construct(){
+    public function __construct($informacion){
         $this->path = "..";
-        $this->encabezadoShow("Formulario Factura Generada");
+        $this->encabezadoShow("Formulario Factura Generada",$informacion);
     }
 
     public function formFacturaGeneradaShow($datosProforma=[],$tiposServicio = []){

@@ -1,9 +1,9 @@
 <?php 
 include_once("../shared/formulario.php");
 class formMenuPrincipal extends formulario{
-    public function __construct($username){
+    public function __construct($username,$informacion){
         $this->path = "..";
-        $this->encabezadoShow("Bienvenido : $username");
+        $this->encabezadoShow("Bienvenido : $username",$informacion);
     }
 
     public function formMenuPrincipalShow($listaPrivilegios = []){
