@@ -86,7 +86,7 @@ class Proforma extends Conexion{
     public function obtenerServiciosDeproformaSeleccionada($id_proforma){
         try {
             $this->bd = $this->conectar();
-            $query = "SELECT dps.id_tiposervicio,ts.nombre FROM proformas as p
+            $query = "SELECT dps.id_tiposervicio,ts.nombre, ts.precioDeServicio FROM proformas as p
             INNER JOIN detalleproformaservicio as dps
                 on dps.id_proforma = p.id_proforma
             INNER JOIN tipodeservicios as ts

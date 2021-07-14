@@ -77,6 +77,7 @@ class formFacturaGenerada extends formulario{
                             }
                             
                             ?> >
+                            <label for="<?php echo $tipo['precioDeServicio']?>" >S/. <?php echo $tipo['precioDeServicio']?></label>
                         </div>
                         <?php 
                     }
@@ -102,7 +103,7 @@ class formFacturaGenerada extends formulario{
             <div class="lista-form">
                 <form action="getComprobantePago.php" method= "post">
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
-                    <input type="submit" class="" name="btnConfirmarFactura" value="Confirmar">
+                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar">
                     
                 <form>
             </div>

@@ -204,6 +204,21 @@ img {
     background-color: #810404;
 }
 
+.verde-form__button {
+    width: 20%;
+    border-radius: 10px;
+    border: none;
+    background-color: #168525;
+    color: white;
+    cursor: pointer;
+    padding: 0.8em 0.5em;
+    margin-left: 15px;
+    font-size: 1.1rem;
+}
+.verde-form__button:hover {
+    background-color: #044e11;
+}
+
 .form-date {
     border: 1px solid #c2c2c2;
     width: 20%;
