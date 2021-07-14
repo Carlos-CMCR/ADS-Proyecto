@@ -17,19 +17,19 @@ class formFacturaGenerada extends formulario{
             <div>
                 <table class="lista-form">
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombre:</th>
                         <td><?php echo $datosProformaProductos[0]['nom_client']." ".$datosProformaProductos[0]['apellido_paterno']." ".$datosProformaProductos[0]['apellido_materno']  ?></td>            
                     </tr>
                     <tr>
-                        <th>DNI</th>
+                        <th>DNI:</th>
                         <td><?php echo $datosProformaProductos[0]['dni'] ?></td>                
                     </tr>
                     <tr>
-                        <th>Teléfono</th>
+                        <th>Teléfono:</th>
                         <td><?php echo $datosProformaProductos[0]['celular'] ?></td>                
                     </tr>
                     <tr>
-                        <th>RUC</th>
+                        <th>RUC:</th>
                         <td><input type="text" max="11" min="11"></td>               
                     </tr>    
                 </table>
@@ -82,32 +82,31 @@ class formFacturaGenerada extends formulario{
                     }
                 ?>
             </div>
-            <div class="lista-form">
-                <form action="getComprobantePago.php" method= "post">
-                    <input type="submit" class="" name="btnConfirmarFactura" value="Confirmar">
-                    <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
-                <form>
-            </div>
-            <div>
+            <div style="width:100%;">
                 <table class="lista-form">
                     <tr>
-                        <th>Subtotal</th>
-                        <td><?php echo $datosProformaProductos[0]['nom_client']  ?></td>            
+                        <th>Subtotal: </th>
+                        <td><?php echo $datosProformaProductos[0]['subtotal']  ?></td>            
                     </tr>
                     <tr>
-                        <th>DNI</th>
-                        <td><?php echo $datosProformaProductos[0]['dni'] ?></td>                
+                        <th>IGV: </th>
+                        <td><?php echo $datosProformaProductos[0]['igv'] ?></td>                
                     </tr>
                     <tr>
-                        <th>Teléfono</th>
-                        <td><?php echo $datosProformaProductos[0]['celular'] ?></td>                
+                        <th>Precio Total: </th>
+                        <td><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
                     </tr>
-                    <tr>
-                        <th>RUC</th>
-                        <td><input type="text" max="11" min="11"></td>               
-                    </tr>    
+                       
                 </table>
             </div>
+            <div class="lista-form">
+                <form action="getComprobantePago.php" method= "post">
+                    <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
+                    <input type="submit" class="" name="btnConfirmarFactura" value="Confirmar">
+                    
+                <form>
+            </div>
+            
         </main>
         <?php 
         $this->piePaginaShow();
