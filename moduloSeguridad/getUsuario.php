@@ -25,6 +25,11 @@ if(isset($_POST["btnIngresar"])){
     include_once("formMenuPrincipal.php");
     $objMenu = new formMenuPrincipal($username);
     $objMenu -> formMenuPrincipalShow($listaPrivilegios);
+}else if(isset($_POST["btnSalir"])){
+    session_unset();
+    session_destroy();
+    session_unset();
+    header("Location:../index.php");
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

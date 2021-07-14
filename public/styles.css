@@ -427,8 +427,17 @@ main{
 .wrapper-dropdown{
     position:absolute;
     top:calc(100% + .5em);
-    display: flex;
+    display: none;
     width: 100%;
     border: 1px solid var(--border-color);
     border-radius:5px;
+}
+
+.dropdown{
+    padding:.5em;
+    cursor: pointer;
+}
+
+.open-dropdown{
+    display: block;
 }
