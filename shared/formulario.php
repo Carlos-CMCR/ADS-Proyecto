@@ -47,8 +47,8 @@ class formulario {
                             </div>
                             <div class="wrapper-dropdown">
                                 <ul class="dropdown-menu" style="padding:0;width: 100%;">
-                                    <form class="dropdown-menu__item" method="post" action=""> 
-                                        <button style="border:none;width:100%;padding: .5em;background:white;"><i class="fas fa-door-open" ></i> Cerrar Sesión</button>
+                                    <form class="dropdown-menu__item" method="post" action="<?php echo $this->path?>/moduloSeguridad/getUsuario.php"> 
+                                        <button style="border:none;width:100%;padding: 1em;background:white;cursor:pointer" name="btnSalir"><i class="fas fa-door-open" ></i> Cerrar Sesión</button>
                                     </form>
                                 </ul>
                             </div>
@@ -60,7 +60,9 @@ class formulario {
         <?php 
     }
     protected function piePaginaShow(){
-        ?>  
+        ?>
+
+        <script src="<?php echo $this->path;?>/public/nav.js"></script>
         </body>
         </html>
         <?php 

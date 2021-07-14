@@ -6,7 +6,7 @@ include_once("formulario.php");
 		public function __construct()
 		{   
             $this->path = "..";
-			$this -> encabezadoShow("Mensaje del sistema");
+			$this -> encabezadoShowIni("Mensaje del sistema");
 		}
 		public function formMensajeSistemaShow($mensaje,$enlace)
 		{
