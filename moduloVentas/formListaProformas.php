@@ -1,9 +1,9 @@
 <?php 
 include_once("../shared/formulario.php");
 class formListaProformas extends formulario{
-    public function __construct(){
+    public function __construct($informacion){
         $this->path = "..";
-        $this->encabezadoShow("Formulario Listar Proformas");
+        $this->encabezadoShow("Formulario Listar Proformas",$informacion);
     }
 
     public function formListaProformasShow($listarProformas = []){

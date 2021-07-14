@@ -6,7 +6,8 @@ class controllerEmitirComprobantePago{
         $arrayProformas = $objProforma->listarProformas();
         //var_dump($arrayProformas);
         include_once("formListaProformas.php");
-		$objListaProformas = new formListaProformas();
+        session_start();
+		$objListaProformas = new formListaProformas($_SESSION["informacion"]);
 		$objListaProformas -> formListaProformasShow($arrayProformas);
     }
 
@@ -16,7 +17,8 @@ class controllerEmitirComprobantePago{
         $resultado = $objProforma->listarProformasFecha($fecha_seleccionada);
         if($resultado["existe"]){
             include_once("formListaProformas.php");
-            $objListaProformas = new formListaProformas();
+            session_start();
+            $objListaProformas = new formListaProformas($_SESSION["informacion"]);
             $objListaProformas -> formListaProformasShow($resultado["data"]);
         }else{
             include_once("../shared/formMensajeSistema.php");
@@ -33,7 +35,8 @@ class controllerEmitirComprobantePago{
 
     public function tipoComprobantePago($id_proforma){
         include_once("formTipoComprobantePago.php");
-		$objTipoComprobantePago = new formTipoComprobantePago();
+        session_start();
+		$objTipoComprobantePago = new formTipoComprobantePago($_SESSION["informacion"]);
 		$objTipoComprobantePago -> formTipoComprobantePagoShow($id_proforma);
     }
 
@@ -48,8 +51,8 @@ class controllerEmitirComprobantePago{
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         
         include_once("formFacturaGenerada.php");
-        $objFacturaGenerada = new formFacturaGenerada();
         session_start();
+        $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
         $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[]];
         $productos = [];
         $servicios = [];

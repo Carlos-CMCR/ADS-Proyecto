@@ -20,7 +20,7 @@ class formulario {
         <body>
         <?php
     }
-    protected function encabezadoShow($titulo){
+    protected function encabezadoShow($titulo,$informacion){
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -43,7 +43,7 @@ class formulario {
                     <ul class="main-menu__ul">
                         <li class="main-menu__item main-menu__item--dropdown" itemprop="url">
                             <div class="dropdown">
-                                <i class="fas fa-user-tie"></i>  <i class="fa fa-caret-down"></i>
+                                <i class="fas fa-user-tie"></i> <?php echo $informacion["informacion"] ?> <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="wrapper-dropdown">
                                 <ul class="dropdown-menu" style="padding:0;width: 100%;">

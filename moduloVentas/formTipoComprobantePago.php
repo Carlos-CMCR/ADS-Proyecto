@@ -1,9 +1,9 @@
 <?php 
 include_once("../shared/formulario.php");
 class formTipoComprobantePago extends formulario{
-    public function __construct(){
+    public function __construct($informacion){
         $this->path = "..";
-        $this->encabezadoShow("Formulario Tipo de Comprobante de Pago");
+        $this->encabezadoShow("Formulario Tipo de Comprobante de Pago",$informacion);
     }
 
     public function formTipoComprobantePagoShow($id_proforma){
