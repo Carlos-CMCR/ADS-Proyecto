@@ -23,7 +23,7 @@ if(isset($_POST["btnIngresar"])){
     $listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
     
     include_once("formMenuPrincipal.php");
-    $objMenu = new formMenuPrincipal($username);
+    $objMenu = new formMenuPrincipal($username,$_SESSION['informacion']);
     $objMenu -> formMenuPrincipalShow($listaPrivilegios);
 }else if(isset($_POST["btnSalir"])){
     session_unset();
