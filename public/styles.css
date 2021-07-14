@@ -414,3 +414,21 @@ a {
         text-shadow: rgba(0, 0, 0, 0.3) 0 0.05em 0.15em;
     }
 }
+
+main{
+    margin-top: calc( ( var( --header-width ) ) * 1.5 ) !important ;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-menu__item--dropdown{
+    position: relative;
+}
+.wrapper-dropdown{
+    position:absolute;
+    top:calc(100% + .5em);
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius:5px;
+}

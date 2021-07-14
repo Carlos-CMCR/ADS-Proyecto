@@ -41,10 +41,18 @@ class formulario {
                 </div>
                 <nav class="main-menu__nav" id="main-menu__nav" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
                     <ul class="main-menu__ul">
-                        <li class="main-menu__item" itemprop="url"><a class="main-menu__link" href="#" itemprop="name">Home</a></li>
-                        <li class="main-menu__item" itemprop="url"><a class="main-menu__link" href="#" itemprop="name">Taller De Emprendedores</a></li>
-                        <li class="main-menu__item" itemprop="url"><a class="main-menu__link" href="#" itemprop="name">Workshops</a></li>
-                        <li class="main-menu__item" itemprop="url"><a class="main-menu__link" href="#" itemprop="name">Expositores</a></li>
+                        <li class="main-menu__item main-menu__item--dropdown" itemprop="url">
+                            <div class="dropdown">
+                                <i class="fas fa-user-tie"></i> Thom Roman Aguilar (Cajero) <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="wrapper-dropdown">
+                                <ul class="dropdown-menu" style="padding:0;width: 100%;">
+                                    <form class="dropdown-menu__item" method="post" action=""> 
+                                        <button style="border:none;width:100%;padding: .5em;background:white;"><i class="fas fa-door-open" ></i> Cerrar Sesión</button>
+                                    </form>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                 </nav>
             </div>
