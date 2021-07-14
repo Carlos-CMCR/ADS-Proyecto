@@ -53,7 +53,7 @@ class formFacturaGenerada extends formulario{
             </div>
 
             <div>
-                <?php 
+                <?php
                     foreach ($tiposServicio as $tipo) {
                         ?>
                         <div>

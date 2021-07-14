@@ -56,16 +56,17 @@ class controllerEmitirComprobantePago{
         foreach ($datosProformaProductos as $dato){
             $productos[$dato["id_producto"]] = $dato["cantidad"];
         }
+        $datosProforma = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
 
         if($datosProformaServicios["existe"]){
             foreach ($datosProformaServicios["data"] as $dato){
                 array_push($servicios,$dato["id_tiposervicio"]);
             }
+            $datosProforma["datosProformaServicios"] = $datosProformaServicios["data"];
         }
         $_SESSION["lista_proforma"]["productos"] = $productos;
         $_SESSION["lista_proforma"]["servicios"] = $servicios;
 
-        $datosProforma = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>$datosProformaServicios["data"]];
 
         $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma,$tiposServicio);
     }
