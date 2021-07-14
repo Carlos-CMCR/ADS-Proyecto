@@ -54,31 +54,25 @@ class formFacturaGenerada extends formulario{
 
             <div>
                 <?php 
-                // var_dump($_SESSION["lista_proforma"]);
                     foreach ($tiposServicio as $tipo) {
                         ?>
                         <div>
-                                
-                                <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
-                                <input type="checkbox" name="" id="<?php echo $tipo['nombre']?>"
-                                <?php
-                                var_dump(count($datosProformaServicios)); 
-                                if(count($datosProformaServicios)){
-                                    if(count($datosProformaServicios) == 1){
-                                        if($tipo['id_tipo']==$datosProformaServicios[0]["id_tiposervicio"]){
-                                            echo "checked";
-                                        }else{
-                                            if($tipo['id_tipo']==$datosProformaServicios[0]["id_tiposervicio"] or $tipo['id_tipo']==$datosProformaServicios[1]["id_tiposervicio"]){
-                                                echo "checked";
-                                            }
-                                        }
+                            <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
+                            <input type="checkbox" name="" id="<?php echo $tipo['nombre']?>"
+                            <?php
+                            if(count($datosProformaServicios)){
+                                if(count($datosProformaServicios) == 1){
+                                    if($tipo['id_tipo']==$datosProformaServicios[0]["id_tiposervicio"]){
+                                        echo "checked";
+                                    }
+                                }else{
+                                    if($tipo['id_tipo']==$datosProformaServicios[0]["id_tiposervicio"] or $tipo['id_tipo']==$datosProformaServicios[1]["id_tiposervicio"]){
+                                        echo "checked";
                                     }
                                 }
-                                
-                                ?>
-                                
-                                >
+                            }
                             
+                            ?> >
                         </div>
                         <?php 
                     }
