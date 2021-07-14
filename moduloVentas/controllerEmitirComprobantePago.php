@@ -40,10 +40,11 @@ class controllerEmitirComprobantePago{
     public function obtenerProforma($id_proforma){
         include_once("../model/Proforma.php");
         $objProforma = new Proforma;
-        $datos = $objProforma->proformaSeleccionada($id_proforma);
+        $datosProforma = $objProforma->proformaSeleccionada($id_proforma);
+        
         include_once("formFacturaGenerada.php");
         $objFacturaGenerada = new formFacturaGenerada();
-        $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma);
+        $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma);
     }
 
 

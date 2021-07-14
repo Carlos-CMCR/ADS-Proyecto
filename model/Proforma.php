@@ -57,16 +57,16 @@ class Proforma extends Conexion{
                     ON dp.id_proforma = p.id_proforma
                 INNER JOIN productos pr
                     ON pr.id_producto = dp.id_producto
-                INNER JOIN tipodeservicios ts
+                left JOIN tipodeservicios ts
                     ON ts.id_tipo = p.id_tiposervicio
-                WHERE  p.id_proforma = :$id_proforma and p.id_EstadoProforma = 1
+                WHERE  p.id_proforma = :id_proforma and p.id_EstadoProforma = 1
                 GROUP BY pr.id_producto;
             ";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
-                'id_proforma' => $id_proforma
+                'id_proforma' => (int)$id_proforma
             ]);
-             return $consulta->fetch();          
+             return $consulta->fetchAll();          
 
         }catch(Exception $ex){
             return $ex->getMessage();

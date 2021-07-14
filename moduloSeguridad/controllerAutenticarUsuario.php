@@ -11,9 +11,9 @@ class controllerAutenticarUsuario{
 				include_once("../model/UsuarioPrivilegio.php");
 				$objprivilegio = new UsuarioPrivilegio;
 				$listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
-				$informacion = $objUsuario->obtenerInformacionDelUsuario($username); 
+				// $informacion = $objUsuario->obtenerInformacionDelUsuario($username); 
 				$_SESSION['username']= $username;
-				$_SESSION['informacion']= $informacion;
+				// $_SESSION['informacion']= $informacion;
 				include_once("formMenuPrincipal.php");
 				$objMenu = new formMenuPrincipal($username);
 				$objMenu -> formMenuPrincipalShow($listaPrivilegios);

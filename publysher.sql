@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2021 a las 04:18:20
+-- Tiempo de generación: 14-07-2021 a las 09:35:01
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -155,9 +155,19 @@ INSERT INTO `detalleprivilegio` (`id_detalleprivilegio`, `id_rol`, `id_privilegi
 CREATE TABLE `detalleproformas` (
   `id_detalleProforma` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL,
-  `id_proforma` int(10) NOT NULL,
-  `id_servicio` int(10) NOT NULL
+  `id_proforma` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detalleproformas`
+--
+
+INSERT INTO `detalleproformas` (`id_detalleProforma`, `id_producto`, `id_proforma`) VALUES
+(1, 1, 4),
+(2, 2, 4),
+(3, 3, 4),
+(4, 6, 5),
+(5, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -311,7 +321,7 @@ CREATE TABLE `privilegios` (
 INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `url`) VALUES
 (1, 'Cambiar constraseña', 'btnCambiarPassword', ''),
 (2, 'Emitir Proforma', 'btnEmitirProforma', ''),
-(3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', ''),
+(3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', '../moduloVentas/getComprobantePago.php'),
 (4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', ''),
 (5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', ''),
 (6, 'Agendar Servicio', 'btnAgendarServicio', ''),
@@ -370,16 +380,20 @@ CREATE TABLE `proformas` (
   `id_usuario` int(10) NOT NULL,
   `fechaYHora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `subtotal` double NOT NULL,
-  `igv` double NOT NULL
+  `igv` double NOT NULL,
+  `id_tiposervicio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `proformas`
 --
 
-INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_emision`, `id_estadoProforma`, `id_cliente`, `id_estadoEntidad`, `codigo_proforma`, `id_usuario`, `fechaYHora`, `subtotal`, `igv`) VALUES
-(1, '2021-07-06', 574, '00:32:19', 1, 1, 0, '00000001', 1, '2021-07-06 05:38:08', 486.8, 87.62),
-(2, '2021-07-06', 917.9, '07:13:25', 1, 2, 0, '00000002', 1, '2021-07-06 05:38:17', 777.86, 140.01);
+INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_emision`, `id_estadoProforma`, `id_cliente`, `id_estadoEntidad`, `codigo_proforma`, `id_usuario`, `fechaYHora`, `subtotal`, `igv`, `id_tiposervicio`) VALUES
+(1, '2021-07-12', 574, '10:52:19', 1, 1, 0, '00000001', 1, '2021-07-13 04:36:00', 486.8, 87.62, NULL),
+(2, '2021-07-04', 917.9, '17:13:25', 1, 2, 0, '00000002', 1, '2021-07-05 04:36:20', 777.86, 140.01, NULL),
+(3, '2021-07-01', 574, '23:46:23', 1, 1, 0, '00000003', 1, '2021-07-13 04:47:44', 486.8, 87.62, NULL),
+(4, '2021-07-14', 683.27, '00:54:06', 1, 2, 0, '00000004', 1, '2021-07-14 05:57:27', 560.28, 122.98, NULL),
+(5, '2021-07-14', 625.88, '10:20:09', 1, 1, 0, '00000005', 1, '2021-07-14 06:36:25', 513.23, 112.65, 1);
 
 -- --------------------------------------------------------
 
@@ -545,8 +559,7 @@ ALTER TABLE `detalleprivilegio`
 ALTER TABLE `detalleproformas`
   ADD PRIMARY KEY (`id_detalleProforma`),
   ADD KEY `id_proforma` (`id_proforma`),
-  ADD KEY `id_producto` (`id_producto`),
-  ADD KEY `id_servicio` (`id_servicio`);
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `estadocomprobante`
@@ -690,7 +703,7 @@ ALTER TABLE `detalleprivilegio`
 -- AUTO_INCREMENT de la tabla `detalleproformas`
 --
 ALTER TABLE `detalleproformas`
-  MODIFY `id_detalleProforma` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalleProforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `estadocomprobante`
@@ -750,7 +763,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -814,7 +827,6 @@ ALTER TABLE `detalleprivilegio`
 -- Filtros para la tabla `detalleproformas`
 --
 ALTER TABLE `detalleproformas`
-  ADD CONSTRAINT `detalleproformas_ibfk_1` FOREIGN KEY (`id_servicio`) REFERENCES `servicios` (`id_servicio`) ON UPDATE CASCADE,
   ADD CONSTRAINT `detalleproformas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE,
   ADD CONSTRAINT `detalleproformas_ibfk_3` FOREIGN KEY (`id_proforma`) REFERENCES `proformas` (`id_proforma`) ON UPDATE CASCADE;
 
