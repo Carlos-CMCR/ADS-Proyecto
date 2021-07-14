@@ -51,7 +51,11 @@ class formFacturaGenerada extends formulario{
                     ?>
                 </table>
             </div>
-
+            <div style="width:100%;">
+                <form action="getComprobantePago.php" method= "post">
+                    <input type="submit" name="btnAgregarProducto" value="Agregar">
+                </form>
+            </div>
             <div>
                 <?php
                     foreach ($tiposServicio as $tipo) {
@@ -77,6 +81,32 @@ class formFacturaGenerada extends formulario{
                         <?php 
                     }
                 ?>
+            </div>
+            <div class="lista-form">
+                <form action="getComprobantePago.php" method= "post">
+                    <input type="submit" class="" name="btnConfirmarFactura" value="Confirmar">
+                    <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
+                <form>
+            </div>
+            <div>
+                <table class="lista-form">
+                    <tr>
+                        <th>Subtotal</th>
+                        <td><?php echo $datosProformaProductos[0]['nom_client']  ?></td>            
+                    </tr>
+                    <tr>
+                        <th>DNI</th>
+                        <td><?php echo $datosProformaProductos[0]['dni'] ?></td>                
+                    </tr>
+                    <tr>
+                        <th>Teléfono</th>
+                        <td><?php echo $datosProformaProductos[0]['celular'] ?></td>                
+                    </tr>
+                    <tr>
+                        <th>RUC</th>
+                        <td><input type="text" max="11" min="11"></td>               
+                    </tr>    
+                </table>
             </div>
         </main>
         <?php 
