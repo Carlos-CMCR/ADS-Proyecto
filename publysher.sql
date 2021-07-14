@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-07-2021 a las 09:35:01
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 14-07-2021 a las 19:20:53
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -168,6 +168,25 @@ INSERT INTO `detalleproformas` (`id_detalleProforma`, `id_producto`, `id_proform
 (3, 3, 4),
 (4, 6, 5),
 (5, 6, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalleproformaservicio`
+--
+
+CREATE TABLE `detalleproformaservicio` (
+  `id_detalleproformaservicio` int(11) NOT NULL,
+  `id_proforma` int(11) NOT NULL,
+  `id_tiposervicio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detalleproformaservicio`
+--
+
+INSERT INTO `detalleproformaservicio` (`id_detalleproformaservicio`, `id_proforma`, `id_tiposervicio`) VALUES
+(1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -380,20 +399,19 @@ CREATE TABLE `proformas` (
   `id_usuario` int(10) NOT NULL,
   `fechaYHora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `subtotal` double NOT NULL,
-  `igv` double NOT NULL,
-  `id_tiposervicio` int(11) DEFAULT NULL
+  `igv` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `proformas`
 --
 
-INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_emision`, `id_estadoProforma`, `id_cliente`, `id_estadoEntidad`, `codigo_proforma`, `id_usuario`, `fechaYHora`, `subtotal`, `igv`, `id_tiposervicio`) VALUES
-(1, '2021-07-12', 574, '10:52:19', 1, 1, 0, '00000001', 1, '2021-07-13 04:36:00', 486.8, 87.62, NULL),
-(2, '2021-07-04', 917.9, '17:13:25', 1, 2, 0, '00000002', 1, '2021-07-05 04:36:20', 777.86, 140.01, NULL),
-(3, '2021-07-01', 574, '23:46:23', 1, 1, 0, '00000003', 1, '2021-07-13 04:47:44', 486.8, 87.62, NULL),
-(4, '2021-07-14', 683.27, '00:54:06', 1, 2, 0, '00000004', 1, '2021-07-14 05:57:27', 560.28, 122.98, NULL),
-(5, '2021-07-14', 625.88, '10:20:09', 1, 1, 0, '00000005', 1, '2021-07-14 06:36:25', 513.23, 112.65, 1);
+INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_emision`, `id_estadoProforma`, `id_cliente`, `id_estadoEntidad`, `codigo_proforma`, `id_usuario`, `fechaYHora`, `subtotal`, `igv`) VALUES
+(1, '2021-07-12', 574, '10:52:19', 1, 1, 0, '00000001', 1, '2021-07-13 04:36:00', 486.8, 87.62),
+(2, '2021-07-04', 917.9, '17:13:25', 1, 2, 0, '00000002', 1, '2021-07-05 04:36:20', 777.86, 140.01),
+(3, '2021-07-01', 574, '23:46:23', 1, 1, 0, '00000003', 1, '2021-07-13 04:47:44', 486.8, 87.62),
+(4, '2021-07-14', 683.27, '00:54:06', 1, 2, 0, '00000004', 1, '2021-07-14 05:57:27', 560.28, 122.98),
+(5, '2021-07-14', 625.88, '10:20:09', 1, 1, 0, '00000005', 1, '2021-07-14 06:36:25', 513.23, 112.65);
 
 -- --------------------------------------------------------
 
@@ -562,6 +580,12 @@ ALTER TABLE `detalleproformas`
   ADD KEY `id_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `detalleproformaservicio`
+--
+ALTER TABLE `detalleproformaservicio`
+  ADD PRIMARY KEY (`id_detalleproformaservicio`);
+
+--
 -- Indices de la tabla `estadocomprobante`
 --
 ALTER TABLE `estadocomprobante`
@@ -704,6 +728,12 @@ ALTER TABLE `detalleprivilegio`
 --
 ALTER TABLE `detalleproformas`
   MODIFY `id_detalleProforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `detalleproformaservicio`
+--
+ALTER TABLE `detalleproformaservicio`
+  MODIFY `id_detalleproformaservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `estadocomprobante`
