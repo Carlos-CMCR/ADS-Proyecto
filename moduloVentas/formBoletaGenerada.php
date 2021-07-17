@@ -1,12 +1,12 @@
 <?php 
   include_once("../shared/formulario.php");
-    class formBoletaGenerada extends formulario{
-      public function __construct($informacion){
-          $this->path = "..";
-          $this->encabezadoShow("Formulario Boleta Generada",$informacion);
-      }
+class formBoletaGenerada extends formulario{
+    public function __construct($informacion){
+        $this->path = "..";
+        $this->encabezadoShow("Formulario Boleta Generada",$informacion);
+    }
 
-      public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
+    public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
