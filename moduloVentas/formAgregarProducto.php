@@ -6,52 +6,63 @@
           $this->encabezadoShow("Formulario Agregar Producto",$informacion);
       }
 
-      public function formAgregarProductoShow($datosProducto = [],$id_proforma){
+      public function formAgregarProductoShow($datosProducto = [], $datosProductos = [],$id_proforma,$nomProd = ''){
         echo "<main class='wrapper-actions'>";
         ?>
         <div>
             <form action="getComprobantePago.php" method="post">
                 <h3>Producto</h3>
-                <input type="text" name="producto" >
+                <input type="text" name="producto" value="<?php echo $nomProd?>">
                 <input type="hidden" name="idProforma" value="<?php echo $id_proforma;?>">
                 <button type="submit" class="" name="btnBuscarProducto">Buscar</button>
             </form>
             
         </div>
         <div class="wrapper-actions">
-        <table class="lista-form">
+        <?php
+        if(empty($datosProducto)){
+           
+        }else{?>
+            <table class="lista-form">
                     <tr>
                         <th>Nombre Producto:</th>
-                        <td></td>            
+                        <td><?php echo $datosProducto[0]["nombre"]?></td>            
                     </tr>
                     <tr>
                         <th>stock:</th>
-                        <td></td>                
+                        <td><?php echo $datosProducto[0]["stock"]?></td>                
                     </tr>
                     <tr>
                         <th>Precio Unitario:</th>
-                        <td></td>                
+                        <td><?php echo $datosProducto[0]["precioUnitario"]?></td>                
                     </tr>
                         
         </table>
         <form action="getComprobantePago.php" method="post">
+            <input type="hidden" name="idProducto" value="<?php echo $datosProducto[0]["id_producto"]?>">
+            <input type="hidden" name="idProforma" value="<?php echo $id_proforma?>">
             <input type="submit" class="" name="btnAgregar" value="Agregar"/>
-            </form>
+        </form>
+        <?php }
+        ?>
+        
         </div>
         <div>
         <?php
         
-        if(empty($datosProducto)){
+        if(empty($datosProductos)){
            
         }else{
-            foreach($datosProducto as $dato) {
+            foreach($datosProductos as $dato) {
                 ?>
                 <tr>
                 <form action="getComprobantePago.php" method= "post">
+                    <input type="hidden" name="producto" value="<?php echo $nomProd?>">
                     <input type="hidden" name="idProducto" value="<?php echo $dato["id_producto"]?>">
+                    <input type="hidden" name="idProforma" value="<?php echo $id_proforma?>">
                     <td align="center" ><?php echo $dato["codigo_producto"]?></td>
                     <td align="center" ><?php echo $dato["nombre"]?></td>
-                    <td><button  type="submit" class="" name="btnSeleccionar">Seleccionar</button></td>
+                    <td><button  type="submit" class="" name="btnSeleccionarProducto">Seleccionar</button></td>
                 </form>
                 
                 </tr>
@@ -60,7 +71,13 @@
         }?>
         
         </div>
-
+        <div class="lista-form">
+            <form action="getComprobantePago.php" method= "post">
+                <input type="hidden" value="<?php echo $id_proforma;?>" name="idProforma">
+                <input class="volver-form__button" name="btnBoleta" type="submit" value="Volver" >
+                
+            <form>
+        </div>
 
 
         <?php

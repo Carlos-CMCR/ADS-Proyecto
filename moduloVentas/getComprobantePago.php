@@ -33,12 +33,12 @@ elseif(isset($_POST["btnSeleccionar"])){
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> agregarProductos($id_proforma);
 }else if(isset($_POST["btnBuscarProducto"])){
-    $producto = ($_POST['producto']);
+    $productos = ($_POST['producto']);
     $id_proforma = ($_POST['idProforma']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-    if($producto >= 1){
-        $controlComprobante -> buscarProducto($producto, $id_proforma);
+    if($productos >= 1){
+        $controlComprobante -> buscarProducto($productos, $id_proforma);
     }else{
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;
@@ -48,7 +48,15 @@ elseif(isset($_POST["btnSeleccionar"])){
     </form>");
     }
     
-}else{
+}else if(isset($_POST["btnSeleccionarProducto"])){
+    $id_producto = ($_POST['idProducto']);
+    $id_proforma = ($_POST['idProforma']);
+    $productos = ($_POST['producto']);
+
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> seleccionarProducto($id_producto, $id_proforma,$productos);
+} else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
     $nuevoMensaje -> formMensajeSistemaShow("¡ACCESO NO PERMITIDO!","<a href='../index.php' class='form-message__link'>Volver</a>");
