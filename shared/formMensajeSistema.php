@@ -8,11 +8,11 @@ include_once("formulario.php");
             $this->path = "..";
 			$this -> encabezadoShowIni("Mensaje del sistema");
 		}
-		public function formMensajeSistemaShow($mensaje,$enlace)
+		public function formMensajeSistemaShow($mensaje,$enlace,$exito = false)
 		{
             ?>
             <div class="form-message">
-                <img src="../img/alert.png" alt="" class="form-message__img">
+                <img src="../img/<?php echo $exito?'exito.png':'alert.png' ?>" alt="" class="form-message__img">
                 <p class="form-message__content">
                     <?php echo $mensaje;?>
                 </p>

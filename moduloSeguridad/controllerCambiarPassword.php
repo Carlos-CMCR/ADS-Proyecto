@@ -18,6 +18,26 @@ class controllerCambiarPassword{
         </form>");
         }
     }
+
+    public function cambiarPassword($username,$password){
+        // change password the user
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $respuesta = $objUsuario -> cambiarPassword($username,$password);
+        if($respuesta["success"]){
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow($respuesta["mensaje"],"<form action='getUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnInicio'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Ir al Inicio' type='submit'>
+        </form>",$respuesta["success"]);
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow($respuesta["mensaje"],"<form action='getCambiarPassword.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnCambiar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+        }
+    }
     
 }
 
