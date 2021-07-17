@@ -11,7 +11,7 @@ class formCambiarPassword extends formulario{
             <h1 class='form-cambiar__title'>Ingrese su contraseña actual</h1>
             <form action="getCambiarPassword.php" method="post" class="form-cambiar__actions">
                 <input type="password" name="password" placeholder="Contraseña actual">
-                <button btn="btnConfirmar">Confirmar</button>
+                <button name="btnConfirmar">Confirmar</button>
             </form>
             <form action="getUsuario.php" method="post" class="form-cambiar__volver">
                 <button name="btnInicio">Ir al inicio</button>
