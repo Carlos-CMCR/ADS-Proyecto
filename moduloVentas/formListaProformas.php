@@ -7,7 +7,7 @@ class formListaProformas extends formulario{
     }
 
     public function formListaProformasShow($listarProformas = []){
-        echo "<main class='formLista-actions'>";
+        echo "<main class='wrapper-actions'>";
         $month = date('m');
         $day = date('d');
         $year = date('Y');
