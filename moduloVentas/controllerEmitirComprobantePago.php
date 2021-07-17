@@ -96,16 +96,28 @@ class controllerEmitirComprobantePago{
             $_SESSION["lista_proforma"]["productos"] = $productos;
             $_SESSION["lista_proforma"]["servicios"] = $servicios;
     
-            $objBoletaGenerada -> formBoletaGeneradaShow($datosProforma,$tiposServicio);
+            $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$datosProforma,$tiposServicio);
         }
         
     }
 
     public function agregarProductos($id_proforma){
+        include_once("../model/Producto.php");
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow($id_proforma);
+		$objAgregarProducto -> formAgregarProductoShow([], $id_proforma);
+    }
+
+    public function buscarProducto($producto, $id_proforma){
+        include_once("../model/Producto.php");
+        $objProducto = new Producto;
+        $datosProducto = $objProducto -> obtenerProducto($producto);
+
+        include_once("formAgregarProducto.php");
+        session_start();
+		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
+		$objAgregarProducto -> formAgregarProductoShow($datosProducto , $id_proforma);
     }
 
 

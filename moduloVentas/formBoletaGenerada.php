@@ -6,7 +6,7 @@
           $this->encabezadoShow("Formulario Boleta Generada",$informacion);
       }
 
-      public function formBoletaGeneradaShow($datosProforma=[],$tiposServicio = []){
+      public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
@@ -50,6 +50,7 @@
             </div>
             <div style="width:100%;">
                 <form action="getComprobantePago.php" method= "post">
+                <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>
