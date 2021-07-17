@@ -16,13 +16,17 @@ elseif(isset($_POST["btnSeleccionar"])){
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> tipoComprobantePago($id_proforma);
 }else if(isset($_POST["btnFactura"])){
+    $button = true;
     $id_proforma = ($_POST['idProforma']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-    $controlComprobante -> obtenerProforma($id_proforma);
+    $controlComprobante -> obtenerProforma($id_proforma, $button);
 }else if(isset($_POST["btnBoleta"])){
+    $button = false;
     $id_proforma = ($_POST['idProforma']);
-    echo $id_proforma;
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> obtenerProforma($id_proforma, $button);
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
