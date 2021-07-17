@@ -428,6 +428,9 @@ a {
     .main-menu__link:hover {
         text-shadow: rgba(0, 0, 0, 0.3) 0 0.05em 0.15em;
     }
+    .wrapper-actions--cambiar-password{
+        width: 600px;
+    }
 }
 
 main{
@@ -455,4 +458,47 @@ main{
 
 .open-dropdown{
     display: block;
+}
+
+.form-cambiar{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.form-cambiar__title{
+    text-align:center;
+}
+
+.form-cambiar__actions{
+    display: flex;
+    flex-direction: column;
+    margin: 0 2em;
+}
+
+.form-cambiar__volver {
+    margin: 0 2em;
+}
+.form-cambiar__volver button{
+    width: 100%;
+}
+
+.form-cambiar__actions input,.form-cambiar__actions button,.form-cambiar__volver button {
+    margin-bottom: 1em;
+    padding: 0.5em 0.6em;
+    position: relative;
+    font-size: 1.2em;
+} 
+
+.form-cambiar__actions button{
+    background-color: #0e47a1;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.form-cambiar__volver button {
+    cursor: pointer;
+    background-color: #cf3838;
+    border: none;
+    color: white;
 }
