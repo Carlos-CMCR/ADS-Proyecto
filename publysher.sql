@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-07-2021 a las 19:20:53
+-- Tiempo de generación: 17-07-2021 a las 08:26:24
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -338,7 +338,7 @@ CREATE TABLE `privilegios` (
 --
 
 INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `url`) VALUES
-(1, 'Cambiar constraseña', 'btnCambiarPassword', ''),
+(1, 'Cambiar constraseña', 'btnCambiarPassword', '../moduloSeguridad/getCambiarPassword.php'),
 (2, 'Emitir Proforma', 'btnEmitirProforma', ''),
 (3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', '../moduloVentas/getComprobantePago.php'),
 (4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', ''),
@@ -891,18 +891,6 @@ ALTER TABLE `proformas`
 ALTER TABLE `servicios`
   ADD CONSTRAINT `servicios_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON UPDATE CASCADE,
   ADD CONSTRAINT `servicios_ibfk_2` FOREIGN KEY (`id_tipo`) REFERENCES `tipodeservicios` (`id_tipo`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`id_estadoEntidad`) REFERENCES `estadoentidad` (`id_estadoEntidad`) ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 --
 -- Filtros para la tabla `usuarios`

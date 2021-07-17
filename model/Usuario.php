@@ -51,6 +51,21 @@ class Usuario extends Conexion{
             $this->bd = null;
         }
     }
+
+    public function cambiarPassword($username,$password){
+        try{
+            $this->bd = $this->conectar();
+            $query = "UPDATE usuarios SET password = :password WHERE username = :username";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username,
+                "password"=>$password
+            ]);
+            return ["success"=>true,"mensaje"=>"El password se ha cambiado con exito" ];
+        }catch(Exception $e){
+            return ["success"=>false,"mensaje"=>$e->getMessage() ];
+        }
+    }
 }
 
 ?>
