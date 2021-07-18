@@ -33,14 +33,14 @@ class controllerEmitirComprobantePago{
         
     }
 
-    public function tipoComprobantePago($id_proforma){
+    public function tipoComprobantePago($id_proforma, $id_cliente){
         include_once("formTipoComprobantePago.php");
         session_start();
 		$objTipoComprobantePago = new formTipoComprobantePago($_SESSION["informacion"]);
-		$objTipoComprobantePago -> formTipoComprobantePagoShow($id_proforma);
+		$objTipoComprobantePago -> formTipoComprobantePagoShow($id_proforma, $id_cliente);
     }
 
-    public function obtenerProforma($id_proforma, $button){
+    public function obtenerProforma($id_proforma,$id_cliente, $button){
         include_once("../model/Proforma.php");
         include_once("../model/TipoDeServicio.php");
         $objProforma = new Proforma;
@@ -77,20 +77,20 @@ class controllerEmitirComprobantePago{
             // false si es boleta
             include_once("formBoletaGenerada.php");
             $objBoletaGenerada = new formBoletaGenerada($_SESSION["informacion"]);
-            $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$datosProforma,$tiposServicio);
+            $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$id_cliente,$datosProforma,$tiposServicio);
         }
         
     }
 
-    public function agregarProductos($id_proforma){
+    public function agregarProductos($id_proforma, $id_cliente){
         include_once("../model/Producto.php");
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],[], $id_proforma);
+		$objAgregarProducto -> formAgregarProductoShow([],[], $id_proforma,$id_cliente);
     }
 
-    public function buscarProducto($productos, $id_proforma){
+    public function buscarProducto($productos, $id_proforma, $id_cliente){
         include_once("../model/Producto.php");
         $objProducto = new Producto;
         $datosProductos = $objProducto -> obtenerProductos($productos);
@@ -98,10 +98,10 @@ class controllerEmitirComprobantePago{
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],$datosProductos , $id_proforma,$productos);
+		$objAgregarProducto -> formAgregarProductoShow([],$datosProductos , $id_proforma,$id_cliente,$productos);
     }
 
-    public function seleccionarProducto($id_producto, $id_proforma,$productos){
+    public function seleccionarProducto($id_producto, $id_proforma, $id_cliente,$productos){
         include_once("../model/Producto.php");
         $objProducto = new Producto;
         $datosProducto = $objProducto -> obtenerProducto($id_producto);
@@ -109,22 +109,62 @@ class controllerEmitirComprobantePago{
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma,$productos);
+		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma, $id_cliente,$productos);
     }
 
-    public function agregarProducto($id_producto, $id_proforma,$productos){
+    public function agregarProducto($cantidad,$id_producto, $id_proforma,$id_cliente, $productos){
+        include_once("../model/Producto.php");
         $objProducto = new Producto;
-        $objProducto -> agregarProducto($id_producto, $id_proforma);
-        $datosProducto = $objProducto -> obtenerProducto($id_producto, $id_proforma);
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
         session_start();
-		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma,$productos);
+        $_SESSION["lista"]["productos"][$id_producto]= $cantidad;
+        		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
+		$objAgregarProducto -> formAgregarProductoShow([],$datosProductos, $id_proforma,$id_cliente,$productos);
+    }
+    public function listarProductosDeNuevaLista($id_proforma,$id_cliente,$button){
+        session_start();
+        include_once("../model/TipoDeServicio.php");
+        include_once("../model/Producto.php");
+        $objProducto = new Producto;
+        $objTipoDeServicios = new TipoDeServicio;
+        $tiposServicio =  $objTipoDeServicios->listarServicios();
+        
+        // true factura
+        if($button){
+            include_once("formFacturaGenerada.php");
+            $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
+        }else{
+            // BOLETA
+            $total = (double) 0;
+
+            // asasasd
+            $datosLista = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
+            $index = 0;
+            foreach ($tiposServicio as $tipo){
+                if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"] or $_SESSION["lista"]["servicios"][1]==$tipo["id_tipo"]){
+                    $total+=(double)$tipo["precioDeServicio"];
+                    $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
+                    $index+=1;
+                }
+            }
+            $productos = $objProducto->listarProductosLista($_SESSION["lista"]["productos"],$id_cliente);
+            foreach ($productos as $producto) {
+                $producto["cantidad"] = $_SESSION["lista"]["productos"][$producto["id_producto"]];
+                $total+=((double)$producto["precioProduct"])*$producto["cantidad"];
+                $productos["precioTotal"] = $total;
+            }
+
+            $datosLista["datosProformaProductos"] = $productos;
+
+            include_once("formBoletaGenerada.php");
+            $objBoletaGenerada = new formBoletaGenerada($_SESSION["informacion"]);
+            $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$id_cliente,$datosLista,$tiposServicio);
+
+        }
     }
 
 
-
-    }
+}
     
 ?>

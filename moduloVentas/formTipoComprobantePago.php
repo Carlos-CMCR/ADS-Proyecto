@@ -6,13 +6,14 @@ class formTipoComprobantePago extends formulario{
         $this->encabezadoShow("Formulario Tipo de Comprobante de Pago",$informacion);
     }
 
-    public function formTipoComprobantePagoShow($id_proforma){
+    public function formTipoComprobantePagoShow($id_proforma, $id_cliente){
         echo "<main class='wrapper-actions'>";
         
         ?>
         
         <form action="getComprobantePago.php" method="post">
             <input type="hidden" value="<?php echo $id_proforma;?>" name="idProforma">
+            <input type="hidden" value="<?php echo $id_cliente;?>" name="idCliente">
             <input  type="submit" name="btnFactura"  value="Factura">
             <input type="submit" name="btnBoleta"  value="Boleta">
             <input  type="submit" name="btnEmitirComprobante" value="Volver" >
