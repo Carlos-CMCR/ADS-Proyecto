@@ -51,7 +51,7 @@ class Producto extends Conexion{
 
     public function listarProductosLista($idDeProductos = [],$idcliente){
         try {
-            $query = "select p.id_producto,p.codigo_producto,p.precioUnitario as precioProduct,c.nombres as nom_client,c.apellido_paterno,c.apellido_materno,c.celular from productos as p join clientes as c WHERE id_producto IN (";
+            $query = "select p.id_producto,p.stock,p.codigo_producto,p.precioUnitario as precioProduct,p.nombre as nom_product,c.dni,c.nombres as nom_client,c.apellido_paterno,c.apellido_materno,c.celular from productos as p join clientes as c WHERE id_producto IN (";
 
             foreach ($idDeProductos as $key => $value) {
                 $query.=(int)$key;

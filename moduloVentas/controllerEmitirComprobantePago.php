@@ -139,20 +139,33 @@ class controllerEmitirComprobantePago{
             $total = (double) 0;
 
             // asasasd
-            $datosLista = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
+            $datosLista = ["datosProformaProductos"=>[],"datosProformaServicios"=>[]];
             $index = 0;
             foreach ($tiposServicio as $tipo){
-                if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"] or $_SESSION["lista"]["servicios"][1]==$tipo["id_tipo"]){
-                    $total+=(double)$tipo["precioDeServicio"];
-                    $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
-                    $index+=1;
+                if(count($_SESSION["lista"]["servicios"])==2){
+                    if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"] or $_SESSION["lista"]["servicios"][1]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                        $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
+                        $index+=1;
+                    }
+                }
+                if(count($_SESSION["lista"]["servicios"])==1){
+                    if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                        $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
+                        $index+=1;
+                    }
                 }
             }
             $productos = $objProducto->listarProductosLista($_SESSION["lista"]["productos"],$id_cliente);
-            foreach ($productos as $producto) {
-                $producto["cantidad"] = $_SESSION["lista"]["productos"][$producto["id_producto"]];
-                $total+=((double)$producto["precioProduct"])*$producto["cantidad"];
-                $productos["precioTotal"] = $total;
+            
+            for ($i=0; $i < count($productos); $i++) { 
+                $productos[$i]["cantidad"] = $_SESSION["lista"]["productos"][$productos[$i]["id_producto"]];
+                $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
+                $productos[$i]["precioTotal"] = $total;
+                $productos[$i]["igv"] = (double)$total * 0.18;
+                $productos[$i]["subtotal"] = $total - $productos[$i]["igv"];
+
             }
 
             $datosLista["datosProformaProductos"] = $productos;
