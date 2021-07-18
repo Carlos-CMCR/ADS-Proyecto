@@ -6,7 +6,10 @@ class controllerEmitirComprobantePago{
         $arrayProformas = $objProforma->listarProformas();
         //var_dump($arrayProformas);
         include_once("formListaProformas.php");
-        session_start();
+        if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        }
 		$objListaProformas = new formListaProformas($_SESSION["informacion"]);
 		$objListaProformas -> formListaProformasShow($arrayProformas);
     }
@@ -123,8 +126,14 @@ class controllerEmitirComprobantePago{
 		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma,$productos);
     }
 
-
-
+    public function obtenerPrecioUnitaciosProductos($idDeProductos){
+        include_once("../model/Producto.php");
+        $objProducto = new Producto;
+        $datosPreciosUnitarios = $objProducto ->obtenerPrecioUnitaciosProductos($idDeProductos);
+        return $datosPreciosUnitarios;
     }
+
+
+}
     
 ?>

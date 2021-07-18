@@ -41,9 +41,9 @@ class formBoletaGenerada extends formulario{
                         <td><button type="button" data-idproducto="<?php echo $dato['id_producto'] ?>" >X</button> </td>      
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
 
-                        <td><input type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
-
-                        <td><input type="string" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
+                        <td><input class="input-counter" data-idproducto="<?php echo $dato['id_producto'] ?>" type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
+                        <td align="center"><input type="text" value="<?php echo $dato['precioProduct']?>" disabled></td>
+                        <td><input class="input-result" type="text" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
                         
                         </tr>
                         <?php 
@@ -57,13 +57,15 @@ class formBoletaGenerada extends formulario{
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>
-            <div>
+            <div id="container-servicios">
                 <?php
                     foreach ($tiposServicio as $tipo) {
                         ?>
                         <div>
                             <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
-                            <input type="checkbox" name="" id="<?php echo $tipo['nombre']?>"
+                            <input type="checkbox" id="<?php echo $tipo['nombre']?>"
+                            data-precioServicio = "<?php echo $tipo['precioDeServicio'] ?>"
+                            data-idServicio = "<?php echo $tipo['id_tipo'] ?>"
                             <?php
                             if(count($datosProformaServicios)){
                                 if(count($datosProformaServicios) == 1){
@@ -122,6 +124,7 @@ class formBoletaGenerada extends formulario{
         </div>
         <script src="<?php echo $this->path ?>/public/comprobante.js"></script>
         <?php 
+        $idDeProductos = [1,2,3,4];
         $this->piePaginaShow();
     }
 }

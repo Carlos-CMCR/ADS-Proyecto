@@ -71,5 +71,28 @@ class Producto extends Conexion{
         }
     }
 
+    // REALLY ??
+    public function obtenerPrecioUnitaciosProductos($idDeProductos = []){
+        try {
+            $query = "select precioUnitario,id_producto from productos WHERE id_producto IN (";
+
+            foreach ($idDeProductos as $key => $value) {
+                $query.=(int)$key;
+                $query.=",";
+            }
+            $query = substr($query, 0, -1).")";
+            $this->bd = $this->conectar();
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return $consulta->fetchAll();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+        finally {
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+    }
+
 }
 ?>

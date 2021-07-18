@@ -1,5 +1,10 @@
 <?php 
 if(isset($_POST["btnEmitirComprobante"])){
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
+    unset($_SESSION['lista']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> obtenerProformas();
@@ -48,7 +53,21 @@ elseif(isset($_POST["btnSeleccionar"])){
     </form>");
     }
 }else if(isset($_POST["btnQuitarProducto"])){
+
+}else if(isset($_POST["btnCounterProducto"])){
+    $id_producto = ($_POST['idproducto']);
+    $cantidad = ($_POST['cantidad']);
+    session_start();
+    // header('Content-type: application/json; charset=utf-8');
+    $_SESSION["lista"]["productos"][$id_producto] = (int)$cantidad;
+    // echo json_encode($_SESSION["lista"]["productos"]);
+    // include_once("./controllerEmitirComprobantePago.php");
+    // $controlComprobante = new controllerEmitirComprobantePago;
+    // $objPreciosUnitarios = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
     
+    // $arrayCalculos = 
+
+    // echo json_encode($objPreciosUnitarios);
 }else if(isset($_POST["btnSeleccionarProducto"])){
     $id_producto = ($_POST['idProducto']);
     $id_proforma = ($_POST['idProforma']);
