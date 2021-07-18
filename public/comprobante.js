@@ -53,8 +53,8 @@ if(table_productos_lista){
 }
 if(container_servicios){
     container_servicios.addEventListener("change", async (event) => {
-        const target = event.target.tagName("INPUT")
-        if(!target) return
-        console.log("cambio")
+        const target = event.target
+        console.log(target)
+
     })
 }

@@ -121,8 +121,12 @@ class controllerEmitirComprobantePago{
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
         session_start();
-        $_SESSION["lista"]["productos"][$id_producto]= $cantidad;
-        		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
+        if(isset($_SESSION["lista"]["productos"][$id_producto])){
+            $_SESSION["lista"]["productos"][$id_producto]+= $cantidad;
+        }else{
+            $_SESSION["lista"]["productos"][$id_producto]= $cantidad;
+        }
+        $objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
 		$objAgregarProducto -> formAgregarProductoShow([],$datosProductos, $id_proforma,$id_cliente,$productos);
     }
     public function listarProductosDeNuevaLista($id_proforma,$id_cliente,$button){
