@@ -6,7 +6,7 @@ class formBoletaGenerada extends formulario{
         $this->encabezadoShow("Formulario Boleta Generada",$informacion);
     }
 
-    public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
+    public function formBoletaGeneradaShow($id_proforma,$id_cliente, $datosProforma=[],$tiposServicio = []){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
@@ -34,16 +34,26 @@ class formBoletaGenerada extends formulario{
             </div>
             <div style="width:100%;">
                 <table style="width:100%;" id="table_productos_lista">
+                    <tr>
+                        <th>Acción</th>
+                        <th>Código</th>
+                        <th>Nombre del Producto</th>
+                        <th>Unidades</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
+
+                    </tr>
                     <?php 
                     foreach ($datosProformaProductos as $dato){
                         ?> 
                         <tr>
-                        <td><button type="button" data-idproducto="<?php echo $dato['id_producto'] ?>" >X</button> </td>      
+                        <td align="center"><button type="button" data-idproducto="<?php echo $dato['id_producto'] ?>">X</button></td>
+                        <td align="center"><p><?php echo $dato['codigo_producto'] ?></p></td>      
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
-
                         <td><input class="input-counter" data-idproducto="<?php echo $dato['id_producto'] ?>" type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
                         <td align="center"><input type="text" value="<?php echo $dato['precioProduct']?>" disabled></td>
                         <td><input class="input-result" type="text" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
+
                         
                         </tr>
                         <?php 
@@ -53,7 +63,8 @@ class formBoletaGenerada extends formulario{
             </div>
             <div style="width:100%;">
                 <form action="getComprobantePago.php" method= "post">
-                <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
+                    <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
+                    <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>
