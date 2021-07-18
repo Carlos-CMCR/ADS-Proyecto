@@ -58,11 +58,11 @@ class Proforma extends Conexion{
     public function obtenerProductosDeproformaSeleccionada($id_proforma){
         try {
             $this->bd = $this->conectar();
-            $query = "SELECT count(pr.id_producto) as cantidad,p.id_proforma,p.precioTotal,p.subtotal,p.igv, c.nombres as nom_client,pr.stock, c.apellido_paterno, c.apellido_materno, c.dni, c.celular,dp.id_producto, dp.id_detalleProforma
+            $query = "SELECT count(pr.id_producto) as cantidad,p.id_proforma,p.precioTotal,p.subtotal,p.igv, c.nombres as nom_client,pr.stock, c.apellido_paterno, c.apellido_materno, c.dni, c.celular,dp.id_producto, dp.id_detalleProformaProducto
             ,pr.nombre as nom_product, pr.precioUnitario as precioProduct FROM proformas p 
                 INNER JOIN clientes c
                 ON c.id_cliente = p.id_cliente
-                INNER JOIN detalleProformas dp
+                INNER JOIN detalleproformaproducto dp
                     ON dp.id_proforma = p.id_proforma
                 INNER JOIN productos pr
                     ON pr.id_producto = dp.id_producto

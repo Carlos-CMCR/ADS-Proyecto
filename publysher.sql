@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2021 a las 05:30:03
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 8.0.8
+-- Tiempo de generación: 18-07-2021 a las 05:54:49
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -85,7 +85,6 @@ CREATE TABLE `comprobantedepago` (
   `id_cliente` int(10) NOT NULL,
   `numero_comprobante` varchar(8) NOT NULL,
   `id_estadoComprobante` int(10) NOT NULL,
-  `id_proforma` int(10) NOT NULL,
   `id_usuario` int(10) NOT NULL,
   `fechaYhora` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -562,7 +561,6 @@ ALTER TABLE `comprobantedepago`
   ADD KEY `id_tipocomprobante` (`id_tipocomprobante`),
   ADD KEY `id_cliente` (`id_cliente`),
   ADD KEY `id_estadocomprobante` (`id_estadoComprobante`),
-  ADD KEY `id_proforma` (`id_proforma`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
@@ -857,7 +855,6 @@ ALTER TABLE `usuarios`
 ALTER TABLE `comprobantedepago`
   ADD CONSTRAINT `comprobantedepago_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON UPDATE CASCADE,
   ADD CONSTRAINT `comprobantedepago_ibfk_2` FOREIGN KEY (`id_estadoComprobante`) REFERENCES `estadocomprobante` (`id_estadoComprobante`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `comprobantedepago_ibfk_3` FOREIGN KEY (`id_proforma`) REFERENCES `proformas` (`id_proforma`) ON UPDATE CASCADE,
   ADD CONSTRAINT `comprobantedepago_ibfk_4` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE CASCADE;
 
 --

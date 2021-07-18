@@ -33,7 +33,7 @@ class formBoletaGenerada extends formulario{
                 </table>
             </div>
             <div style="width:100%;">
-                <table style="width:100%;" id="table_productos_proforma" data-idproforma="<?php echo $id_proforma ?>">
+                <table style="width:100%;" id="table_productos_lista">
                     <?php 
                     foreach ($datosProformaProductos as $dato){
                         ?> 

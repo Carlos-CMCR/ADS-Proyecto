@@ -49,55 +49,34 @@ class controllerEmitirComprobantePago{
         $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         $tiposServicio =  $objTipoDeServicios->listarServicios();
-        
+        session_start();
+        $_SESSION["lista"] = ["productos"=>[],"servicios"=>[]];
+        $productos = [];
+        $servicios = [];
+
+        foreach ($datosProformaProductos as $dato){
+            $productos[$dato["id_producto"]] = $dato["cantidad"];
+        }
+        $datosProforma = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
+
+        if($datosProformaServicios["existe"]){
+            foreach ($datosProformaServicios["data"] as $dato){
+                array_push($servicios,$dato["id_tiposervicio"]);
+            }
+            $datosProforma["datosProformaServicios"] = $datosProformaServicios["data"];
+        }
+        $_SESSION["lista"]["productos"] = $productos;
+        $_SESSION["lista"]["servicios"] = $servicios;
 
         // true si es factura
         if($button == true){
             include_once("formFacturaGenerada.php");
-            session_start();
             $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
-            $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[]];
-            $productos = [];
-            $servicios = [];
-            foreach ($datosProformaProductos as $dato){
-                $productos[$dato["id_producto"]] = $dato["cantidad"];
-            }
-            $datosProforma = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
-    
-            if($datosProformaServicios["existe"]){
-                foreach ($datosProformaServicios["data"] as $dato){
-                    array_push($servicios,$dato["id_tiposervicio"]);
-                }
-                $datosProforma["datosProformaServicios"] = $datosProformaServicios["data"];
-            }
-            $_SESSION["lista_proforma"]["productos"] = $productos;
-            $_SESSION["lista_proforma"]["servicios"] = $servicios;
-    
-    
             $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma,$tiposServicio);
-            
-        }else{ 
+        }else{
             // false si es boleta
             include_once("formBoletaGenerada.php");
-            session_start();
             $objBoletaGenerada = new formBoletaGenerada($_SESSION["informacion"]);
-            $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[]];
-            $productos = [];
-            $servicios = [];
-            foreach ($datosProformaProductos as $dato){
-                $productos[$dato["id_producto"]] = $dato["cantidad"];
-            }
-            $datosProforma = ["datosProformaProductos"=>$datosProformaProductos,"datosProformaServicios"=>[]];
-    
-            if($datosProformaServicios["existe"]){
-                foreach ($datosProformaServicios["data"] as $dato){
-                    array_push($servicios,$dato["id_tiposervicio"]);
-                }
-                $datosProforma["datosProformaServicios"] = $datosProformaServicios["data"];
-            }
-            $_SESSION["lista_proforma"]["productos"] = $productos;
-            $_SESSION["lista_proforma"]["servicios"] = $servicios;
-    
             $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$datosProforma,$tiposServicio);
         }
         
