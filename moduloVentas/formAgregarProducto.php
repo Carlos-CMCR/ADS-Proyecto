@@ -20,6 +20,7 @@
         </div>
         <div class="wrapper-actions">
         <?php
+        
         if(empty($datosProducto)){
            
         }else{?>
@@ -36,9 +37,14 @@
                         <th>Precio Unitario:</th>
                         <td><?php echo $datosProducto[0]["precioUnitario"]?></td>                
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td><input type="number" name="cantidad" min="1" max="<?php echo $datosProducto[0]["stock"]?>" value="1"></td>                
+                    </tr>
                         
         </table>
         <form action="getComprobantePago.php" method="post">
+            <input type="hidden" name="producto" value="<?php echo $nomProd?>">
             <input type="hidden" name="idProducto" value="<?php echo $datosProducto[0]["id_producto"]?>">
             <input type="hidden" name="idProforma" value="<?php echo $id_proforma?>">
             <input type="submit" class="" name="btnAgregar" value="Agregar"/>

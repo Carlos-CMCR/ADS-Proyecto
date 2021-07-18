@@ -49,5 +49,27 @@ class Producto extends Conexion{
         }
     }
 
+    public function agregarProducto($id_producto, $id_proforma){
+        try {
+            $this->bd = $this->conectar();
+            $query = "INSERT intop.id_producto, p.nombre, p.stock, p.precioUnitario  FROM productos p INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
+            INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria WHERE p.id_observacion = 0 
+            AND p.stock > 0 AND p.id_producto= :id;
+            ";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_producto' => $id_producto,
+                'id_proforma' => $id_proforma
+            ]);
+            return $consulta->fetchAll();          
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+    }
+
 }
 ?>

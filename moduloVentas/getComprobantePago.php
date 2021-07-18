@@ -56,6 +56,12 @@ elseif(isset($_POST["btnSeleccionar"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> seleccionarProducto($id_producto, $id_proforma,$productos);
+}else if(isset($_POST["btnAgregar"])){
+    $id_producto = ($_POST['idProducto']);
+    $id_proforma = ($_POST['idProforma']);
+    $productos = ($_POST['producto']);
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> seleccionarProducto($id_producto, $id_proforma,$productos);
 } else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

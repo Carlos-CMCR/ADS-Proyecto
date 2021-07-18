@@ -131,6 +131,17 @@ class controllerEmitirComprobantePago{
 		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma,$productos);
     }
 
+    public function agregarProducto($id_producto, $id_proforma,$productos){
+        $objProducto = new Producto;
+        $objProducto -> agregarProducto($id_producto);
+        $datosProducto = $objProducto -> obtenerProducto($id_producto, $id_proforma);
+        $datosProductos = $objProducto -> obtenerProductos($productos);
+        include_once("formAgregarProducto.php");
+        session_start();
+		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
+		$objAgregarProducto -> formAgregarProductoShow($datosProducto,$datosProductos, $id_proforma,$productos);
+    }
+
 
 
     }
