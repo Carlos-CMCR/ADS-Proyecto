@@ -50,6 +50,14 @@ if(table_productos_lista){
                 let cantidad = parseFloat(element.parentNode.previousElementSibling.firstElementChild.value).toFixed(2)
                 element.value = parseFloat(precioUnitario*cantidad).toFixed(2);
             });
+            document.getElementById("precioTotal").innerText = data["precioTotal"]
+            let igv = parseFloat(data["precioTotal"]).toFixed(2) * parseFloat(0.18).toFixed(2)
+            let subtotal = parseFloat(data["precioTotal"]).toFixed(2) - igv
+
+            igv = parseFloat(igv).toFixed(2)
+            subtotal = parseFloat(subtotal).toFixed(2)
+            document.getElementById("igv").innerText = igv
+            document.getElementById("subtotal").innerText = subtotal
         }
     })
 }

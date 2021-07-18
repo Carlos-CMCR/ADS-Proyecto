@@ -101,15 +101,15 @@ class formBoletaGenerada extends formulario{
                 <table class="lista-form">
                     <tr>
                         <th>Subtotal: </th>
-                        <td><?php echo $datosProformaProductos[0]['subtotal']  ?></td>            
+                        <td id="subtotal"><?php echo $datosProformaProductos[0]['subtotal']  ?></td>            
                     </tr>
                     <tr>
                         <th>IGV: </th>
-                        <td><?php echo $datosProformaProductos[0]['igv'] ?></td>                
+                        <td id="igv"><?php echo $datosProformaProductos[0]['igv'] ?></td>                
                     </tr>
                     <tr>
                         <th>Precio Total: </th>
-                        <td><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
+                        <td id="precioTotal"><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
                     </tr>
                 </table>
             </div>
