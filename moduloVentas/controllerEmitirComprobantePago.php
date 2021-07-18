@@ -51,6 +51,7 @@ class controllerEmitirComprobantePago{
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         
 
+        // true si es factura
         if($button == true){
             include_once("formFacturaGenerada.php");
             session_start();
@@ -75,7 +76,8 @@ class controllerEmitirComprobantePago{
     
             $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma,$tiposServicio);
             
-        }else{
+        }else{ 
+            // false si es boleta
             include_once("formBoletaGenerada.php");
             session_start();
             $objBoletaGenerada = new formBoletaGenerada($_SESSION["informacion"]);
