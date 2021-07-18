@@ -39,10 +39,12 @@ if(table_productos_lista){
             form.append("idproducto", idproducto)
             form.append("cantidad", value)
             form.append("btnCounterProducto", "")
-            await fetch("getComprobantePago.php",{
+            const response = await await fetch("getComprobantePago.php",{
                 method: 'POST',
                 body: form
             });
+            const data = await response.json();
+            console.log("🚀 ~ file: comprobante.js ~ line 47 ~ table_productos_lista.addEventListener ~ data", data);
             [ ...document.querySelectorAll('.input-result') ].forEach(element => {
                 let precioUnitario = parseFloat(element.parentNode.previousElementSibling.previousElementSibling.firstElementChild.value)
                 let cantidad = parseFloat(element.parentNode.previousElementSibling.firstElementChild.value).toFixed(2)

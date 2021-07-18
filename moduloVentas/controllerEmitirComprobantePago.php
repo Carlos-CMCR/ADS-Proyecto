@@ -53,7 +53,7 @@ class controllerEmitirComprobantePago{
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         session_start();
-        $_SESSION["lista"] = ["productos"=>[],"servicios"=>[]];
+        $_SESSION["lista"] = ["productos"=>[],"servicios"=>[],"precioTotal"=>0.0];
         $productos = [];
         $servicios = [];
 
@@ -70,6 +70,7 @@ class controllerEmitirComprobantePago{
         }
         $_SESSION["lista"]["productos"] = $productos;
         $_SESSION["lista"]["servicios"] = $servicios;
+        $_SESSION["lista"]["precioTotal"] = $datosProformaProductos[0]["precioTotal"];
 
         // true si es factura
         if($button == true){
@@ -186,6 +187,36 @@ class controllerEmitirComprobantePago{
         $objProducto = new Producto;
         $datosPreciosUnitarios = $objProducto ->obtenerPrecioUnitaciosProductos($idDeProductos);
         return $datosPreciosUnitarios;
+    }
+    public function obtenerPrecioUnitaciosServicios($idDeServicios){
+        include_once("../model/TipoDeServicio.php");
+        $objTipoDeServicio = new TipoDeServicio;
+        $datosPreciosUnitarios = $objTipoDeServicio ->obtenerPrecioUnitaciosServicios($idDeServicios);
+        return $datosPreciosUnitarios;
+    }
+    public function obtenerTotal($objPreciosUnitariosProductos = [], $objPreciosUnitariosServicios = []){
+        $total = (double) 0;
+        if(count($objPreciosUnitariosProductos)){
+            foreach ($objPreciosUnitariosProductos as $objProducto){
+                $total+= (double)$objProducto["precioUnitario"]*$_SESSION["lista"]["productos"][$objProducto["id_producto"]];
+            }
+        }
+
+        if(count($objPreciosUnitariosServicios) == 2){
+            for ($i=0; $i < count($objPreciosUnitariosServicios); $i++) { 
+                # code...
+                if($objPreciosUnitariosServicios[$i]["id_tipo"] === $_SESSION["lista"]["servicios"][0] or $objPreciosUnitariosServicios[$i]["id_tipo"] === $_SESSION["lista"]["servicios"][1]){
+                    $total+= (double)$$objPreciosUnitariosServicios[$i]["precioDeServicio"];
+                }
+            }
+        }
+        if(count($objPreciosUnitariosServicios) == 1){
+            if($objPreciosUnitariosServicios[0]["id_tipo"] === $_SESSION["lista"]["servicios"][0]){
+                $total+= (double)$objPreciosUnitariosServicios[$i]["precioDeServicio"];
+            }
+        }
+        $_SESSION["lista"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
+        return $_SESSION["lista"];
     }
 }
     

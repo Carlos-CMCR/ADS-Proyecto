@@ -71,18 +71,17 @@ elseif(isset($_POST["btnSeleccionar"])){
     $id_producto = ($_POST['idproducto']);
     $cantidad = ($_POST['cantidad']);
     session_start();
-    // header('Content-type: application/json; charset=utf-8');
     $_SESSION["lista"]["productos"][$id_producto] = (int)$cantidad;
-    // echo json_encode($_SESSION["lista"]["productos"]);
-    // include_once("./controllerEmitirComprobantePago.php");
-    // $controlComprobante = new controllerEmitirComprobantePago;
-    // $objPreciosUnitarios = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
-    
-    // $arrayCalculos = 
-
-    // echo json_encode($objPreciosUnitarios);
-
-
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $objPreciosUnitariosProductos = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
+    $objPreciosUnitariosServicios = [];
+    if(count($_SESSION["lista"]["servicios"])){
+        $objPRecioUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
+    }
+    $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($objTotal);
 }else if(isset($_POST["btnSeleccionarProducto"])){
     $id_producto = ($_POST['idProducto']);
     $id_proforma = ($_POST['idProforma']);
