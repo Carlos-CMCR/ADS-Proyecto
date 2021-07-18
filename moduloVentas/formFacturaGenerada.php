@@ -42,7 +42,7 @@ class formFacturaGenerada extends formulario{
                         <tr>
                         <td><button type="button" >X</button> </td>      
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
-                        <td><input type="number" value="<?php echo $dato['cantidad'] ?>" ></td>
+                        <td><input type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
                         <td><input type="string" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
                         
                         </tr>

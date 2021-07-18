@@ -1,15 +1,16 @@
 <?php 
   include_once("../shared/formulario.php");
-    class formBoletaGenerada extends formulario{
-      public function __construct($informacion){
-          $this->path = "..";
-          $this->encabezadoShow("Formulario Boleta Generada",$informacion);
-      }
+class formBoletaGenerada extends formulario{
+    public function __construct($informacion){
+        $this->path = "..";
+        $this->encabezadoShow("Formulario Boleta Generada",$informacion);
+    }
 
-      public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
+    public function formBoletaGeneradaShow($id_proforma, $datosProforma=[],$tiposServicio = []){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
+        
         <main class='wrapper-actions'>
             <div style="width:100% ">
                 <h2 align="center">Información de Boleta </h2>
@@ -32,14 +33,16 @@
                 </table>
             </div>
             <div style="width:100%;">
-                <table style="width:100%;">
+                <table style="width:100%;" id="table_productos_proforma" data-idproforma="<?php echo $id_proforma ?>">
                     <?php 
                     foreach ($datosProformaProductos as $dato){
                         ?> 
                         <tr>
-                        <td><button type="button" >X</button> </td>      
+                        <td><button type="button" data-idproducto="<?php echo $dato['id_producto'] ?>" >X</button> </td>      
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
-                        <td><input type="number" min="1" max="10" value="<?php echo $dato['cantidad'] ?>" ></td>
+
+                        <td><input type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
+
                         <td><input type="string" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
                         
                         </tr>
@@ -95,7 +98,6 @@
                         <th>Precio Total: </th>
                         <td><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
                     </tr>
-                       
                 </table>
             </div>
             <div class="lista-form">
@@ -107,8 +109,20 @@
             </div>
             
         </main>
+        <div class="modal-bg">
+            <div class="modal">
+                <img src="<?php echo $this->path?>/img/alert.png" alt="" class="modal__img">
+                <h2 class="modal__title">Quitar Producto</h2>
+                <p class="modal__information">¿Estas seguro que desea quitar el producto <strong><span id="modal-nombre_producto"></span></strong> de la lista? </p>
+                <div class="modal-actions">
+                    <button class="modal__action modal__action--cancelar" type="button">Cancelar</button>
+                    <button class="modal__action modal__action--continuar" type="button">Continuar</button>
+                </div>
+            </div>
+        </div>
+        <script src="<?php echo $this->path ?>/public/comprobante.js"></script>
         <?php 
         $this->piePaginaShow();
-      }
     }
+}
 ?>

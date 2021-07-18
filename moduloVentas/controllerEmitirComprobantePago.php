@@ -133,7 +133,7 @@ class controllerEmitirComprobantePago{
 
     public function agregarProducto($id_producto, $id_proforma,$productos){
         $objProducto = new Producto;
-        $objProducto -> agregarProducto($id_producto);
+        $objProducto -> agregarProducto($id_producto, $id_proforma);
         $datosProducto = $objProducto -> obtenerProducto($id_producto, $id_proforma);
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
