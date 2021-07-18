@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-07-2021 a las 08:26:24
+-- Tiempo de generación: 18-07-2021 a las 05:30:03
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -93,14 +93,25 @@ CREATE TABLE `comprobantedepago` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detallecomprobantes`
+-- Estructura de tabla para la tabla `detallecomprobanteproducto`
 --
 
-CREATE TABLE `detallecomprobantes` (
+CREATE TABLE `detallecomprobanteproducto` (
   `id_detallecomprobantes` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL,
-  `id_comprobante` int(10) NOT NULL,
-  `id_servicio` int(10) NOT NULL
+  `id_comprobante` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detallecomprobanteservicio`
+--
+
+CREATE TABLE `detallecomprobanteservicio` (
+  `id_detallecomprobanteservicio` int(11) NOT NULL,
+  `id_servicio` int(11) NOT NULL,
+  `id_comprobante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -149,20 +160,20 @@ INSERT INTO `detalleprivilegio` (`id_detalleprivilegio`, `id_rol`, `id_privilegi
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalleproformas`
+-- Estructura de tabla para la tabla `detalleproformaproducto`
 --
 
-CREATE TABLE `detalleproformas` (
-  `id_detalleProforma` int(10) NOT NULL,
+CREATE TABLE `detalleproformaproducto` (
+  `id_detalleProformaProducto` int(10) NOT NULL,
   `id_producto` int(10) NOT NULL,
   `id_proforma` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `detalleproformas`
+-- Volcado de datos para la tabla `detalleproformaproducto`
 --
 
-INSERT INTO `detalleproformas` (`id_detalleProforma`, `id_producto`, `id_proforma`) VALUES
+INSERT INTO `detalleproformaproducto` (`id_detalleProformaProducto`, `id_producto`, `id_proforma`) VALUES
 (1, 1, 4),
 (2, 2, 4),
 (3, 3, 4),
@@ -555,13 +566,18 @@ ALTER TABLE `comprobantedepago`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `detallecomprobantes`
+-- Indices de la tabla `detallecomprobanteproducto`
 --
-ALTER TABLE `detallecomprobantes`
+ALTER TABLE `detallecomprobanteproducto`
   ADD PRIMARY KEY (`id_detallecomprobantes`),
-  ADD KEY `id_servicio` (`id_servicio`),
   ADD KEY `id_comprobante` (`id_comprobante`),
   ADD KEY `id_producto` (`id_producto`);
+
+--
+-- Indices de la tabla `detallecomprobanteservicio`
+--
+ALTER TABLE `detallecomprobanteservicio`
+  ADD PRIMARY KEY (`id_detallecomprobanteservicio`);
 
 --
 -- Indices de la tabla `detalleprivilegio`
@@ -572,10 +588,10 @@ ALTER TABLE `detalleprivilegio`
   ADD KEY `id_privilegio` (`id_privilegio`);
 
 --
--- Indices de la tabla `detalleproformas`
+-- Indices de la tabla `detalleproformaproducto`
 --
-ALTER TABLE `detalleproformas`
-  ADD PRIMARY KEY (`id_detalleProforma`),
+ALTER TABLE `detalleproformaproducto`
+  ADD PRIMARY KEY (`id_detalleProformaProducto`),
   ADD KEY `id_proforma` (`id_proforma`),
   ADD KEY `id_producto` (`id_producto`);
 
@@ -712,10 +728,16 @@ ALTER TABLE `comprobantedepago`
   MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `detallecomprobantes`
+-- AUTO_INCREMENT de la tabla `detallecomprobanteproducto`
 --
-ALTER TABLE `detallecomprobantes`
+ALTER TABLE `detallecomprobanteproducto`
   MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detallecomprobanteservicio`
+--
+ALTER TABLE `detallecomprobanteservicio`
+  MODIFY `id_detallecomprobanteservicio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleprivilegio`
@@ -724,10 +746,10 @@ ALTER TABLE `detalleprivilegio`
   MODIFY `id_detalleprivilegio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `detalleproformas`
+-- AUTO_INCREMENT de la tabla `detalleproformaproducto`
 --
-ALTER TABLE `detalleproformas`
-  MODIFY `id_detalleProforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `detalleproformaproducto`
+  MODIFY `id_detalleProformaProducto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleproformaservicio`
@@ -839,12 +861,11 @@ ALTER TABLE `comprobantedepago`
   ADD CONSTRAINT `comprobantedepago_ibfk_4` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `detallecomprobantes`
+-- Filtros para la tabla `detallecomprobanteproducto`
 --
-ALTER TABLE `detallecomprobantes`
-  ADD CONSTRAINT `detallecomprobantes_ibfk_1` FOREIGN KEY (`id_servicio`) REFERENCES `servicios` (`id_servicio`),
-  ADD CONSTRAINT `detallecomprobantes_ibfk_2` FOREIGN KEY (`id_comprobante`) REFERENCES `comprobantedepago` (`id_comprobante`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detallecomprobantes_ibfk_3` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE;
+ALTER TABLE `detallecomprobanteproducto`
+  ADD CONSTRAINT `detallecomprobanteproducto_ibfk_2` FOREIGN KEY (`id_comprobante`) REFERENCES `comprobantedepago` (`id_comprobante`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detallecomprobanteproducto_ibfk_3` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `detalleprivilegio`
@@ -854,11 +875,11 @@ ALTER TABLE `detalleprivilegio`
   ADD CONSTRAINT `detalleprivilegio_ibfk_2` FOREIGN KEY (`id_privilegio`) REFERENCES `privilegios` (`id_privilegio`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `detalleproformas`
+-- Filtros para la tabla `detalleproformaproducto`
 --
-ALTER TABLE `detalleproformas`
-  ADD CONSTRAINT `detalleproformas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalleproformas_ibfk_3` FOREIGN KEY (`id_proforma`) REFERENCES `proformas` (`id_proforma`) ON UPDATE CASCADE;
+ALTER TABLE `detalleproformaproducto`
+  ADD CONSTRAINT `detalleproformaproducto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detalleproformaproducto_ibfk_3` FOREIGN KEY (`id_proforma`) REFERENCES `proformas` (`id_proforma`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `incidencias`
