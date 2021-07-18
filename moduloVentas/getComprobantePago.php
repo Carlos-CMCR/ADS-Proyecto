@@ -47,6 +47,7 @@ elseif(isset($_POST["btnSeleccionar"])){
         <input name='btnAgregarProducto'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
     </form>");
     }
+}else if(isset($_POST["btnQuitarProducto"])){
     
 }else if(isset($_POST["btnSeleccionarProducto"])){
     $id_producto = ($_POST['idProducto']);

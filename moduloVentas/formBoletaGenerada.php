@@ -122,5 +122,5 @@ class formBoletaGenerada extends formulario{
         <?php 
         $this->piePaginaShow();
     }
-    }
+}
 ?>
