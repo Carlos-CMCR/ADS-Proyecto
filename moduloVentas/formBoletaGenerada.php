@@ -115,7 +115,9 @@ class formBoletaGenerada extends formulario{
             </div>
             <div class="lista-form">
                 <form action="getComprobantePago.php" method= "post">
-                    <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
+                    <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
+                    <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
+                    <input class="volver-form__button" name="btnSeleccionar" type="submit" value="Volver" >
                     <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar">
                     
                 <form>
@@ -135,7 +137,6 @@ class formBoletaGenerada extends formulario{
         </div>
         <script src="<?php echo $this->path ?>/public/comprobante.js"></script>
         <?php 
-        $idDeProductos = [1,2,3,4];
         $this->piePaginaShow();
     }
 }
