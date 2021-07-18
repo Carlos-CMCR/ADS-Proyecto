@@ -11,12 +11,12 @@ class formTipoComprobantePago extends formulario{
         
         ?>
         
-        <form action="getComprobantePago.php" method="post">
+        <form action="getComprobantePago.php" method="post" class="tipos-conprobantes">
             <input type="hidden" value="<?php echo $id_proforma;?>" name="idProforma">
             <input type="hidden" value="<?php echo $id_cliente;?>" name="idCliente">
-            <input  type="submit" name="btnFactura"  value="Factura">
-            <input type="submit" name="btnBoleta"  value="Boleta">
-            <input  type="submit" name="btnEmitirComprobante" value="Volver" >
+            <button type="submit" name="btnFactura"><i class="fas fa-file-invoice-dollar"></i> Factura</button>
+            <button type="submit" name="btnBoleta"><i class="fas fa-file-alt"></i> Boleta</button>
+            <button type="submit" name="btnEmitirComprobante"><i class="fas fa-backward"></i> Volver</button>
         </form>
 
         <?php 

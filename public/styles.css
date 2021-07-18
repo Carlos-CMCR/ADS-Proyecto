@@ -590,3 +590,34 @@ main{
 .modal__action--cancelar{
     background-color: rgb(221, 51, 51);
 }
+
+.tipos-conprobantes{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.tipos-conprobantes button{
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: .625em 1.1em;
+    font-weight: 500;
+    font-size: 1.125em;
+}
+
+.tipos-conprobantes button:first-of-type{
+    background-color: #EFE2CF;
+    color: #010101;
+}
+.tipos-conprobantes button:nth-of-type(2){
+    background-color: #88C1EA;
+    color: #010101;
+    
+}
+.tipos-conprobantes button:last-of-type{
+    background-color: rgb(221, 51, 51);
+}
+

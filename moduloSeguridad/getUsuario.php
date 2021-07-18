@@ -17,6 +17,7 @@ if(isset($_POST["btnIngresar"])){
 
 }else if(isset($_POST["btnInicio"])){
     session_start();
+    unset($_SESSION['lista']);
     $username = $_SESSION['username'];
     include_once("../model/UsuarioPrivilegio.php");
     $objprivilegio = new UsuarioPrivilegio;
@@ -28,7 +29,6 @@ if(isset($_POST["btnIngresar"])){
 }else if(isset($_POST["btnSalir"])){
     session_unset();
     session_destroy();
-    session_unset();
     header("Location:../index.php");
 }else{
     include_once("../shared/formMensajeSistema.php");

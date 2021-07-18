@@ -48,6 +48,11 @@ class formulario {
                             <div class="wrapper-dropdown">
                                 <ul class="dropdown-menu" style="padding:0;width: 100%;">
                                     <form class="dropdown-menu__item" method="post" action="<?php echo $this->path?>/moduloSeguridad/getUsuario.php"> 
+                                        <button style="border:none;width:100%;padding: 1em;background:white;cursor:pointer" name="btnInicio"><i class="fas fa-home"></i> Ir al Principal</button>
+                                    </form>
+                                </ul>
+                                <ul class="dropdown-menu" style="padding:0;width: 100%;">
+                                    <form class="dropdown-menu__item" method="post" action="<?php echo $this->path?>/moduloSeguridad/getUsuario.php"> 
                                         <button style="border:none;width:100%;padding: 1em;background:white;cursor:pointer" name="btnSalir"><i class="fas fa-door-open" ></i> Cerrar Sesión</button>
                                     </form>
                                 </ul>
