@@ -179,7 +179,7 @@ class controllerEmitirComprobantePago{
         }else{
             // BOLETAs
             $total = (double) 0;
-
+            echo 
             // asasasd
             $datosLista = ["datosProformaProductos"=>[],"datosProformaServicios"=>[]];
             $index = 0;

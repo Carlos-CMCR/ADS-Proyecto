@@ -27,8 +27,8 @@ if(table_productos_lista){
                     //     method: 'POST',
                     //     body: form
                     // })
-                    const data = await response.json()
-                    console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
+                    // const data = await response.json()
+                    // console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
                 }
             })
         }
