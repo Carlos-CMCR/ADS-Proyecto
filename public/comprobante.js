@@ -64,7 +64,9 @@ if(table_productos_lista){
 if(container_servicios){
     container_servicios.addEventListener("change", async (event) => {
         const target = event.target
-        console.log(target)
+        console.log("🚀 ~ file: comprobante.js ~ line 67 ~ container_servicios.addEventListener ~ target", target)
+        console.log(target.dataset.precioservicio)
+        console.log(target.dataset.idservicio)
 
     })
 }
