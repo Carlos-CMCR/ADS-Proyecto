@@ -6,7 +6,7 @@
           $this->encabezadoShow("Formulario Agregar Producto",$informacion);
       }
 
-      public function formAgregarProductoShow($datosProducto = [], $datosProductos = [],$id_proforma,$id_cliente,$nomProd = ''){
+      public function formAgregarProductoShow($button,$datosProducto = [], $datosProductos = [],$id_proforma,$id_cliente,$nomProd = ''){
         echo "<main class='wrapper-actions'>";
         ?>
         <div>
@@ -96,7 +96,14 @@
             <form action="getComprobantePago.php" method= "post">
                 <input type="hidden" value="<?php echo $id_proforma;?>" name="idProforma">
                 <input type="hidden" value="<?php echo $id_cliente;?>" name="idCliente">
-                <input class="volver-form__button" name="btnRegresarFactura" type="submit" value="Volver" >
+                <?php
+                if($button == "factura"){?>
+                    <input class="volver-form__button" name="btnRegresarFactura" type="submit" value="Volver" >
+                <?php }else{?>
+                    <input class="volver-form__button" name="btnRegresarBoleta" type="submit" value="Volver" >
+                <?php }
+                ?>
+                
                 
             <form>
         </div>

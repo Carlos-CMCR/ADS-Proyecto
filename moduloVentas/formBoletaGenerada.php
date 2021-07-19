@@ -65,6 +65,7 @@ class formBoletaGenerada extends formulario{
                 <form action="getComprobantePago.php" method= "post">
                     <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
+                    <input type="hidden" value="boleta" name="button" >
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>

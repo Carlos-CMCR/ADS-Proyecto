@@ -79,6 +79,7 @@ class controllerEmitirComprobantePago{
             $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma,$id_cliente,$datosProforma,$tiposServicio);
         }else{
             // false si es boleta
+            $button == false;
             include_once("formBoletaGenerada.php");
             $objBoletaGenerada = new formBoletaGenerada($_SESSION["informacion"]);
             $objBoletaGenerada -> formBoletaGeneradaShow($id_proforma,$id_cliente,$datosProforma,$tiposServicio);
@@ -86,12 +87,12 @@ class controllerEmitirComprobantePago{
         
     }
 
-    public function agregarProductos($id_proforma, $id_cliente){
+    public function agregarProductos($button, $id_proforma, $id_cliente){
         include_once("../model/Producto.php");
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],[], $id_proforma,$id_cliente);
+		$objAgregarProducto -> formAgregarProductoShow($button,[],[], $id_proforma,$id_cliente);
     }
 
     public function buscarProducto($productos, $id_proforma, $id_cliente){
