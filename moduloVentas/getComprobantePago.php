@@ -53,17 +53,18 @@ elseif(isset($_POST["btnSeleccionar"])){
 }else if(isset($_POST["btnAgregarProducto"])){
     $id_proforma = ($_POST['idProforma']);
     $id_cliente = ($_POST['idCliente']);
+    
     $button = ($_POST['button']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-    $controlComprobante -> agregarProductos( $button,$id_proforma, $id_cliente);
+    $controlComprobante -> agregarProductos( $button,$id_proforma, $id_cliente, "");
 }else if(isset($_POST["btnBuscarProducto"])){
     $productos = ($_POST['producto']);
     $id_proforma = ($_POST['idProforma']);
     $id_cliente = ($_POST['idCliente']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-    if($productos >= 1){
+    if(strlen(trim($productos)) >= 1){
         $controlComprobante -> buscarProducto($productos, $id_proforma, $id_cliente);
     }else{
         include_once("../shared/formMensajeSistema.php");
