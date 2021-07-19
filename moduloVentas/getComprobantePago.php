@@ -76,6 +76,26 @@ elseif(isset($_POST["btnSeleccionar"])){
 
     }
 }else if(isset($_POST["btnQuitarProducto"])){
+    $id_producto = $_POST["idproducto"];
+    session_start();
+    if(count($_SESSION["lista"]["productos"]) > 1){
+        unset($_SESSION["lista"]["productos"][$id_producto]);
+    }else if(count($_SESSION["lista"]["productos"]) == 1){
+        $_SESSION["lista"]["productos"] = [];
+    }
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $objPreciosUnitariosProductos = [];
+    if(count($_SESSION["lista"]["productos"])){
+        $objPreciosUnitariosProductos = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
+    }
+    $objPreciosUnitariosServicios = [];
+    if(count($_SESSION["lista"]["servicios"])){
+        $objPreciosUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
+    }
+    $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($objTotal);
 
 }else if(isset($_POST["btnAgregarServicio"])){
     $id_servicio = $_POST["idservicio"];

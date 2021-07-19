@@ -23,12 +23,20 @@ if(table_productos_lista){
                     const form = new FormData()
                     form.append("idproducto", idproducto)
                     form.append("btnQuitarProducto","")
-                    // const response = await fetch('../moduloVentas/getComprobantePago.php',{
-                    //     method: 'POST',
-                    //     body: form
-                    // })
-                    // const data = await response.json()
-                    // console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
+                    const response = await fetch('../moduloVentas/getComprobantePago.php',{
+                        method: 'POST',
+                        body: form
+                    })
+                    const data = await response.json()
+                    console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
+                    document.getElementById("precioTotal").innerText = data["precioTotal"]
+                    let igv = parseFloat(data["precioTotal"]).toFixed(2) * parseFloat(0.18).toFixed(2)
+                    let subtotal = parseFloat(data["precioTotal"]).toFixed(2) - igv
+            
+                    igv = parseFloat(igv).toFixed(2)
+                    subtotal = parseFloat(subtotal).toFixed(2)
+                    document.getElementById("igv").innerText = igv
+                    document.getElementById("subtotal").innerText = subtotal
                 }
             })
         }
