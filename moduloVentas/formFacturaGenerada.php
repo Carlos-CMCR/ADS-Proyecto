@@ -55,8 +55,7 @@ class formFacturaGenerada extends formulario{
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
                         <td><input class="input-counter" data-idproducto="<?php echo $dato['id_producto'] ?>" type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
                         <td align="center"><input type="text" value="<?php echo $dato['precioProduct']?>" disabled></td>
-                        <td><input class="input-result" type="text" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
-                        
+                        <td><input class="input-result" type="text" value="<?php echo number_format( floatval($dato['precioProduct']*$dato['cantidad']), 2, '.', '') ?>" disabled></td>
                         </tr>
                         <?php 
                     }
@@ -71,13 +70,15 @@ class formFacturaGenerada extends formulario{
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>
-            <div>
+            <div id="container-servicios">
                 <?php
                     foreach ($tiposServicio as $tipo) {
                         ?>
                         <div>
                             <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
                             <input type="checkbox" name="" id="<?php echo $tipo['nombre']?>"
+                            data-precioServicio = "<?php echo $tipo['precioDeServicio'] ?>"
+                            data-idServicio = "<?php echo $tipo['id_tipo'] ?>"
                             <?php
                             if(count($datosProformaServicios)){
                                 if(count($datosProformaServicios) == 1){
@@ -102,15 +103,15 @@ class formFacturaGenerada extends formulario{
                 <table class="lista-form">
                     <tr>
                         <th>Subtotal: </th>
-                        <td><?php echo $datosProformaProductos[0]['subtotal']  ?></td>            
+                        <td id="subtotal"><?php echo $datosProformaProductos[0]['subtotal']  ?></td>            
                     </tr>
                     <tr>
                         <th>IGV: </th>
-                        <td><?php echo $datosProformaProductos[0]['igv'] ?></td>                
+                        <td id="igv"><?php echo $datosProformaProductos[0]['igv'] ?></td>                
                     </tr>
                     <tr>
                         <th>Precio Total: </th>
-                        <td><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
+                        <td id="precioTotal"><?php echo $datosProformaProductos[0]['precioTotal'] ?></td>                
                     </tr>
                        
                 </table>
