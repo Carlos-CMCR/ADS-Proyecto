@@ -171,7 +171,18 @@ elseif(isset($_POST["btnSeleccionar"])){
     $cantidad = ($_POST['cantidad']);
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-    $controlComprobante -> agregarProducto( $cantidad, $id_producto, $id_proforma, $id_cliente,$productos);
+    if($cantidad >= 1){
+        $controlComprobante -> agregarProducto( $cantidad, $id_producto, $id_proforma, $id_cliente,$productos);
+    }else{
+        include_once("../shared/formMensajeSistema.php");
+        $nuevoMensaje = new formMensajeSistema;
+        $nuevoMensaje -> formMensajeSistemaShow("¡INGRESE CANTIDAD VÁLIDO!","<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='idProforma' value='$id_proforma' >
+        <input name='btnAgregarProducto'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+    </form>");
+
+    }
+    
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
