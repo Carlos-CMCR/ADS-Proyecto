@@ -23,12 +23,20 @@ if(table_productos_lista){
                     const form = new FormData()
                     form.append("idproducto", idproducto)
                     form.append("btnQuitarProducto","")
-                    // const response = await fetch('../moduloVentas/getComprobantePago.php',{
-                    //     method: 'POST',
-                    //     body: form
-                    // })
-                    // const data = await response.json()
-                    // console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
+                    const response = await fetch('../moduloVentas/getComprobantePago.php',{
+                        method: 'POST',
+                        body: form
+                    })
+                    const data = await response.json()
+                    console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
+                    document.getElementById("precioTotal").innerText = data["precioTotal"]
+                    let igv = parseFloat(data["precioTotal"]).toFixed(2) * parseFloat(0.18).toFixed(2)
+                    let subtotal = parseFloat(data["precioTotal"]).toFixed(2) - igv
+            
+                    igv = parseFloat(igv).toFixed(2)
+                    subtotal = parseFloat(subtotal).toFixed(2)
+                    document.getElementById("igv").innerText = igv
+                    document.getElementById("subtotal").innerText = subtotal
                 }
             })
         }
@@ -44,7 +52,6 @@ if(table_productos_lista){
                 body: form
             });
             const data = await response.json();
-            console.log("🚀 ~ file: comprobante.js ~ line 47 ~ table_productos_lista.addEventListener ~ data", data);
             [ ...document.querySelectorAll('.input-result') ].forEach(element => {
                 let precioUnitario = parseFloat(element.parentNode.previousElementSibling.previousElementSibling.firstElementChild.value)
                 let cantidad = parseFloat(element.parentNode.previousElementSibling.firstElementChild.value).toFixed(2)
@@ -64,9 +71,22 @@ if(table_productos_lista){
 if(container_servicios){
     container_servicios.addEventListener("change", async (event) => {
         const target = event.target
-        console.log("🚀 ~ file: comprobante.js ~ line 67 ~ container_servicios.addEventListener ~ target", target)
-        console.log(target.dataset.precioservicio)
-        console.log(target.dataset.idservicio)
+        let idservicio = target.dataset.idservicio
+        const form = new FormData()
+        form.append("idservicio", idservicio)
+        form.append(target.checked ? "btnAgregarServicio":"btnQuitarServicio", "")
+        const response = await await fetch("getComprobantePago.php",{
+            method: 'POST',
+            body: form
+        });
+        const data = await response.json();
+        document.getElementById("precioTotal").innerText = data["precioTotal"]
+        let igv = parseFloat(data["precioTotal"]).toFixed(2) * parseFloat(0.18).toFixed(2)
+        let subtotal = parseFloat(data["precioTotal"]).toFixed(2) - igv
 
+        igv = parseFloat(igv).toFixed(2)
+        subtotal = parseFloat(subtotal).toFixed(2)
+        document.getElementById("igv").innerText = igv
+        document.getElementById("subtotal").innerText = subtotal
     })
 }
