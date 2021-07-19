@@ -98,26 +98,31 @@ const ruc = document.getElementById("ruc")
 if(validarRuc && ruc){
     validarRuc.addEventListener("click", async (event) => {
         event.preventDefault();
-        const response = await fetch("https://api.migo.pe/api/v1/ruc",{
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                "ruc": ruc.value,
-                "token": "rSdUJkM7rjvGAuzu3T2LnBrBAzOAnJ6miuvbG1ZwEpwJ7yM9OZgOT20bbNHh"
-            }),
-        })
+        try{
+            const response = await fetch("https://api.migo.pe/api/v1/ruc",{
+                method: 'POST',
+                body: JSON.stringify({
+                    "token": "rSdUJkM7rjvGAuzu3T2LnBrBAzOAnJ6miuvbG1ZwEpwJ7yM9OZgOT20bbNHh",
+                    "ruc": ruc.value+"",
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
 
-        const data = await response.json()
-        if(data["success"]){
-            console.log("el ruc es correcto")
-            console.log(data)
-        }else{
-
-            console.log(data)
+            const data = await response.json()
+            console.log("🚀 ~ file: comprobante.js ~ line 114 ~ validarRuc.addEventListener ~ data", data)
+            if(data["success"]){
+                document.getElementById("mensaje_ruc").innerText = "Success : Ruc valido";
+                document.getElementById("mensaje_ruc").classList.remove("mensaje_ruc");
+                document.getElementById("mensaje_ruc").classList.add("ruc_correcto");
+            }else{
+                document.getElementById("mensaje_ruc").innerText = "Error : Ruc invalido";
+                document.getElementById("mensaje_ruc").classList.remove("ruc_correcto");
+                document.getElementById("mensaje_ruc").classList.add("mensaje_ruc");
+            }
+        }catch(ex){
         }
-        
     })
 }
