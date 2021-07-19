@@ -109,7 +109,7 @@ elseif(isset($_POST["btnSeleccionar"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> agregarProducto( $cantidad, $id_producto, $id_proforma, $id_cliente,$productos);
-} else{
+}else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
     $nuevoMensaje -> formMensajeSistemaShow("¡ACCESO NO PERMITIDO!","<a href='../index.php' class='form-message__link'>Volver</a>");
