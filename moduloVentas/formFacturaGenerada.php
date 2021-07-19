@@ -6,7 +6,7 @@ class formFacturaGenerada extends formulario{
         $this->encabezadoShow("Formulario Factura Generada",$informacion);
     }
 
-    public function formFacturaGeneradaShow($datosProforma=[],$tiposServicio = []){
+    public function formFacturaGeneradaShow($id_proforma,$id_cliente,$datosProforma=[],$tiposServicio = []){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
@@ -15,7 +15,7 @@ class formFacturaGenerada extends formulario{
                 <h2 align="center">Información de Factura </h2>
             </div>
             <div>
-                <table class="lista-form">
+                <table class="lista-form" >
                     <tr>
                         <th>Nombre:</th>
                         <td><?php echo $datosProformaProductos[0]['nom_client']." ".$datosProformaProductos[0]['apellido_paterno']." ".$datosProformaProductos[0]['apellido_materno']  ?></td>            
@@ -30,20 +30,32 @@ class formFacturaGenerada extends formulario{
                     </tr>
                     <tr>
                         <th>RUC:</th>
-                        <td><input type="text" max="11" min="11"></td>               
+                        <td><input type="text" max="11" min="11"></td>
+                        <td><button type="button" >Validar</button></td>               
                     </tr>    
                 </table>
             </div>
             <div style="width:100%;">
-                <table style="width:100%;">
+                <table style="width:100%;" id="table_productos_lista">
+                    <tr>
+                        <th>Acción</th>
+                        <th>Código</th>
+                        <th>Nombre del Producto</th>
+                        <th>Unidades</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
+
+                    </tr>
                     <?php 
                     foreach ($datosProformaProductos as $dato){
                         ?> 
                         <tr>
-                        <td><button type="button" >X</button> </td>      
+                        <td align="center"><button type="button" data-idproducto="<?php echo $dato['id_producto'] ?>">X</button></td>
+                        <td align="center"><p><?php echo $dato['codigo_producto'] ?></p></td>      
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
-                        <td><input type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
-                        <td><input type="string" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
+                        <td><input class="input-counter" data-idproducto="<?php echo $dato['id_producto'] ?>" type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
+                        <td align="center"><input type="text" value="<?php echo $dato['precioProduct']?>" disabled></td>
+                        <td><input class="input-result" type="text" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
                         
                         </tr>
                         <?php 
@@ -53,6 +65,8 @@ class formFacturaGenerada extends formulario{
             </div>
             <div style="width:100%;">
                 <form action="getComprobantePago.php" method= "post">
+                    <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
+                    <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input type="submit" name="btnAgregarProducto" value="Agregar">
                 </form>
             </div>
@@ -102,6 +116,8 @@ class formFacturaGenerada extends formulario{
             </div>
             <div class="lista-form">
                 <form action="getComprobantePago.php" method= "post">
+                    <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
+                    <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
                     <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar">
                     
@@ -109,6 +125,18 @@ class formFacturaGenerada extends formulario{
             </div>
             
         </main>
+        <div class="modal-bg">
+            <div class="modal">
+                <img src="<?php echo $this->path?>/img/alert.png" alt="" class="modal__img">
+                <h2 class="modal__title">Quitar Producto</h2>
+                <p class="modal__information">¿Estas seguro que desea quitar el producto <strong><span id="modal-nombre_producto"></span></strong> de la lista? </p>
+                <div class="modal-actions">
+                    <button class="modal__action modal__action--cancelar" type="button">Cancelar</button>
+                    <button class="modal__action modal__action--continuar" type="button">Continuar</button>
+                </div>
+            </div>
+        </div>
+        <script src="<?php echo $this->path ?>/public/comprobante.js"></script>
         <?php 
         $this->piePaginaShow();
     }

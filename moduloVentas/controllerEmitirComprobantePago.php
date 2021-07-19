@@ -76,7 +76,7 @@ class controllerEmitirComprobantePago{
         if($button == true){
             include_once("formFacturaGenerada.php");
             $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
-            $objFacturaGenerada -> formFacturaGeneradaShow($datosProforma,$tiposServicio);
+            $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma,$id_cliente,$datosProforma,$tiposServicio);
         }else{
             // false si es boleta
             include_once("formBoletaGenerada.php");
@@ -140,10 +140,43 @@ class controllerEmitirComprobantePago{
         
         // true factura
         if($button){
+            $total = (double) 0;
+
+            // asasasd
+            $datosLista = ["datosProformaProductos"=>[],"datosProformaServicios"=>[]];
+            $index = 0;
+            foreach ($tiposServicio as $tipo){
+                if(count($_SESSION["lista"]["servicios"])==2){
+                    if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"] or $_SESSION["lista"]["servicios"][1]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                        $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
+                        $index+=1;
+                    }
+                }
+                if(count($_SESSION["lista"]["servicios"])==1){
+                    if($_SESSION["lista"]["servicios"][0]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                        $datosLista["datosProformaServicios"][$index]["id_tiposervicio"] = $tipo["id_tipo"]; 
+                        $index+=1;
+                    }
+                }
+            }
+            $productos = $objProducto->listarProductosLista($_SESSION["lista"]["productos"],$id_cliente);
+            
+            for ($i=0; $i < count($productos); $i++) { 
+                $productos[$i]["cantidad"] = $_SESSION["lista"]["productos"][$productos[$i]["id_producto"]];
+                $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
+                $productos[$i]["precioTotal"] = $total;
+                $productos[$i]["igv"] = (double)$total * 0.18;
+                $productos[$i]["subtotal"] = $total - $productos[$i]["igv"];
+
+            }
+            $datosLista["datosProformaProductos"] = $productos;
             include_once("formFacturaGenerada.php");
             $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
+            $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma,$id_cliente,$datosLista,$tiposServicio);
         }else{
-            // BOLETA
+            // BOLETAs
             $total = (double) 0;
 
             // asasasd
