@@ -119,7 +119,7 @@ class formBoletaGenerada extends formulario{
                     <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnSeleccionar" type="submit" value="Volver" >
-                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar">
+                    <input class="verde-form__button" type="submit"  name="btnConfirmarBoleta" value="Confirmar">
                     
                 <form>
             </div>
