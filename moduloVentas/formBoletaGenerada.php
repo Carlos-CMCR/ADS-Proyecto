@@ -52,7 +52,7 @@ class formBoletaGenerada extends formulario{
                         <td><p><?php echo $dato['nom_product'] ?></p></td>
                         <td><input class="input-counter" data-idproducto="<?php echo $dato['id_producto'] ?>" type="number" value="<?php echo $dato['cantidad'] ?>" min="1" max="<?php echo $dato['stock']?>"></td>
                         <td align="center"><input type="text" value="<?php echo $dato['precioProduct']?>" disabled></td>
-                        <td><input class="input-result" type="text" value="<?php echo $dato['precioProduct']*$dato['cantidad'] ?>" disabled></td>
+                        <td><input class="input-result" type="text" value="<?php echo number_format( floatval($dato['precioProduct']*$dato['cantidad']), 2, '.', '') ?>" disabled></td>
 
                         
                         </tr>

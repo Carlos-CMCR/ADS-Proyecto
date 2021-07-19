@@ -163,15 +163,18 @@ class controllerEmitirComprobantePago{
                 }
             }
             $productos = $objProducto->listarProductosLista($_SESSION["lista"]["productos"],$id_cliente);
-            
-            for ($i=0; $i < count($productos); $i++) { 
+            for ($i=0; $i < count($productos); $i++) {
                 $productos[$i]["cantidad"] = $_SESSION["lista"]["productos"][$productos[$i]["id_producto"]];
                 $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
-                $productos[$i]["precioTotal"] = $total;
-                $productos[$i]["igv"] = (double)$total * 0.18;
-                $productos[$i]["subtotal"] = $total - $productos[$i]["igv"];
-
+                $productos[0]["precioTotal"] = $total;
+                $productos[0]["igv"] = (double)$total * 0.18;
+                $productos[0]["subtotal"] = $total - $productos[$i]["igv"];
+                
             }
+            $productos[0]["precioTotal"] =number_format( floatval($productos[0]["precioTotal"]), 2, '.', '');
+            $productos[0]["igv"] = number_format( floatval($productos[0]["igv"]), 2, '.', '');
+            $productos[0]["subtotal"] = number_format( floatval($productos[0]["subtotal"]), 2, '.', '');
+            
             $datosLista["datosProformaProductos"] = $productos;
             include_once("formFacturaGenerada.php");
             $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
@@ -203,11 +206,13 @@ class controllerEmitirComprobantePago{
             for ($i=0; $i < count($productos); $i++) { 
                 $productos[$i]["cantidad"] = $_SESSION["lista"]["productos"][$productos[$i]["id_producto"]];
                 $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
-                $productos[$i]["precioTotal"] = $total;
-                $productos[$i]["igv"] = (double)$total * 0.18;
-                $productos[$i]["subtotal"] = $total - $productos[$i]["igv"];
-
+                $productos[0]["precioTotal"] = $total;
+                $productos[0]["igv"] = (double)$total * 0.18;
+                $productos[0]["subtotal"] = $total - $productos[0]["igv"];
             }
+            $productos[0]["precioTotal"] =number_format( floatval($productos[0]["precioTotal"]), 2, '.', '');
+            $productos[0]["igv"] = number_format( floatval($productos[0]["igv"]), 2, '.', '');
+            $productos[0]["subtotal"] = number_format( floatval($productos[0]["subtotal"]), 2, '.', '');
             $datosLista["datosProformaProductos"] = $productos;
 
             include_once("formBoletaGenerada.php");
