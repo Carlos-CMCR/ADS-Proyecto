@@ -233,23 +233,15 @@ class controllerEmitirComprobantePago{
         return $datosPreciosUnitarios;
     }
     public function obtenerTotal($objPreciosUnitariosProductos = [], $objPreciosUnitariosServicios = []){
-        $total = (double) 0;
+        $total = (float) 0;
         if(count($objPreciosUnitariosProductos)){
             foreach ($objPreciosUnitariosProductos as $objProducto){
                 $total+= (double)$objProducto["precioUnitario"]*$_SESSION["lista"]["productos"][$objProducto["id_producto"]];
             }
         }
 
-        if(count($objPreciosUnitariosServicios) == 2){
+        if(count($objPreciosUnitariosServicios)){
             for ($i=0; $i < count($objPreciosUnitariosServicios); $i++) { 
-                # code...
-                if($objPreciosUnitariosServicios[$i]["id_tipo"] === $_SESSION["lista"]["servicios"][0] or $objPreciosUnitariosServicios[$i]["id_tipo"] === $_SESSION["lista"]["servicios"][1]){
-                    $total+= (double)$$objPreciosUnitariosServicios[$i]["precioDeServicio"];
-                }
-            }
-        }
-        if(count($objPreciosUnitariosServicios) == 1){
-            if($objPreciosUnitariosServicios[0]["id_tipo"] === $_SESSION["lista"]["servicios"][0]){
                 $total+= (double)$objPreciosUnitariosServicios[$i]["precioDeServicio"];
             }
         }

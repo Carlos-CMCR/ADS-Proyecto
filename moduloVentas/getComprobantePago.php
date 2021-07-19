@@ -77,6 +77,48 @@ elseif(isset($_POST["btnSeleccionar"])){
     }
 }else if(isset($_POST["btnQuitarProducto"])){
 
+}else if(isset($_POST["btnAgregarServicio"])){
+    $id_servicio = $_POST["idservicio"];
+    session_start();
+    array_push($_SESSION["lista"]["servicios"],$id_servicio);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $objPreciosUnitariosProductos = [];
+    if(count($_SESSION["lista"]["productos"])){
+        $objPreciosUnitariosProductos = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
+    }
+    $objPreciosUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
+    $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($objTotal);
+}else if(isset($_POST["btnQuitarServicio"])){
+    $id_servicio = $_POST["idservicio"];
+    session_start();    
+    if(count($_SESSION["lista"]["servicios"])==1){
+        $_SESSION["lista"]["servicios"] = [];
+    }else if(count($_SESSION["lista"]["servicios"])==2){
+        if($_SESSION["lista"]["servicios"][0] == $id_servicio){
+            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][1]];
+        }else{
+            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][0]];
+        }
+    }else{
+        $_SESSION["lista"]["servicios"] = [];
+    }
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $objPreciosUnitariosProductos = [];
+    if(count($_SESSION["lista"]["productos"])){
+        $objPreciosUnitariosProductos = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
+    }
+    $objPreciosUnitariosServicios = [];
+    if(count($_SESSION["lista"]["servicios"])){
+        $objPreciosUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
+    }
+    $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($objTotal);
+
 }else if(isset($_POST["btnCounterProducto"])){
     $id_producto = ($_POST['idproducto']);
     $cantidad = ($_POST['cantidad']);
@@ -87,7 +129,7 @@ elseif(isset($_POST["btnSeleccionar"])){
     $objPreciosUnitariosProductos = $controlComprobante -> obtenerPrecioUnitaciosProductos($_SESSION["lista"]["productos"]);
     $objPreciosUnitariosServicios = [];
     if(count($_SESSION["lista"]["servicios"])){
-        $objPRecioUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
+        $objPreciosUnitariosServicios = $controlComprobante -> obtenerPrecioUnitaciosServicios($_SESSION["lista"]["servicios"]);
     }
     $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
     header('Content-type: application/json; charset=utf-8');
