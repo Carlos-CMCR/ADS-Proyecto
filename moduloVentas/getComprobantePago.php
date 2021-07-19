@@ -21,13 +21,6 @@ elseif(isset($_POST["btnSeleccionar"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> tipoComprobantePago($id_proforma, $id_cliente);
-}else if(isset($_POST["btnFactura"])){
-    $button = true;
-    $id_proforma = ($_POST['idProforma']);
-    $id_cliente = ($_POST['idCliente']);
-    include_once("./controllerEmitirComprobantePago.php");
-    $controlComprobante = new controllerEmitirComprobantePago;
-    $controlComprobante -> obtenerProforma($id_proforma,$id_cliente, $button);
 }else if(isset($_POST["btnBoleta"])){
     $id_proforma = ($_POST['idProforma']);
     $id_cliente = ($_POST['idCliente']);
@@ -36,6 +29,13 @@ elseif(isset($_POST["btnSeleccionar"])){
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> obtenerProforma($id_proforma,$id_cliente, $button);
 
+}else if(isset($_POST["btnFactura"])){
+    $button = true;
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> obtenerProforma($id_proforma,$id_cliente, $button);
 }else if(isset($_POST["btnRegresarBoleta"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
