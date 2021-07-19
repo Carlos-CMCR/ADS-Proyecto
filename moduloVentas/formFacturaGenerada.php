@@ -30,8 +30,8 @@ class formFacturaGenerada extends formulario{
                     </tr>
                     <tr>
                         <th>RUC:</th>
-                        <td><input type="text" max="11" min="11"></td>
-                        <td><button type="button" >Validar</button></td>               
+                        <td><input type="text" max="11" min="11" id="ruc"></td>
+                        <td><button type="button" id="validar-ruc" >Validar</button></td>               
                     </tr>    
                 </table>
             </div>
