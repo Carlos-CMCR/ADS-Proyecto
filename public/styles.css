@@ -638,3 +638,14 @@ main{
 .dn{
     display: none;
 }
+
+input:disabled,
+input[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+input[disabled]:hover,input:disabled:hover {
+    background-color: #cccccc;
+}

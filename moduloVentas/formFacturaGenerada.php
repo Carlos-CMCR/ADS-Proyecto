@@ -127,8 +127,7 @@ class formFacturaGenerada extends formulario{
                     <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
-                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar">
-                    
+                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" disabled="disabled">     
                 <form>
             </div>
             
@@ -140,7 +139,7 @@ class formFacturaGenerada extends formulario{
                 <p class="modal__information">¿Estas seguro que desea quitar el producto <strong><span id="modal-nombre_producto"></span></strong> de la lista? </p>
                 <div class="modal-actions">
                     <button class="modal__action modal__action--cancelar" type="button">Cancelar</button>
-                    <button class="modal__action modal__action--continuar" type="button" disabled>Continuar</button>
+                    <button class="modal__action modal__action--continuar" type="button">Continuar</button>
                 </div>
             </div>
         </div>
