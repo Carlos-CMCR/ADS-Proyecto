@@ -32,8 +32,7 @@ class formFacturaGenerada extends formulario{
                         <th>RUC:</th>
                         <td>
                             <input type="text" max="11" min="11" id="ruc">
-                        </td>
-                        <td><button type="button" id="validar-ruc" >Validar</button></td>               
+                        </td>           
                     </tr>
                     <tr>
                         <td></td>
@@ -127,7 +126,7 @@ class formFacturaGenerada extends formulario{
                     <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
-                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" disabled="disabled">     
+                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" disabled="disabled" id="confirmarFactura">     
                 <form>
             </div>
             

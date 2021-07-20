@@ -1,6 +1,7 @@
 const table_productos_lista = document.getElementById("table_productos_lista")
 const container_servicios = document.getElementById("container-servicios")
 
+
 if(table_productos_lista){
     table_productos_lista.addEventListener("click", async (event) => {
         event.preventDefault();
@@ -28,7 +29,6 @@ if(table_productos_lista){
                         body: form
                     })
                     const data = await response.json()
-                    console.log("🚀 ~ file: comprobante.js ~ line 32 ~ document.querySelector ~ data", data)
                     document.getElementById("precioTotal").innerText = data["precioTotal"]
                     let igv = parseFloat(data["precioTotal"]).toFixed(2) * parseFloat(0.18).toFixed(2)
                     let subtotal = parseFloat(data["precioTotal"]).toFixed(2) - igv
@@ -95,15 +95,28 @@ if(container_servicios){
 const validarRuc = document.getElementById("validar-ruc")
 const ruc = document.getElementById("ruc")
 
-if(validarRuc && ruc){
-    validarRuc.addEventListener("click", async (event) => {
-        event.preventDefault();
+if(ruc){
+
+
+    function debounce (callback,time){
+        let timeoutId
+        return function(){
+            if(timeoutId) clearTimeout(timeoutId)
+            const context = this
+            const args = arguments
+            timeoutId = setTimeout(()=>{
+                callback.apply(context,args)
+            },time)
+        }
+    }
+    
+    const ajaxRuc = async ruc => {
         try{
             const response = await fetch("https://api.migo.pe/api/v1/ruc",{
                 method: 'POST',
                 body: JSON.stringify({
                     "token": "rSdUJkM7rjvGAuzu3T2LnBrBAzOAnJ6miuvbG1ZwEpwJ7yM9OZgOT20bbNHh",
-                    "ruc": ruc.value+"",
+                    "ruc": ruc+"",
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -112,17 +125,28 @@ if(validarRuc && ruc){
             })
 
             const data = await response.json()
-            console.log("🚀 ~ file: comprobante.js ~ line 114 ~ validarRuc.addEventListener ~ data", data)
             if(data["success"]){
+                document.getElementById("confirmarFactura").disabled = false;
                 document.getElementById("mensaje_ruc").innerText = "Success : Ruc valido";
                 document.getElementById("mensaje_ruc").classList.remove("mensaje_ruc");
                 document.getElementById("mensaje_ruc").classList.add("ruc_correcto");
             }else{
+                document.getElementById("confirmarFactura").disabled = true;
                 document.getElementById("mensaje_ruc").innerText = "Error : Ruc invalido";
                 document.getElementById("mensaje_ruc").classList.remove("ruc_correcto");
                 document.getElementById("mensaje_ruc").classList.add("mensaje_ruc");
             }
         }catch(ex){
         }
+    } 
+    
+    const renderResultDebounce = debounce(ajaxRuc,500)
+
+
+    ruc.addEventListener("keyup", (event) => {
+        event.preventDefault();
+        renderResultDebounce(ruc.value)
     })
 }
+
+
