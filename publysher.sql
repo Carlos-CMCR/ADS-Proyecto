@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2021 a las 05:54:49
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 8.0.7
+-- Tiempo de generación: 20-07-2021 a las 08:12:24
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,11 +79,11 @@ CREATE TABLE `comprobantedepago` (
   `id_comprobante` int(10) NOT NULL,
   `id_tipocomprobante` int(10) NOT NULL,
   `fechaemision` varchar(30) NOT NULL,
-  `ruc` varchar(30) NOT NULL,
+  `ruc` varchar(30) DEFAULT NULL,
   `hora_emision` varchar(30) NOT NULL,
   `precioTotal` double NOT NULL,
   `id_cliente` int(10) NOT NULL,
-  `numero_comprobante` varchar(8) NOT NULL,
+  `numero_comprobante` varchar(8) DEFAULT NULL,
   `id_estadoComprobante` int(10) NOT NULL,
   `id_usuario` int(10) NOT NULL,
   `fechaYhora` date NOT NULL
@@ -407,7 +407,7 @@ CREATE TABLE `proformas` (
   `id_estadoEntidad` int(10) NOT NULL,
   `codigo_proforma` varchar(8) NOT NULL,
   `id_usuario` int(10) NOT NULL,
-  `fechaYHora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `fechaYHora` timestamp NOT NULL DEFAULT current_timestamp(),
   `subtotal` double NOT NULL,
   `igv` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -417,11 +417,11 @@ CREATE TABLE `proformas` (
 --
 
 INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_emision`, `id_estadoProforma`, `id_cliente`, `id_estadoEntidad`, `codigo_proforma`, `id_usuario`, `fechaYHora`, `subtotal`, `igv`) VALUES
-(1, '2021-07-12', 574, '10:52:19', 1, 1, 0, '00000001', 1, '2021-07-13 04:36:00', 486.8, 87.62),
-(2, '2021-07-04', 917.9, '17:13:25', 1, 2, 0, '00000002', 1, '2021-07-05 04:36:20', 777.86, 140.01),
-(3, '2021-07-01', 574, '23:46:23', 1, 1, 0, '00000003', 1, '2021-07-13 04:47:44', 486.8, 87.62),
-(4, '2021-07-14', 683.27, '00:54:06', 1, 2, 0, '00000004', 1, '2021-07-14 05:57:27', 560.28, 122.98),
-(5, '2021-07-14', 625.88, '10:20:09', 1, 1, 0, '00000005', 1, '2021-07-14 06:36:25', 513.23, 112.65);
+(1, '2021-07-03', 574, '01:03:27', 1, 1, 0, '00000001', 1, '2021-07-03 06:03:27', 486.8, 87.62),
+(2, '2021-07-09', 917.9, '01:03:42', 1, 2, 0, '00000002', 1, '2021-07-09 06:03:42', 777.86, 140.01),
+(3, '2021-07-05', 574, '01:03:53', 1, 1, 0, '00000003', 1, '2021-07-05 06:03:53', 486.8, 87.62),
+(4, '2021-07-14', 683.27, '01:04:19', 1, 2, 0, '00000004', 1, '2021-07-14 06:04:19', 560.28, 122.98),
+(5, '2021-07-14', 625.88, '01:04:02', 1, 1, 0, '00000005', 1, '2021-07-14 06:04:02', 513.23, 112.65);
 
 -- --------------------------------------------------------
 
@@ -723,13 +723,13 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `comprobantedepago`
 --
 ALTER TABLE `comprobantedepago`
-  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteproducto`
 --
 ALTER TABLE `detallecomprobanteproducto`
-  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteservicio`
