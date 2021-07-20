@@ -140,7 +140,7 @@ class formFacturaGenerada extends formulario{
                 <p class="modal__information">¿Estas seguro que desea quitar el producto <strong><span id="modal-nombre_producto"></span></strong> de la lista? </p>
                 <div class="modal-actions">
                     <button class="modal__action modal__action--cancelar" type="button">Cancelar</button>
-                    <button class="modal__action modal__action--continuar" type="button">Continuar</button>
+                    <button class="modal__action modal__action--continuar" type="button" disabled>Continuar</button>
                 </div>
             </div>
         </div>

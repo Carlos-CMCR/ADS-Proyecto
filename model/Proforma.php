@@ -114,7 +114,7 @@ class Proforma extends Conexion{
     public function cambiarEstadoProforma($id_proforma){
         try{
             $this->bd = $this->conectar();
-            $query = "UPDATE proformas SET id_estadoProforma = 1 where id_proforma = :id_proforma;";
+            $query = "UPDATE proformas SET id_estadoProforma = 0 where id_proforma = :id_proforma;";
             $consulta = $this->bd->prepare($query);
 
             $consulta->execute([
