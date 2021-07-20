@@ -256,7 +256,9 @@ class controllerEmitirComprobantePago{
 
     public function insertarBoleta($id_cliente,$id_usuario,$lista){
         include_once("../model/ComprobanteDePago.php");
+        include_once("../model/Producto.php");
         $objComprobante = new ComprobanteDePago;
+        $objProducto = new Producto;
         $respuesta = $objComprobante ->insertarBoleta($id_cliente,$lista["precioTotal"],$id_usuario);
         if($respuesta["success"]){
             if(count($lista["productos"])){
@@ -272,8 +274,12 @@ class controllerEmitirComprobantePago{
                 if(!$resp["success"]){
                     return;
                 }
-                // mensjae sistema todo ok
             }
+            // updateStockOfProducts
+            $objProducto->updateStockOfProducts($lista["productos"]);
+
+            // mensjae sistema todo ok
+            
         }else{
             include_once("../shared/formMensajeSistema.php");
             $nuevoMensaje = new formMensajeSistema;
@@ -287,7 +293,9 @@ class controllerEmitirComprobantePago{
 
     public function insertarFactura($id_cliente,$id_usuario,$lista){
         include_once("../model/ComprobanteDePago.php");
+        include_once("../model/Producto.php");
         $objComprobante = new ComprobanteDePago;
+        $objProducto = new Producto;
     }
 
 }

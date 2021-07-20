@@ -36,6 +36,16 @@ elseif(isset($_POST["btnSeleccionar"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
     $controlComprobante -> obtenerProforma($id_proforma,$id_cliente, $button);
+}else if(isset($_POST["btnValidarRuc"])){
+    $ruc = $_POST['ruc'];
+    $esValido = $_POST['esValido'];
+    session_start();
+    if($esValido){
+        $_SESSION['lista']["ruc"] = $ruc;
+    }else{
+        unset($_SESSION['lista']["ruc"]);
+    }
+
 }else if(isset($_POST["btnRegresarBoleta"])){
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;

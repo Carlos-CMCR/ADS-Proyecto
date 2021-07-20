@@ -93,6 +93,25 @@ class Producto extends Conexion{
             $this->bd = null;
         }
     }
+    public  function updateStockOfProducts($productos){
+        try {
+            $this->bd = $this->conectar();
+            $query = "UPDATE productos SET stock = stock - :cantidad WHERE id_producto = :id_producto";
+            $consulta = $this->bd->prepare($query);
+            foreach ($productos as $id => $cantidad) {
+                $consulta->execute([
+                    "cantidad" => $cantidad,
+                    "id_producto" => $id
+                ]);
+            }
+            
+        }catch (Exception $ex) {
+            return $ex->getMessage();
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+    }
 
 }
 ?>
