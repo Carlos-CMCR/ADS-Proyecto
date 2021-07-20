@@ -141,7 +141,7 @@ class controllerEmitirComprobantePago{
         // true factura
         if($button){
             $total = (double) 0;
-
+            echo "entre";
             // asasasd
             $datosLista = ["datosProformaProductos"=>[],"datosProformaServicios"=>[]];
             $index = 0;
@@ -167,7 +167,7 @@ class controllerEmitirComprobantePago{
                 $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
                 $productos[0]["precioTotal"] = $total;
                 $productos[0]["igv"] = (double)$total * 0.18;
-                $productos[0]["subtotal"] = $total - $productos[$i]["igv"];
+                $productos[0]["subtotal"] = $total - $productos[0]["igv"];
                 
             }
             $productos[0]["precioTotal"] =number_format( floatval($productos[0]["precioTotal"]), 2, '.', '');
