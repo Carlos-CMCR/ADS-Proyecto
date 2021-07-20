@@ -99,6 +99,7 @@
             <form action="getComprobantePago.php" method= "post">
                 <input type="hidden" value="<?php echo $id_proforma;?>" name="idProforma">
                 <input type="hidden" value="<?php echo $id_cliente;?>" name="idCliente">
+                
                 <?php
                 if($button == "factura"){?>
                     <input class="volver-form__button" name="btnRegresarFactura" type="submit" value="Volver" >

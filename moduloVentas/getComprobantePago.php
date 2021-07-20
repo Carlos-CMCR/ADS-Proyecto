@@ -77,6 +77,70 @@ elseif(isset($_POST["btnSeleccionar"])){
     </form>");
 
     }
+}else if(isset($_POST["btnSeleccionarProducto"])){
+    $id_producto = ($_POST['idProducto']);
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    $productos = ($_POST['producto']);
+    $button = ($_POST['button']);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    $controlComprobante -> seleccionarProducto($button,$id_producto, $id_proforma, $id_cliente,$productos);
+}else if(isset($_POST["btnAgregar"])){
+    $id_producto = ($_POST['idProducto']);
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    $productos = ($_POST['producto']);
+    $cantidad = ($_POST['cantidad']);
+    $button = ($_POST['button']);
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+    if($cantidad >= 1){
+        $controlComprobante -> agregarProducto($button, $cantidad, $id_producto, $id_proforma, $id_cliente,$productos);
+    }else{
+        include_once("../shared/formMensajeSistema.php");
+        $nuevoMensaje = new formMensajeSistema;
+        $nuevoMensaje -> formMensajeSistemaShow("¡INGRESE CANTIDAD VÁLIDO!","<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='idProforma' value='$id_proforma' >
+        <input name='btnAgregarProducto'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+    </form>");
+
+    }
+    
+}else if(isset($_POST["btnConfirmarFactura"])){
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    $button = "factura";
+    session_start();
+    include_once("../shared/formAlerta.php");
+    $mensajeAlerta = new formAlerta;
+    $mensajeAlerta -> formAlertaShow($button,$id_proforma, $id_cliente);
+        
+}else if(isset($_POST["btnConfirmarBoleta"])){
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    $button = "boleta";
+    session_start();
+    include_once("../shared/formAlerta.php");
+    $mensajeAlerta = new formAlerta;
+    $mensajeAlerta -> formAlertaShow($button,$id_proforma, $id_cliente);
+        
+}else if(isset($_POST["btnconfirmarComprobante"])){
+    $id_proforma = ($_POST['idProforma']);
+    $id_cliente = ($_POST['idCliente']);
+    $button = ($_POST['button']);
+    session_start();
+    include_once("./controllerEmitirComprobantePago.php");
+    $controlComprobante = new controllerEmitirComprobantePago;
+
+    $controlComprobante -> actualizarEstadoProforma($id_proforma);
+
+    if($button=="factura"){
+        // $controlComprobante -> 
+    }else{
+        $controlComprobante ->insertarBoleta($id_cliente,$_SESSION["id_usuario"],$_SESSION["lista"]);
+    }
+            
 }else if(isset($_POST["btnQuitarProducto"])){
     $id_producto = $_POST["idproducto"];
     session_start();
@@ -156,36 +220,6 @@ elseif(isset($_POST["btnSeleccionar"])){
     $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($objTotal);
-}else if(isset($_POST["btnSeleccionarProducto"])){
-    $id_producto = ($_POST['idProducto']);
-    $id_proforma = ($_POST['idProforma']);
-    $id_cliente = ($_POST['idCliente']);
-    $productos = ($_POST['producto']);
-    $button = ($_POST['button']);
-    include_once("./controllerEmitirComprobantePago.php");
-    $controlComprobante = new controllerEmitirComprobantePago;
-    $controlComprobante -> seleccionarProducto($button,$id_producto, $id_proforma, $id_cliente,$productos);
-}else if(isset($_POST["btnAgregar"])){
-    $id_producto = ($_POST['idProducto']);
-    $id_proforma = ($_POST['idProforma']);
-    $id_cliente = ($_POST['idCliente']);
-    $productos = ($_POST['producto']);
-    $cantidad = ($_POST['cantidad']);
-    $button = ($_POST['button']);
-    include_once("./controllerEmitirComprobantePago.php");
-    $controlComprobante = new controllerEmitirComprobantePago;
-    if($cantidad >= 1){
-        $controlComprobante -> agregarProducto($button, $cantidad, $id_producto, $id_proforma, $id_cliente,$productos);
-    }else{
-        include_once("../shared/formMensajeSistema.php");
-        $nuevoMensaje = new formMensajeSistema;
-        $nuevoMensaje -> formMensajeSistemaShow("¡INGRESE CANTIDAD VÁLIDO!","<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
-        <input type='hidden' name='idProforma' value='$id_proforma' >
-        <input name='btnAgregarProducto'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
-    </form>");
-
-    }
-    
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

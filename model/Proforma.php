@@ -110,6 +110,23 @@ class Proforma extends Conexion{
             $this->bd = null;
         }
     }
+
+    public function cambiarEstadoProforma($id_proforma){
+        try{
+            $this->bd = $this->conectar();
+            $query = "UPDATE proformas SET id_estadoProforma = 1 where id_proforma = :id_proforma;";
+            $consulta = $this->bd->prepare($query);
+
+            $consulta->execute([
+                'id_proforma' => (int)$id_proforma
+            ]);
+            return ["success"=>true];
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }finally{
+            $this->bd = null;
+        }
+    }
     
 }
 

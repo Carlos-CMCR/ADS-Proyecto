@@ -247,6 +247,49 @@ class controllerEmitirComprobantePago{
         $_SESSION["lista"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
         return $_SESSION["lista"];
     }
+
+    public function actualizarEstadoProforma($id_proforma){
+        include_once("../model/Proforma.php");
+        $objProforma = new Proforma;
+        $objProforma-> cambiarEstadoProforma($id_proforma);
+    }
+
+    public function insertarBoleta($id_cliente,$id_usuario,$lista){
+        include_once("../model/ComprobanteDePago.php");
+        $objComprobante = new ComprobanteDePago;
+        $respuesta = $objComprobante ->insertarBoleta($id_cliente,$lista["precioTotal"],$id_usuario);
+        if($respuesta["success"]){
+            if(count($lista["productos"])){
+                // detalle comprobante producto
+                $resp = $objComprobante->insertDetalleBoletaProductos($respuesta["id"],$lista["productos"]);
+                if(!$resp["success"]){
+                    return;
+                }
+            }
+            if(count($lista["servicios"])){
+                // detalle comprobante servicio
+                $resp = $objComprobante->insertDetalleBoletaServicios($respuesta["id"],$lista["servicios"]);
+                if(!$resp["success"]){
+                    return;
+                }
+                // mensjae sistema todo ok
+            }
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow(
+            $resultado["mensaje"],
+                "<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
+                    <input name='btnEmitirComprobante'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                </form>");
+        }
+    }
+
+    public function insertarFactura($id_cliente,$id_usuario,$lista){
+        include_once("../model/ComprobanteDePago.php");
+        $objComprobante = new ComprobanteDePago;
+    }
+
 }
     
 ?>

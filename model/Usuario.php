@@ -66,6 +66,24 @@ class Usuario extends Conexion{
             return ["success"=>false,"mensaje"=>$e->getMessage() ];
         }
     }
+
+    public function obtenerIdUsuario($username){
+        try{
+            $this->bd = $this->conectar();
+            $query = "SELECT id_usuario FROM usuarios WHERE username = :username";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username
+            ]);
+            return $consulta->fetch();
+        }catch(Exception $e){
+            // TO DO manejar el error
+            return $e->getMessage();
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+    }
 }
 
 ?>
