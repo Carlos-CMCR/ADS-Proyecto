@@ -136,9 +136,19 @@ if(ruc){
                 document.getElementById("mensaje_ruc").classList.remove("ruc_correcto");
                 document.getElementById("mensaje_ruc").classList.add("mensaje_ruc");
             }
+            const form = new FormData()
+            form.append("btnValidarRuc","")
+            form.append("esValido",data["success"])
+            form.append("ruc",data["success"] && ruc);
+
+            await fetch("getComprobantePago.php",{
+                method: 'POST',
+                body: form
+            });
+
         }catch(ex){
         }
-    } 
+    }
     
     const renderResultDebounce = debounce(ajaxRuc,500)
 
