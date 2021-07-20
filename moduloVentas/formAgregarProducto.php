@@ -15,6 +15,7 @@
                 <input type="text" name="producto" value="<?php echo $nomProd?>">
                 <input type="hidden" name="idProforma" value="<?php echo $id_proforma;?>">
                 <input type="hidden" name="idCliente" value="<?php echo $id_cliente;?>">
+                <input type="hidden" name="button" value="<?php echo $button;?>">
                 <button type="submit" class="" name="btnBuscarProducto">Buscar</button>
             </form>
             
@@ -46,6 +47,7 @@
                         <input type="hidden" name="idProducto" value="<?php echo $datosProducto[0]["id_producto"]?>">
                         <input type="hidden" name="idProforma" value="<?php echo $id_proforma?>">
                         <input type="hidden" name="idCliente" value="<?php echo $id_cliente?>">
+                        <input type="hidden" name="button" value="<?php echo $button;?>">
                         <td><input type="number" name="cantidad" min="1" max="<?php echo $datosProducto[0]["stock"]?>" value="1"></td>                
                     </tr>
                     <div>
@@ -81,6 +83,7 @@
                     <input type="hidden" name="idProducto" value="<?php echo $dato["id_producto"]?>">
                     <input type="hidden" name="idProforma" value="<?php echo $id_proforma?>">
                     <input type="hidden" name="idCliente" value="<?php echo $id_cliente?>">
+                    <input type="hidden" name="button" value="<?php echo $button;?>">
                     <td align="center" ><?php echo $dato["codigo_producto"]?></td>
                     <td align="left" ><?php echo $dato["nombre"]?></td>
                     <td><button  type="submit" class="" name="btnSeleccionarProducto">Seleccionar</button></td>

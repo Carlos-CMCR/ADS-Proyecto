@@ -94,7 +94,7 @@ class controllerEmitirComprobantePago{
 		$objAgregarProducto -> formAgregarProductoShow($button,[],[], $id_proforma,$id_cliente, $productos);
     }
 
-    public function buscarProducto($productos, $id_proforma, $id_cliente){
+    public function buscarProducto($button,$productos, $id_proforma, $id_cliente){
         include_once("../model/Producto.php");
         $objProducto = new Producto;
         $datosProductos = $objProducto -> obtenerProductos($productos);
@@ -102,10 +102,10 @@ class controllerEmitirComprobantePago{
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],[],$datosProductos , $id_proforma,$id_cliente,$productos);
+		$objAgregarProducto -> formAgregarProductoShow($button,[],$datosProductos , $id_proforma,$id_cliente,$productos);
     }
 
-    public function seleccionarProducto($id_producto, $id_proforma, $id_cliente,$productos){
+    public function seleccionarProducto($button, $id_producto, $id_proforma, $id_cliente,$productos){
         include_once("../model/Producto.php");
         $objProducto = new Producto;
         $datosProducto = $objProducto -> obtenerProducto($id_producto);
@@ -113,10 +113,10 @@ class controllerEmitirComprobantePago{
         include_once("formAgregarProducto.php");
         session_start();
 		$objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],$datosProducto,$datosProductos, $id_proforma, $id_cliente,$productos);
+		$objAgregarProducto -> formAgregarProductoShow($button,$datosProducto,$datosProductos, $id_proforma, $id_cliente,$productos);
     }
 
-    public function agregarProducto($cantidad,$id_producto, $id_proforma,$id_cliente, $productos){
+    public function agregarProducto($button,$cantidad,$id_producto, $id_proforma,$id_cliente, $productos){
         include_once("../model/Producto.php");
         $objProducto = new Producto;
         $datosProductos = $objProducto -> obtenerProductos($productos);
@@ -128,7 +128,7 @@ class controllerEmitirComprobantePago{
             $_SESSION["lista"]["productos"][$id_producto]= $cantidad;
         }
         $objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
-		$objAgregarProducto -> formAgregarProductoShow([],[],$datosProductos, $id_proforma,$id_cliente,$productos);
+		$objAgregarProducto -> formAgregarProductoShow($button,[],$datosProductos, $id_proforma,$id_cliente,$productos);
     }
     public function listarProductosDeNuevaLista($id_proforma,$id_cliente,$button){
         session_start();
