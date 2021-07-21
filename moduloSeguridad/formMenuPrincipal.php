@@ -1,12 +1,16 @@
 <?php 
-include_once("../shared/formulario.php");
-class formMenuPrincipal extends formulario{
+include_once("../shared/footerSingleton.php");
+include_once("../shared/headSingleton.php");
+class formMenuPrincipal{
+    private $informacion = "";
+    private $username = "";
     public function __construct($username,$informacion){
-        $this->path = "..";
-        $this->encabezadoShow("Bienvenido : $username",$informacion);
+        $this->username = $username;
+        $this->informacion = $informacion;
     }
 
     public function formMenuPrincipalShow($listaPrivilegios = []){
+        headSingleton::getHead("Bienvenido : $this->username",$this->informacion,"..");
         echo "<main class='wrapper-actions'>";
         foreach ($listaPrivilegios as $privilegio) {
             ?>
@@ -18,7 +22,7 @@ class formMenuPrincipal extends formulario{
             <?php 
         }
         echo "</main>";
-        $this->piePaginaShow(); 
+        footerSingleton::getFooter("..");
     }
 }
 

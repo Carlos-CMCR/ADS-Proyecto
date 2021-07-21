@@ -135,7 +135,7 @@ elseif(isset($_POST["btnSeleccionar"])){
     $mensajeAlerta = new formAlerta;
     $mensajeAlerta -> formAlertaShow($button,$id_proforma, $id_cliente);
         
-}else if(isset($_POST["btnconfirmarComprobante"])){
+}else if(isset($_POST["btnConfirmarComprobante"])){
     $id_proforma = ($_POST['idProforma']);
     $id_cliente = ($_POST['idCliente']);
     $button = ($_POST['button']);

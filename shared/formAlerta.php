@@ -18,7 +18,7 @@ include_once("formulario.php");
                 <input type="hidden" name="idProforma" value="<?php echo $id_proforma;?>">
                 <input type="hidden" name="idCliente" value="<?php echo $id_cliente;?>">
                 <input type="hidden" name="button" value="<?php echo $button;?>">
-                <button type="submit" name="btnconfirmarComprobante" >Aceptar</button>
+                <button type="submit" name="btnConfirmarComprobante" >Aceptar</button>
                 <?php
                 if($button == "factura"){?>
                     

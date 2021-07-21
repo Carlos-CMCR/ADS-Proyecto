@@ -1,15 +1,11 @@
 <?php
 
-include_once("./shared/formulario.php");
+include_once("./shared/headIniSingleton.php");
+include_once("./shared/footerSingleton.php");
 
-class formAutenticarUsuario extends formulario{
-    public function __construct(){
-        $this->path = ".";
-        $this->encabezadoShowIni("Autenticar Usuario");
-    }
-
+class formAutenticarUsuario {
     public function formAutenticarUsuarioShow(){
-        
+        headIniSingleton::getHead("Autenticar Usuario");
         ?>
     
             <form class="form-login" method="post" action="./moduloSeguridad/getUsuario.php">
@@ -23,8 +19,8 @@ class formAutenticarUsuario extends formulario{
                     Iniciar Sesión
                 </button>
             </form>
-        <?php 
-        $this->piePaginaShow();
+        <?php
+        footerSingleton::getFooter();
     }
 }
 
