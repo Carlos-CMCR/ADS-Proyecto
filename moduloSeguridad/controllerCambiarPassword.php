@@ -3,8 +3,8 @@
 class controllerCambiarPassword{
     
     public function validarPasswordDelUsuario($username,$password){
-        include_once("../model/Usuario.php");
-        $objUsuario = new Usuario;
+        include_once("../model/FactoryModels.php");
+        $objUsuario = FactoryModels::getModel("usuario");
         $respuesta = $objUsuario -> verificarUsuario($username,$password);
         if($respuesta["existe"]){
             include_once("formNuevoPassword.php");
@@ -20,9 +20,8 @@ class controllerCambiarPassword{
     }
 
     public function cambiarPassword($username,$password){
-        // change password the user
-        include_once("../model/Usuario.php");
-        $objUsuario = new Usuario;
+        include_once("../model/FactoryModels.php");
+        $objUsuario = FactoryModels::getModel("usuario");
         $respuesta = $objUsuario -> cambiarPassword($username,$password);
         if($respuesta["success"]){
             include_once("../shared/formMensajeSistema.php");

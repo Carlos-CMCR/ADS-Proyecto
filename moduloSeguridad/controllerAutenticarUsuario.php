@@ -3,13 +3,12 @@
 class controllerAutenticarUsuario{
     public function validarUsuario($username,$password)
 		{
-			include_once("../model/Usuario.php");
-			$objUsuario = new Usuario;
+			include_once("../model/FactoryModels.php");
+			$objUsuario = FactoryModels::getModel("usuario");
 			$respuesta = $objUsuario -> verificarUsuario($username,$password);
 			if($respuesta["existe"]){
 				session_start();
-				include_once("../model/UsuarioPrivilegio.php");
-				$objprivilegio = new UsuarioPrivilegio;
+				$objprivilegio = FactoryModels::getModel("usuarioPrivilegio");
 				$listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
 				$informacion = $objUsuario->obtenerInformacionDelUsuario($username);
 				$obj = $objUsuario->obtenerIdUsuario($username);
