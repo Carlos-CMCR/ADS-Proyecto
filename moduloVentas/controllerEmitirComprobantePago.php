@@ -288,10 +288,9 @@ class controllerEmitirComprobantePago{
     }
 
     public function insertarFactura($id_cliente,$id_usuario,$lista){
-        include_once("../model/ComprobanteDePago.php");
-        include_once("../model/Producto.php");
-        $objComprobante = new ComprobanteDePago;
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objComprobante = FactoryModels::getModel("comprobante");
+        $objProducto = FactoryModels::getModel("producto");
     }
 
 }
