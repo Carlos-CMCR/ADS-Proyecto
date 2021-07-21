@@ -1,7 +1,7 @@
 <?php
 
-include_once("./shared/headIniSingleton.php");
-include_once("./shared/footerSingleton.php");
+require_once __DIR__."/../shared/headIniSingleton.php";
+require_once __DIR__."/../shared/footerSingleton.php";
 
 class formAutenticarUsuario {
     public function formAutenticarUsuarioShow(){
