@@ -1,15 +1,12 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class TipoDeServicio extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+class TipoDeServicio{
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
+    
 
     public function listarServicios() {
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT * FROM tipodeservicios";
             $consulta = $this->bd->prepare($query);
             $consulta->execute();
@@ -18,8 +15,6 @@ class TipoDeServicio extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            $this->bd = null;
         }
     }
 
@@ -32,16 +27,12 @@ class TipoDeServicio extends Conexion{
                 $query.=",";
             }
             $query = substr($query, 0, -1).")";
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $consulta = $this->bd->prepare($query);
             $consulta->execute();
             return $consulta->fetchAll();
         } catch (Exception $ex) {
             return $ex->getMessage();
-        }
-        finally {
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 

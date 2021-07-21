@@ -1,15 +1,11 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class Producto extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+class Producto{
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
 
     public function obtenerProductos($producto){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT p.id_producto, p.codigo_producto, p.nombre  FROM productos p INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
             INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria WHERE p.id_observacion = 0 
             AND p.stock > 0 AND p.nombre LIKE '$producto%' OR ma.marca_nombre LIKE '$producto%' OR ca.nombre_categoria 
@@ -21,16 +17,13 @@ class Producto extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
 
     }
 
     public function obtenerProducto($id_producto){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT p.id_producto,p.codigo_producto, p.nombre, p.stock, p.precioUnitario  FROM productos p INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
             INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria WHERE p.id_observacion = 0 
             AND p.stock > 0 AND p.id_producto= :id;
@@ -43,9 +36,6 @@ class Producto extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
@@ -58,16 +48,12 @@ class Producto extends Conexion{
                 $query.=",";
             }
             $query = substr($query, 0, -1).") and c.id_cliente = :id_cliente";
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $consulta = $this->bd->prepare($query);
             $consulta->execute(["id_cliente"=>$idcliente]);
             return $consulta->fetchAll();
         } catch (Exception $ex) {
             return $ex->getMessage();
-        }
-        finally {
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
@@ -81,21 +67,17 @@ class Producto extends Conexion{
                 $query.=",";
             }
             $query = substr($query, 0, -1).")";
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $consulta = $this->bd->prepare($query);
             $consulta->execute();
             return $consulta->fetchAll();
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
-        finally {
-            // Conexion::closeConnection();
-            $this->bd = null;
-        }
     }
     public  function updateStockOfProducts($productos){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "UPDATE productos SET stock = stock - :cantidad WHERE id_producto = :id_producto";
             $consulta = $this->bd->prepare($query);
             foreach ($productos as $id => $cantidad) {
@@ -107,9 +89,6 @@ class Producto extends Conexion{
             
         }catch (Exception $ex) {
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 

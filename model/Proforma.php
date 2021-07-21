@@ -1,15 +1,11 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class Proforma extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+class Proforma {
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
 
     public function listarProformas(){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno  FROM proformas p 
              INNER JOIN clientes c
              ON c.id_cliente = p.id_cliente
@@ -21,15 +17,12 @@ class Proforma extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function listarProformasFecha($fecha_seleccionada){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision,c.id_cliente, c.nombres, c.apellido_paterno, c.apellido_materno FROM proformas p 
             INNER JOIN clientes c
              ON c.id_cliente = p.id_cliente
@@ -49,15 +42,12 @@ class Proforma extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function obtenerProductosDeproformaSeleccionada($id_proforma){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT count(pr.id_producto) as cantidad,p.id_proforma,p.precioTotal,p.subtotal,p.igv, c.nombres as nom_client,pr.stock, c.apellido_paterno, c.apellido_materno, c.dni, c.celular,dp.id_producto, dp.id_detalleProformaProducto
             ,pr.nombre as nom_product,pr.codigo_producto, pr.precioUnitario as precioProduct FROM proformas p 
                 INNER JOIN clientes c
@@ -77,15 +67,12 @@ class Proforma extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function obtenerServiciosDeproformaSeleccionada($id_proforma){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT dps.id_tiposervicio,ts.nombre, ts.precioDeServicio FROM proformas as p
             INNER JOIN detalleproformaservicio as dps
                 on dps.id_proforma = p.id_proforma
@@ -105,15 +92,12 @@ class Proforma extends Conexion{
             }        
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function cambiarEstadoProforma($id_proforma){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "UPDATE proformas SET id_estadoProforma = 0 where id_proforma = :id_proforma;";
             $consulta = $this->bd->prepare($query);
 
@@ -123,8 +107,6 @@ class Proforma extends Conexion{
             return ["success"=>true];
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            $this->bd = null;
         }
     }
     

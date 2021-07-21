@@ -1,15 +1,11 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class Usuario extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+class Usuario{
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
     public function verificarUsuario($username,$password){
         
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT * FROM usuarios as u WHERE u.username =:username AND u.password = :password";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
@@ -24,15 +20,12 @@ class Usuario extends Conexion{
         }catch(Exception $e){
             // TO DO manejar el error
             return ["existe"=>false,"mensaje"=>$e->getMessage() ];
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
 
     }
     public function obtenerInformacionDelUsuario($username){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT CONCAT(u.apellido_paterno,' ',u.apellido_materno,' ',u.nombres,' ( ',u.username,' ) ',' - ',' ( ',UPPER(r.nombre_rol),' )') as informacion FROM usuarios as u 
             INNER JOIN roles as r
              ON r.id_rol = u.id_rol
@@ -46,15 +39,12 @@ class Usuario extends Conexion{
         }catch(Exception $e){
             // TO DO manejar el error
             return $e->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function cambiarPassword($username,$password){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "UPDATE usuarios SET password = :password WHERE username = :username";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
@@ -69,7 +59,7 @@ class Usuario extends Conexion{
 
     public function obtenerIdUsuario($username){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT id_usuario FROM usuarios WHERE username = :username";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
@@ -79,9 +69,6 @@ class Usuario extends Conexion{
         }catch(Exception $e){
             // TO DO manejar el error
             return $e->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 }

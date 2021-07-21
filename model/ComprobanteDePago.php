@@ -1,11 +1,8 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class ComprobanteDePago extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+
+class ComprobanteDePago{
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
     public function insertarBoleta($id_cliente,$precioTotal,$id_usuario){
         try{
             date_default_timezone_set('America/Lima');
@@ -13,7 +10,7 @@ class ComprobanteDePago extends Conexion{
             $fechaemision = explode(" ", $fechaYhora)[0];
             $hora_emision = explode(" ", $fechaYhora)[1];
 
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "INSERT INTO 
                     comprobantedepago
                     (id_tipocomprobante,fechaemision,hora_emision,precioTotal,id_cliente,id_usuario,fechaYhora) 
@@ -42,13 +39,11 @@ class ComprobanteDePago extends Conexion{
 
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            $this->bd = null;
         }
     }
     public function insertDetalleBoletaProductos($id_boleta,$productos = []){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "INSERT INTO detallecomprobanteproducto (id_producto,id_comprobante) VALUES ";
             foreach ($productos as $idp => $cantidad) {
                 for ($i=0; $i < $cantidad ; $i++) { 
@@ -61,13 +56,11 @@ class ComprobanteDePago extends Conexion{
             return ["success"=>true]; 
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            $this->bd = null;
         }
     }
     public function insertDetalleBoletaServicios($id_boleta,$servicios){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "INSERT INTO detallecomprobanteservicio (id_servicio,id_comprobante) VALUES ";
             for ($i=0; $i < $servicios ; $i++) { 
                 $query.="( $servicios[$i], $id_boleta),";
@@ -78,8 +71,6 @@ class ComprobanteDePago extends Conexion{
             return ["success"=>true]; 
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            $this->bd = null;
         }
     }
 }
