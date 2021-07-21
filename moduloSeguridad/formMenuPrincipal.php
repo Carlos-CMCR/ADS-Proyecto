@@ -1,6 +1,6 @@
 <?php 
-include_once("../shared/footerSingleton.php");
-include_once("../shared/headSingleton.php");
+require_once __DIR__."/../shared/footerSingleton.php";
+require_once __DIR__."/../shared/headSingleton.php";
 class formMenuPrincipal{
     private $informacion = "";
     private $username = "";
