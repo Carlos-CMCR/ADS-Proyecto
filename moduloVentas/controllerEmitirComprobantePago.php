@@ -1,10 +1,9 @@
 <?php 
 class controllerEmitirComprobantePago{
     public function obtenerProformas(){
-        include_once("../model/Proforma.php");
-        $objProforma = new Proforma;
+        include_once("../model/FactoryModels.php");
+        $objProforma = FactoryModels::getModel("proforma");
         $arrayProformas = $objProforma->listarProformas();
-        //var_dump($arrayProformas);
         include_once("formListaProformas.php");
         if(!isset($_SESSION)) 
         { 
@@ -15,8 +14,8 @@ class controllerEmitirComprobantePago{
     }
 
     public function obtenerProformasFecha($fecha_seleccionada){
-        include_once("../model/Proforma.php");
-        $objProforma = new Proforma;
+        include_once("../model/FactoryModels.php");
+        $objProforma = FactoryModels::getModel("proforma");
         $resultado = $objProforma->listarProformasFecha($fecha_seleccionada);
         if($resultado["existe"]){
             include_once("formListaProformas.php");
@@ -44,10 +43,9 @@ class controllerEmitirComprobantePago{
     }
 
     public function obtenerProforma($id_proforma,$id_cliente, $button){
-        include_once("../model/Proforma.php");
-        include_once("../model/TipoDeServicio.php");
-        $objProforma = new Proforma;
-        $objTipoDeServicios = new TipoDeServicio;
+        include_once("../model/FactoryModels.php");
+        $objProforma = FactoryModels::getModel("proforma");
+        $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
 
         $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
@@ -95,8 +93,8 @@ class controllerEmitirComprobantePago{
     }
 
     public function buscarProducto($button,$productos, $id_proforma, $id_cliente){
-        include_once("../model/Producto.php");
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
         $datosProductos = $objProducto -> obtenerProductos($productos);
 
         include_once("formAgregarProducto.php");
@@ -106,8 +104,8 @@ class controllerEmitirComprobantePago{
     }
 
     public function seleccionarProducto($button, $id_producto, $id_proforma, $id_cliente,$productos){
-        include_once("../model/Producto.php");
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
         $datosProducto = $objProducto -> obtenerProducto($id_producto);
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
@@ -117,8 +115,8 @@ class controllerEmitirComprobantePago{
     }
 
     public function agregarProducto($button,$cantidad,$id_producto, $id_proforma,$id_cliente, $productos){
-        include_once("../model/Producto.php");
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
         session_start();
@@ -132,10 +130,9 @@ class controllerEmitirComprobantePago{
     }
     public function listarProductosDeNuevaLista($id_proforma,$id_cliente,$button){
         session_start();
-        include_once("../model/TipoDeServicio.php");
-        include_once("../model/Producto.php");
-        $objProducto = new Producto;
-        $objTipoDeServicios = new TipoDeServicio;
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
+        $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         
         // true factura
@@ -220,14 +217,14 @@ class controllerEmitirComprobantePago{
         }
     }
     public function obtenerPrecioUnitaciosProductos($idDeProductos){
-        include_once("../model/Producto.php");
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
         $datosPreciosUnitarios = $objProducto ->obtenerPrecioUnitaciosProductos($idDeProductos);
         return $datosPreciosUnitarios;
     }
     public function obtenerPrecioUnitaciosServicios($idDeServicios){
-        include_once("../model/TipoDeServicio.php");
-        $objTipoDeServicio = new TipoDeServicio;
+        include_once("../model/FactoryModels.php");
+        $objTipoDeServicio = FactoryModels::getModel("tipodeservicio");
         $datosPreciosUnitarios = $objTipoDeServicio ->obtenerPrecioUnitaciosServicios($idDeServicios);
         return $datosPreciosUnitarios;
     }
@@ -249,16 +246,15 @@ class controllerEmitirComprobantePago{
     }
 
     public function actualizarEstadoProforma($id_proforma){
-        include_once("../model/Proforma.php");
-        $objProforma = new Proforma;
+        include_once("../model/FactoryModels.php");
+        $objProforma = FactoryModels::getModel("proforma");
         $objProforma-> cambiarEstadoProforma($id_proforma);
     }
 
     public function insertarBoleta($id_cliente,$id_usuario,$lista){
-        include_once("../model/ComprobanteDePago.php");
-        include_once("../model/Producto.php");
-        $objComprobante = new ComprobanteDePago;
-        $objProducto = new Producto;
+        include_once("../model/FactoryModels.php");
+        $objComprobante = FactoryModels::getModel("comprobante");
+        $objProducto = FactoryModels::getModel("producto");
         $respuesta = $objComprobante ->insertarBoleta($id_cliente,$lista["precioTotal"],$id_usuario);
         if($respuesta["success"]){
             if(count($lista["productos"])){
