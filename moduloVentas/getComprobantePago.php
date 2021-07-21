@@ -142,14 +142,13 @@ elseif(isset($_POST["btnSeleccionar"])){
     session_start();
     include_once("./controllerEmitirComprobantePago.php");
     $controlComprobante = new controllerEmitirComprobantePago;
-
     $controlComprobante -> actualizarEstadoProforma($id_proforma);
-
-    if($button=="factura"){
-        // $controlComprobante -> 
-    }else{
-        $controlComprobante ->insertarBoleta($id_cliente,$_SESSION["id_usuario"],$_SESSION["lista"]);
+    $tipoComprobante = $button;
+    $ruc = NULL;
+    if($tipoComprobante == "factura"){
+        $ruc = $_SESSION["lista"]["ruc"];
     }
+    $controlComprobante ->insertarComprobante($id_cliente,$_SESSION["id_usuario"],$_SESSION["lista"],$tipoComprobante,$ruc);
             
 }else if(isset($_POST["btnQuitarProducto"])){
     $id_producto = $_POST["idproducto"];

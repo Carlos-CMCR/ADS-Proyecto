@@ -78,9 +78,10 @@ class Producto{
     public  function updateStockOfProducts($productos){
         try {
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
-            $query = "UPDATE productos SET stock = stock - :cantidad WHERE id_producto = :id_producto";
-            $consulta = $this->bd->prepare($query);
+            
             foreach ($productos as $id => $cantidad) {
+                $query = "UPDATE productos SET stock = stock - :cantidad WHERE id_producto = :id_producto";
+                $consulta = $this->bd->prepare($query);
                 $consulta->execute([
                     "cantidad" => $cantidad,
                     "id_producto" => $id

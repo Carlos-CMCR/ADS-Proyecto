@@ -6,7 +6,7 @@ class formFacturaGenerada extends formulario{
         $this->encabezadoShow("Formulario Factura Generada",$informacion);
     }
 
-    public function formFacturaGeneradaShow($id_proforma,$id_cliente,$datosProforma=[],$tiposServicio = []){
+    public function formFacturaGeneradaShow($id_proforma,$id_cliente,$datosProforma=[],$tiposServicio = [],$ruc = NULL){
         $datosProformaProductos = $datosProforma["datosProformaProductos"];
         $datosProformaServicios = $datosProforma["datosProformaServicios"];
         ?>
@@ -31,12 +31,12 @@ class formFacturaGenerada extends formulario{
                     <tr>
                         <th>RUC:</th>
                         <td>
-                            <input type="text" max="11" min="11" id="ruc">
+                            <input type="text" max="11" min="11" id="ruc" value="<?php echo $ruc == NULL ?'':$ruc ?>">
                         </td>           
                     </tr>
                     <tr>
                         <td></td>
-                        <td align="center" id="mensaje_ruc" class="dn">Error : Ruc invalido</td>
+                        <td align="center" id="mensaje_ruc" class="<?php echo $ruc == NULL ? 'dn':'ruc_correcto'?>"><?php echo $ruc == NULL ?:"Success : Ruc valido"?></td>
                     </tr>    
                 </table>
             </div>
@@ -126,7 +126,7 @@ class formFacturaGenerada extends formulario{
                     <input type="hidden" value="<?php echo $id_proforma ?>" name="idProforma" >
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
-                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" disabled="disabled" id="confirmarFactura">     
+                    <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" <?php echo $ruc == NULL ? 'disabled':''?> id="confirmarFactura">     
                 <form>
             </div>
             

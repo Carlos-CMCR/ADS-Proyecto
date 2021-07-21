@@ -174,7 +174,12 @@ class controllerEmitirComprobantePago{
             $datosLista["datosProformaProductos"] = $productos;
             include_once("formFacturaGenerada.php");
             $objFacturaGenerada = new formFacturaGenerada($_SESSION["informacion"]);
-            $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma,$id_cliente,$datosLista,$tiposServicio);
+            $ruc = NULL;
+            if(isset($_SESSION["lista"]["ruc"])){
+                $ruc = $_SESSION["lista"]["ruc"];
+            }
+
+            $objFacturaGenerada -> formFacturaGeneradaShow($id_proforma,$id_cliente,$datosLista,$tiposServicio,$ruc);
         }else{
             // BOLETAs
             $total = (double) 0;
@@ -251,22 +256,22 @@ class controllerEmitirComprobantePago{
         $objProforma-> cambiarEstadoProforma($id_proforma);
     }
 
-    public function insertarBoleta($id_cliente,$id_usuario,$lista){
+    public function insertarComprobante($id_cliente,$id_usuario,$lista,$tipoComprobante, $ruc){
         include_once("../model/FactoryModels.php");
         $objComprobante = FactoryModels::getModel("comprobante");
         $objProducto = FactoryModels::getModel("producto");
-        $respuesta = $objComprobante ->insertarBoleta($id_cliente,$lista["precioTotal"],$id_usuario);
+        $respuesta = $objComprobante ->insertarComprobante($id_cliente,$lista["precioTotal"],$id_usuario,$tipoComprobante, $ruc);
         if($respuesta["success"]){
             if(count($lista["productos"])){
                 // detalle comprobante producto
-                $resp = $objComprobante->insertDetalleBoletaProductos($respuesta["id"],$lista["productos"]);
+                $resp = $objComprobante->insertDetalleComprobanteProductos($respuesta["id"],$lista["productos"]);
                 if(!$resp["success"]){
                     return;
                 }
             }
             if(count($lista["servicios"])){
                 // detalle comprobante servicio
-                $resp = $objComprobante->insertDetalleBoletaServicios($respuesta["id"],$lista["servicios"]);
+                $resp = $objComprobante->insertDetalleComprobanteServicios($respuesta["id"],$lista["servicios"]);
                 if(!$resp["success"]){
                     return;
                 }
@@ -275,6 +280,15 @@ class controllerEmitirComprobantePago{
             $objProducto->updateStockOfProducts($lista["productos"]);
 
             // mensjae sistema todo ok
+            $exito = true;
+            $mensaje = "Comprobante de Pago registrada con éxito";+
+            include_once("../shared/formMensajeSistema.php");
+				$nuevoMensaje = new formMensajeSistema;
+				$nuevoMensaje -> formMensajeSistemaShow(
+                    $mensaje,
+                    "<form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnEmitirComprobante'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                    </form>",$exito);
             
         }else{
             include_once("../shared/formMensajeSistema.php");
