@@ -121,10 +121,18 @@ class formEmitirProforma {
         </div>
         <div class="lista-form" style="display:flex;width: 100%;gap:50px">
         <form action='../moduloSeguridad/getUsuario.php'  method='post' style="width:20%;">
-            <button class="volver-form__button" name="btnInicio" type="submit" style="width:100%;">Volver</button>
+            <button class="volver-form__button" name="btnInicio" type="submit" style="width:100%;background-color: #F1C232;color: black;">Ir al Inicio</button>
         </form>
         <form action='getEmitirProforma.php'  method='post' style="width:20%;">
             <input type="hidden" name="producto" value="<?php echo $nomProd?>">
+            <?php 
+            if(count($datosProducto)){
+                ?>
+                <input type="hidden" name="idProducto" value="<?php echo $datosProducto[0]["id_producto"]?>">
+                <?php 
+            }
+            
+            ?>
             <button class="volver-form__button" name="btnBorrarLista" type="submit" style="width:100%;">Borrar Lista</button>
         </form>
         <form action="getComprobantePago.php" method= "post" style="width:20%;">

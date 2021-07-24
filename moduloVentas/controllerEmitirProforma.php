@@ -34,7 +34,10 @@ class controllerEmitirProforma {
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         $datosProducto = $objProducto -> obtenerProducto($id_producto);
         $datosProductos = $objProducto -> obtenerProductos($productos);
-        session_start();
+        if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        }
 		$formulario = new formEmitirProforma();
 
         if(count($_SESSION["lista_proforma"]["servicios"])){

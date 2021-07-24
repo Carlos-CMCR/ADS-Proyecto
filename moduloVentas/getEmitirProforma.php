@@ -48,7 +48,12 @@ if(isset($_POST["btnEmitirProforma"])){
     $controller = new controllerEmitirProforma;
     if(strlen(trim($_POST["producto"]))){
         $producto = trim($_POST["producto"]);
-        $controller->buscarProducto($producto);
+        if(isset($_POST["idProducto"])){
+            $idProducto = $_POST["idProducto"];
+            $controller->seleccionarProducto($idProducto,$producto);
+        }else{
+            $controller->buscarProducto($producto);
+        }
     }else{
         $controller->mostrarFormularioAddProductoYServicioAProforma();  
     }
