@@ -18,6 +18,7 @@ if(isset($_POST["btnIngresar"])){
 }else if(isset($_POST["btnInicio"])){
     session_start();
     unset($_SESSION['lista']);
+    unset($_SESSION['lista_proforma']);
     $username = $_SESSION['username'];
     include_once("../model/UsuarioPrivilegio.php");
     $objprivilegio = new UsuarioPrivilegio;
