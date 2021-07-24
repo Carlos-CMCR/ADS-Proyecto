@@ -23,6 +23,11 @@ if(isset($_POST["btnEmitirProforma"])){
     </form>");
     }
 }elseif(isset($_POST["btnSeleccionarProducto"])){
+    $nom = $_POST["producto"];
+    $idProducto = $_POST["idProducto"];
+    include_once("./controllerEmitirProforma.php");
+    $controller = new controllerEmitirProforma;
+    $controller->seleccionarProducto($idProducto,$nom);
 }
 else{
     include_once("../shared/formMensajeSistema.php");

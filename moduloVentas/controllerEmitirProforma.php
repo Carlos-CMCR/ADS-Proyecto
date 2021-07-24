@@ -19,6 +19,18 @@ class controllerEmitirProforma {
         $formulario = new formEmitirProforma();
         $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$nombreProd);
     }
+    public function seleccionarProducto($id_producto,$productos){
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
+        $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
+        $tiposServicio =  $objTipoDeServicios->listarServicios();
+        $datosProducto = $objProducto -> obtenerProducto($id_producto);
+        $datosProductos = $objProducto -> obtenerProductos($productos);
+        session_start();
+		$formulario = new formEmitirProforma();
+
+        $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos);
+    }
 }
 
 ?>

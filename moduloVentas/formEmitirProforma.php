@@ -17,14 +17,14 @@ class formEmitirProforma {
             
         </div>
         
-        <div class="wrapper-actions">
+        <div class="wrapper-actions" style="margin:0">
         <?php
         
         if(empty($datosProducto)){
 
         }else{?>
         
-            <form class="lista-form" method="post" action="getComprobantePago.php">
+            <form class="lista-form" method="post" action="getEmitirProforma.php">
                     <tr>
                         <th>Nombre Producto:</th>
                         <td><?php echo $datosProducto[0]["nombre"]?></td>            
