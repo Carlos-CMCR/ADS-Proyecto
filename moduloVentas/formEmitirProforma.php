@@ -119,13 +119,16 @@ class formEmitirProforma {
         }?>
         </table>
         </div>
-        <div class="lista-form" style="display:flex;width: 100%;">
+        <div class="lista-form" style="display:flex;width: 100%;gap:50px">
         <form action='../moduloSeguridad/getUsuario.php'  method='post' style="width:20%;">
             <button class="volver-form__button" name="btnInicio" type="submit" style="width:100%;">Volver</button>
         </form>
         <form action='getEmitirProforma.php'  method='post' style="width:20%;">
             <input type="hidden" name="producto" value="<?php echo $nomProd?>">
             <button class="volver-form__button" name="btnBorrarLista" type="submit" style="width:100%;">Borrar Lista</button>
+        </form>
+        <form action="getComprobantePago.php" method= "post" style="width:20%;">
+            <input class="verde-form__button" type="submit"  name="btnVerLista" value="Ver Lista" style="width:100%;">     
         </form>
         </div>
 
