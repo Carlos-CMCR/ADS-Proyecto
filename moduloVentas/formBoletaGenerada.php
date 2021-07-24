@@ -121,7 +121,7 @@ class formBoletaGenerada extends formulario{
                     <input class="volver-form__button" name="btnSeleccionar" type="submit" value="Volver" >
                     <input class="verde-form__button" type="submit"  name="btnConfirmarBoleta" value="Confirmar">
                     
-                <form>
+                </form>
             </div>
             
         </main>

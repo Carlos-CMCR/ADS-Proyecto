@@ -7,7 +7,11 @@ class controllerEmitirProforma {
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         $formulario = new formEmitirProforma();
 
-        $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio);
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+
+        }else{
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio);
+        }
     }
 
     public function buscarProducto($nombreProd){
@@ -17,7 +21,11 @@ class controllerEmitirProforma {
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         $datosProductos = $objProducto -> obtenerProductos($nombreProd);
         $formulario = new formEmitirProforma();
-        $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$nombreProd);
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+            
+        }else{
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$nombreProd);
+        }
     }
     public function seleccionarProducto($id_producto,$productos){
         include_once("../model/FactoryModels.php");
@@ -29,7 +37,11 @@ class controllerEmitirProforma {
         session_start();
 		$formulario = new formEmitirProforma();
 
-        $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos);
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+            
+        }else{
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos);
+        }
     }
 }
 

@@ -127,7 +127,7 @@ class formFacturaGenerada extends formulario{
                     <input type="hidden" value="<?php echo $id_cliente ?>" name="idCliente" >
                     <input class="volver-form__button" name="btnEmitirComprobante" type="submit" value="Volver" >
                     <input class="verde-form__button" type="submit"  name="btnConfirmarFactura" value="Confirmar" <?php echo $ruc == NULL ? 'disabled':''?> id="confirmarFactura">     
-                <form>
+                </form>
             </div>
             
         </main>

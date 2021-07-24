@@ -3,7 +3,7 @@
 require_once __DIR__ ."/../shared/footerSingleton.php";
 require_once __DIR__ ."/../shared/headSingleton.php";
 class formEmitirProforma {
-    public function formEmitirProformaShow($informacion,$tiposServicio=[],$datosProducto = [],$datosProductos = [],$nomProd = ''){
+    public function formEmitirProformaShow($informacion,$tiposServicio=[],$datosProducto = [],$datosProductos = [],$nomProd = '',$serviciosElegidos = []){
         headSingleton::getHead("Formulario Proforma",$informacion,"..");
         
         echo "<main class='wrapper-actions'>";
@@ -63,7 +63,23 @@ class formEmitirProforma {
                             <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
                             <input type="checkbox" id="<?php echo $tipo['nombre']?>"
                             data-precioServicio = "<?php echo $tipo['precioDeServicio'] ?>"
-                            data-idServicio = "<?php echo $tipo['id_tipo'] ?>">
+                            data-idServicio = "<?php echo $tipo['id_tipo'] ?>"
+                            <?php 
+                            if(count($serviciosElegidos)){
+                                if(count($serviciosElegidos) == 1){
+                                    if($tipo['id_tipo']==$serviciosElegidos[0]["id_tiposervicio"]){
+                                        echo "checked";
+                                    }
+                                }else{
+                                    if($tipo['id_tipo']==$serviciosElegidos[0]["id_tiposervicio"] or $tipo['id_tipo']==$serviciosElegidos[1]["id_tiposervicio"]){
+                                        echo "checked";
+                                    }
+                                }
+                            }
+                            
+                            ?>
+                            
+                            >
                             <label for="<?php echo $tipo['precioDeServicio']?>" >S/. <?php echo $tipo['precioDeServicio']?></label>
                         </div>
                         <?php 
@@ -103,11 +119,14 @@ class formEmitirProforma {
         }?>
         </table>
         </div>
-        <div class="lista-form">
-        <form action='../moduloSeguridad/getUsuario.php'  method='post'>
-            <button class="volver-form__button" name="btnInicio" type="submit" >Volver</button>
-        <form>
-            
+        <div class="lista-form" style="display:flex;width: 100%;">
+        <form action='../moduloSeguridad/getUsuario.php'  method='post' style="width:20%;">
+            <button class="volver-form__button" name="btnInicio" type="submit" style="width:100%;">Volver</button>
+        </form>
+        <form action='getEmitirProforma.php'  method='post' style="width:20%;">
+            <input type="hidden" name="producto" value="<?php echo $nomProd?>">
+            <button class="volver-form__button" name="btnBorrarLista" type="submit" style="width:100%;">Borrar Lista</button>
+        </form>
         </div>
 
 
