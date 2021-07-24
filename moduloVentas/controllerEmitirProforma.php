@@ -46,6 +46,28 @@ class controllerEmitirProforma {
             $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos);
         }
     }
+
+    public function agregarProducto($idProducto,$productos,$cantidad){
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
+        $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
+        $tiposServicio =  $objTipoDeServicios->listarServicios();
+        $datosProductos = $objProducto -> obtenerProductos($productos);
+        $formulario = new formEmitirProforma();
+
+        if(isset($_SESSION["lista_proforma"]["productos"][$idProducto])){
+            $_SESSION["lista_proforma"]["productos"][$idProducto]+= $cantidad;
+        }else{
+            $_SESSION["lista_proforma"]["productos"][$idProducto]= $cantidad;
+        }
+
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+            
+        }else{
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$productos);
+        }
+
+    }
 }
 
 ?>

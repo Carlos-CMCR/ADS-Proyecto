@@ -28,10 +28,14 @@ if(isset($_POST["btnEmitirProforma"])){
     $controller = new controllerEmitirProforma;
     $controller->seleccionarProducto($idProducto,$nom);
 }elseif(isset($_POST["btnAgregar"])){
+    session_start();
     $nom = $_POST["producto"];
     $idProducto = $_POST["idProducto"];
     $cantidad = (int)$_POST["cantidad"];
     if($cantidad >= 1){
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->agregarProducto($idProducto,$nom,$cantidad);
     }else{
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;
