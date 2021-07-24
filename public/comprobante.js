@@ -47,7 +47,7 @@ if(table_productos_lista){
             form.append("idproducto", idproducto)
             form.append("cantidad", value)
             form.append("btnCounterProducto", "")
-            const response = await await fetch("getComprobantePago.php",{
+            const response = await fetch("getComprobantePago.php",{
                 method: 'POST',
                 body: form
             });
@@ -75,7 +75,7 @@ if(container_servicios){
         const form = new FormData()
         form.append("idservicio", idservicio)
         form.append(target.checked ? "btnAgregarServicio":"btnQuitarServicio", "")
-        const response = await await fetch("getComprobantePago.php",{
+        const response = await fetch("getComprobantePago.php",{
             method: 'POST',
             body: form
         });
