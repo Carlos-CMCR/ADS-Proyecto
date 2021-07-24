@@ -5,6 +5,7 @@
 if(isset($_POST["btnEmitirProforma"])){
     include_once("./controllerEmitirProforma.php");
     session_start();
+    $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[],"total"=>0];
     $controller = new controllerEmitirProforma;
     $controller->mostrarFormularioAddProductoYServicioAProforma();
 }elseif(isset($_POST["btnBuscarProducto"])){
@@ -21,6 +22,7 @@ if(isset($_POST["btnEmitirProforma"])){
         <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
     </form>");
     }
+}elseif(isset($_POST["btnSeleccionarProducto"])){
 }
 else{
     include_once("../shared/formMensajeSistema.php");

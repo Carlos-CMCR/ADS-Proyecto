@@ -50,6 +50,7 @@ class controllerEmitirComprobantePago{
         $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         $tiposServicio =  $objTipoDeServicios->listarServicios();
+        
         session_start();
         $_SESSION["lista"] = ["productos"=>[],"servicios"=>[],"precioTotal"=>0.0];
         $productos = [];

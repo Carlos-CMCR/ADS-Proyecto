@@ -3,7 +3,7 @@
 require_once __DIR__ ."/../shared/footerSingleton.php";
 require_once __DIR__ ."/../shared/headSingleton.php";
 class formEmitirProforma {
-    public function formEmitirProformaShow($informacion,$datosProducto = [],$datosProductos = [],$nomProd = ''){
+    public function formEmitirProformaShow($informacion,$tiposServicio=[],$datosProducto = [],$datosProductos = [],$nomProd = ''){
         headSingleton::getHead("Formulario Proforma",$informacion,"..");
         
         echo "<main class='wrapper-actions'>";
@@ -16,11 +16,12 @@ class formEmitirProforma {
             </form>
             
         </div>
+        
         <div class="wrapper-actions">
         <?php
         
         if(empty($datosProducto)){
-           
+
         }else{?>
         
             <form class="lista-form" method="post" action="getComprobantePago.php">
@@ -52,7 +53,24 @@ class formEmitirProforma {
         ?>
         
         </div>
-        <div>
+        
+        <div id="container-servicios" style="width:100%;display:flex;justify-content: center;flex-direction: column;align-items: center;margin-bottom: 5rem;">
+         <h2>Servicios</h2>
+        <?php
+                    foreach ($tiposServicio as $tipo) {
+                        ?>
+                        <div>
+                            <label for="<?php echo $tipo['nombre']?>" ><?php echo $tipo['nombre']?></label>
+                            <input type="checkbox" id="<?php echo $tipo['nombre']?>"
+                            data-precioServicio = "<?php echo $tipo['precioDeServicio'] ?>"
+                            data-idServicio = "<?php echo $tipo['id_tipo'] ?>">
+                            <label for="<?php echo $tipo['precioDeServicio']?>" >S/. <?php echo $tipo['precioDeServicio']?></label>
+                        </div>
+                        <?php 
+                    }
+                ?>
+            </div>
+        
         <table class="lista-form">
         
         <?php
