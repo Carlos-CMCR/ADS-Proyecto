@@ -209,6 +209,12 @@ class controllerEmitirProforma {
         $objCliente = FactoryModels::getModel("cliente");
         return $objCliente->validarSiExisteCliente($dni,$email,$celular);
     }
+
+    public function insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno){
+        include_once("../model/FactoryModels.php");
+        $objCliente = FactoryModels::getModel("cliente");
+        $objCliente->insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno);
+    }
 }
 
 ?>

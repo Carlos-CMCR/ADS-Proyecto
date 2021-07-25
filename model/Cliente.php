@@ -54,8 +54,7 @@ class Cliente{
                 'apellido_paterno' => $apellido_paterno,
                 'apellido_materno' => $apellido_materno
             ]);
-            $id = $this->bd->lastInsertId();
-            return ["success"=>true,"id"=>$id];
+            return ["success"=>true];
         }catch(Exception $ex){
             return ["success"=>false,"mensaje"=>$ex->getMessage() ];
         }

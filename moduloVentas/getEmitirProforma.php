@@ -195,6 +195,21 @@ if(isset($_POST["btnEmitirProforma"])){
             }else{
                 include_once("../shared/formAlerta.php");
                 $alert = new formAlerta;
+                $alert->formAlertaGeneralShow("¿Esta seguro que desea generar la proforma?","
+                <form action='getEmitirProforma.php' method='post'>
+                <input type='hidden' name='dni' value='$dni'>
+                <input type='hidden' name='apellido_paterno' value='$apellido_paterno'>
+                <input type='hidden' name='apellido_materno' value='$apellido_materno'>
+                <input type='hidden' name='celular' value='$celular'>
+                <input type='hidden' name='nombres' value='$nombres'>
+                <input type='hidden' name='email' value='$email'>
+                <input type='hidden' name='existe'>
+                <button type='submit' name='btnConfirmarEmitir' >Continuar</button>
+                </form>
+                <form action='getEmitirProforma.php' method='post'>
+                <button type='submit' name='btnAgregarCliente' >Cancelar</button>
+                </form>
+                ");
             }
 
         }else{
@@ -228,8 +243,10 @@ if(isset($_POST["btnEmitirProforma"])){
     }else{
         
         // insertar cliente
-        // traerme su dni
-        // luego repetir lo de arriba
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->insertarCliente($_POST["dni"],$_POST["apellido_paterno"],$_POST["apellido_materno"],$_POST["celular"],$_POST["nombres"],$_POST["email"]);
+        $controller->insertarProforma($_POST["dni"]);
         
     }
 }elseif(isset($_POST["btnVerLista"])){
