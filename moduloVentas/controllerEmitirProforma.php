@@ -112,6 +112,34 @@ class controllerEmitirProforma {
         count($_SESSION["lista_proforma"]["servicios"]) ? $_SESSION["lista_proforma"]["servicios"] : [],
         $datosLista,$dinero);
     }
+    public function obtenerPrecioUnitaciosProductos($idDeProductos){
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
+        $datosPreciosUnitarios = $objProducto ->obtenerPrecioUnitaciosProductos($idDeProductos);
+        return $datosPreciosUnitarios;
+    }
+    public function obtenerPrecioUnitaciosServicios($idDeServicios){
+        include_once("../model/FactoryModels.php");
+        $objTipoDeServicio = FactoryModels::getModel("tipodeservicio");
+        $datosPreciosUnitarios = $objTipoDeServicio ->obtenerPrecioUnitaciosServicios($idDeServicios);
+        return $datosPreciosUnitarios;
+    }
+    public function obtenerTotal($objPreciosUnitariosProductos = [], $objPreciosUnitariosServicios = []){
+        $total = (float) 0;
+        if(count($objPreciosUnitariosProductos)){
+            foreach ($objPreciosUnitariosProductos as $objProducto){
+                $total+= (double)$objProducto["precioUnitario"]*$_SESSION["lista"]["productos"][$objProducto["id_producto"]];
+            }
+        }
+
+        if(count($objPreciosUnitariosServicios)){
+            for ($i=0; $i < count($objPreciosUnitariosServicios); $i++) { 
+                $total+= (double)$objPreciosUnitariosServicios[$i]["precioDeServicio"];
+            }
+        }
+        $_SESSION["lista"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
+        return $_SESSION["lista"];
+    }
 }
 
 ?>
