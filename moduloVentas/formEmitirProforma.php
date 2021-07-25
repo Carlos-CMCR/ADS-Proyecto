@@ -135,7 +135,7 @@ class formEmitirProforma {
             ?>
             <button class="volver-form__button" name="btnBorrarLista" type="submit" style="width:100%;">Borrar Lista</button>
         </form>
-        <form action="getComprobantePago.php" method= "post" style="width:20%;">
+        <form action="getEmitirProforma.php" method= "post" style="width:20%;">
             <input class="verde-form__button" type="submit"  name="btnVerLista" value="Ver Lista" style="width:100%;">     
         </form>
         </div>

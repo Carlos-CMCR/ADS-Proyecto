@@ -80,6 +80,19 @@ if(isset($_POST["btnEmitirProforma"])){
     }else{
         $controller->mostrarFormularioAddProductoYServicioAProforma();  
     }
+
+}elseif(isset($_POST["btnVerLista"])){
+    session_start();
+    if(count($_SESSION["lista_proforma"]["productos"]) and count($_SESSION["lista_proforma"]["servicios"])){
+
+    }else{
+        include_once("../shared/formMensajeSistema.php");
+        $nuevoMensaje = new formMensajeSistema;
+        $nuevoMensaje -> formMensajeSistemaShow("¡La lista debe de tener al menos un producto o un servicio!","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='regresar' />
+        <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+    </form>");
+    }
 }
 else{
     include_once("../shared/formMensajeSistema.php");
@@ -88,3 +101,4 @@ else{
 }
 
 ?>
+
