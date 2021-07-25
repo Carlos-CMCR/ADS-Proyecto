@@ -4,7 +4,7 @@ require_once __DIR__ ."/../shared/footerSingleton.php";
 require_once __DIR__ ."/../shared/headSingleton.php";
 
 class formVerLista {
-    public function formVerListaShow($informacion,$tiposServicio,$serviciosElegidos = [],$datosLista=[]){
+    public function formVerListaShow($informacion,$tiposServicio,$serviciosElegidos = [],$datosLista=[],$dinero = []){
         headSingleton::getHead("Formulario ver Lista",$informacion,"..");
         ?>
         <main class='wrapper-actions'>
@@ -71,6 +71,22 @@ class formVerLista {
                         <?php 
                     }
                 ?>
+            </div>
+            <div style="width:100%;">
+                <table class="lista-form">
+                    <tr>
+                        <th>Subtotal: </th>
+                        <td id="subtotal"><?php echo $dinero['subtotal']  ?></td>            
+                    </tr>
+                    <tr>
+                        <th>IGV: </th>
+                        <td id="igv"><?php echo $dinero['igv'] ?></td>                
+                    </tr>
+                    <tr>
+                        <th>Precio Total: </th>
+                        <td id="precioTotal"><?php echo $dinero['precioTotal'] ?></td>                
+                    </tr>
+                </table>
             </div>
             <div class="lista-form" style="display:flex;width: 100%;gap:50px">
             <form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>

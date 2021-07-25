@@ -75,11 +75,41 @@ class controllerEmitirProforma {
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         include_once("formVerLista.php");
         $formulario = new formVerLista();
-        if(count($_SESSION["lista_proforma"]["servicios"])){
-            $formulario->formVerListaShow($_SESSION["informacion"],$tiposServicio,$_SESSION["lista_proforma"]["servicios"]);
-        }else{
-            $formulario->formVerListaShow($_SESSION["informacion"],$tiposServicio);
+        $datosLista = [];
+        $dinero = [];
+        $total = 0;
+        if(count($_SESSION["lista_proforma"]["productos"])){
+            $productos = $objProducto->listarInformacionProductos($_SESSION["lista_proforma"]["productos"]);
+            for ($i=0; $i < count($productos); $i++) {
+                $productos[$i]["cantidad"] = $_SESSION["lista_proforma"]["productos"][$productos[$i]["id_producto"]];
+                $total+=((double)$productos[$i]["precioProduct"])*$productos[$i]["cantidad"];
+            }
+            $datosLista = $productos;
         }
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+            foreach ($tiposServicio as $tipo){
+                if(count($_SESSION["lista_proforma"]["servicios"])==2){
+                    if($_SESSION["lista_proforma"]["servicios"][0]==$tipo["id_tipo"] or $_SESSION["lista_proforma"]["servicios"][1]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                    }
+                }
+                if(count($_SESSION["lista_proforma"]["servicios"])==1){
+                    if($_SESSION["lista_proforma"]["servicios"][0]==$tipo["id_tipo"]){
+                        $total+=(double)$tipo["precioDeServicio"];
+                    }
+                }
+            }
+            $dinero["precioTotal"] = $total;
+            $dinero["igv"] = (double)$total * 0.18;
+            $dinero["subtotal"] = $total - $dinero["igv"];
+            $dinero["precioTotal"] =number_format( floatval($dinero["precioTotal"]), 2, '.', '');
+            $dinero["igv"] = number_format( floatval($dinero["igv"]), 2, '.', '');
+            $dinero["subtotal"] = number_format( floatval($dinero["subtotal"]), 2, '.', '');
+            $_SESSION["lista_proforma"]["precioTotal"] = $dinero["precioTotal"];
+        }
+        $formulario->formVerListaShow($_SESSION["informacion"],$tiposServicio,
+        count($_SESSION["lista_proforma"]["servicios"]) ? $_SESSION["lista_proforma"]["servicios"] : [],
+        $datosLista,$dinero);
     }
 }
 

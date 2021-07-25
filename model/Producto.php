@@ -57,6 +57,24 @@ class Producto{
         }
     }
 
+    public function listarInformacionProductos($idDeProductos = []){
+        try {
+            $query = "select p.id_producto,p.stock,p.codigo_producto,p.precioUnitario as precioProduct,p.nombre as nom_product from productos as p WHERE id_producto IN (";
+
+            foreach ($idDeProductos as $key => $value) {
+                $query.=(int)$key;
+                $query.=",";
+            }
+            $query = substr($query, 0, -1).")";
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return $consulta->fetchAll();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
     // REALLY ??
     public function obtenerPrecioUnitaciosProductos($idDeProductos = []){
         try {

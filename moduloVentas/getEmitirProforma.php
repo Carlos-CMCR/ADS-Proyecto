@@ -3,7 +3,7 @@ if(isset($_POST["btnEmitirProforma"])){
     include_once("./controllerEmitirProforma.php");
     session_start();
     if(!isset($_POST["regresar"]))
-        $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[],"total"=>0];
+        $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[],"precioTotal"=>0];
     $controller = new controllerEmitirProforma;
     $controller->mostrarFormularioAddProductoYServicioAProforma();
 }elseif(isset($_POST["btnBuscarProducto"])){
