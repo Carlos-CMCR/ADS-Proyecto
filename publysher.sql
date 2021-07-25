@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2021 a las 08:12:24
+-- Tiempo de generación: 26-07-2021 a las 00:14:32
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -67,7 +67,8 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id_cliente`, `nombres`, `apellido_paterno`, `apellido_materno`, `dni`, `celular`, `email`) VALUES
 (1, 'Thom', 'Roman', 'Aguilar', '72847974', '998774412', 'thom@gmail.com'),
-(2, 'Esteban', 'Paucar', 'Drebeque', '45653245', '987745123', 'esteban@gmail.com');
+(2, 'Esteban', 'Paucar', 'Drebeque', '45653245', '987745123', 'esteban@gmail.com'),
+(3, 'Thom Carlos', 'Roman', 'Oyola', '72847964', '152413698', 'carlos@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -89,6 +90,13 @@ CREATE TABLE `comprobantedepago` (
   `fechaYhora` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `comprobantedepago`
+--
+
+INSERT INTO `comprobantedepago` (`id_comprobante`, `id_tipocomprobante`, `fechaemision`, `ruc`, `hora_emision`, `precioTotal`, `id_cliente`, `numero_comprobante`, `id_estadoComprobante`, `id_usuario`, `fechaYhora`) VALUES
+(2, 1, '2021-07-25', NULL, '17:13:45', 628.08, 3, '00000002', 1, 2, '2021-07-25');
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +109,15 @@ CREATE TABLE `detallecomprobanteproducto` (
   `id_comprobante` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `detallecomprobanteproducto`
+--
+
+INSERT INTO `detallecomprobanteproducto` (`id_detallecomprobantes`, `id_producto`, `id_comprobante`) VALUES
+(4, 1, 2),
+(5, 1, 2),
+(6, 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +129,14 @@ CREATE TABLE `detallecomprobanteservicio` (
   `id_servicio` int(11) NOT NULL,
   `id_comprobante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detallecomprobanteservicio`
+--
+
+INSERT INTO `detallecomprobanteservicio` (`id_detallecomprobanteservicio`, `id_servicio`, `id_comprobante`) VALUES
+(1, 0, 2),
+(2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -177,7 +202,10 @@ INSERT INTO `detalleproformaproducto` (`id_detalleProformaProducto`, `id_product
 (2, 2, 4),
 (3, 3, 4),
 (4, 6, 5),
-(5, 6, 5);
+(5, 6, 5),
+(6, 1, 6),
+(7, 1, 6),
+(8, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -196,7 +224,9 @@ CREATE TABLE `detalleproformaservicio` (
 --
 
 INSERT INTO `detalleproformaservicio` (`id_detalleproformaservicio`, `id_proforma`, `id_tiposervicio`) VALUES
-(1, 5, 1);
+(1, 5, 1),
+(3, 6, 0),
+(4, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -349,7 +379,7 @@ CREATE TABLE `privilegios` (
 
 INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `url`) VALUES
 (1, 'Cambiar constraseña', 'btnCambiarPassword', '../moduloSeguridad/getCambiarPassword.php'),
-(2, 'Emitir Proforma', 'btnEmitirProforma', ''),
+(2, 'Emitir Proforma', 'btnEmitirProforma', '../moduloVentas/getEmitirProforma.php'),
 (3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', '../moduloVentas/getComprobantePago.php'),
 (4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', ''),
 (5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', ''),
@@ -383,7 +413,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `codigo_producto`, `nombre`, `stock`, `precioUnitario`, `id_categoria`, `id_marca`, `descripcion`, `id_observacion`, `id_estadoEntidad`) VALUES
-(1, 'C-1', 'Cámara IP WIFI 720P interior, lente 2.8mm', 10, 159.36, 1, 1, ' Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 720p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.\r\n', 0, 0),
+(1, 'C-1', 'Cámara IP WIFI 720P interior, lente 2.8mm', 7, 159.36, 1, 1, ' Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 720p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.\r\n', 0, 0),
 (2, 'C-3', 'Cámara IP WIFI 1080P interior, lente 2.8mm', 10, 196.47, 1, 1, 'Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 1080p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.', 0, 0),
 (3, 'C-25', 'DOMO IP 2MP HD 1080p 30fps | CMOS 1/2.8\" ICR| IR 20 a 30m | IP67 | PoE | ANTIVANDALICO IK10.', 10, 327.44, 2, 2, 'Resolución: 1920x1080@30 fps • Lente: 2.8mm@F2.0 •Iluminación:0.01Lux@1.2 | 0Lux IR On • D-WDR. 3D DNR, BLC •Almacenamiento en red: NAS (NFS,SMB/CIFS) • Compresión: H.265+, H.265,H.264+, H.264 • Dual Stream • Alimentación: 12Vdc +/- 25%, PoE (802.3af).\r\nTCP/IP: 10/100Mbps • Compatible Software IVMS 4200. Sin fuente', 0, 0),
 (4, 'C-26', 'DOMO EXTERIOR IP 2MP 1080p 30fps. Lente: 2.8-12MM | CMOS 1/2.8\" ICR |IR 20 a 30m', 10, 618.5, 2, 2, ' D-WDR |Slot Micro SD/SDHC/ SDXC | IP67 | IK10| PoE .Resolución: 1920x1080@30 fps •Lente: 2.8-12mm@F1.4 • Iluminación: 0.01Lux@1.2 | 0Lux IR On • D-WDR, 3DDNR, BLC •Compresión: H.265+, H.265, H.264+, H.264 •Dual Stream • Soporta Tarjeta SD hasta 128Gb •Alimentación: 12Vdc +/- 25%, PoE (802.3af). TCP/IP:10/100Mbps • Compatible Software IVMS 4200. Sin fuente', 0, 0),
@@ -421,7 +451,8 @@ INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_em
 (2, '2021-07-09', 917.9, '01:03:42', 1, 2, 0, '00000002', 1, '2021-07-09 06:03:42', 777.86, 140.01),
 (3, '2021-07-05', 574, '01:03:53', 1, 1, 0, '00000003', 1, '2021-07-05 06:03:53', 486.8, 87.62),
 (4, '2021-07-14', 683.27, '01:04:19', 1, 2, 0, '00000004', 1, '2021-07-14 06:04:19', 560.28, 122.98),
-(5, '2021-07-14', 625.88, '01:04:02', 1, 1, 0, '00000005', 1, '2021-07-14 06:04:02', 513.23, 112.65);
+(5, '2021-07-14', 625.88, '01:04:02', 1, 1, 0, '00000005', 1, '2021-07-14 06:04:02', 513.23, 112.65),
+(6, '2021-07-25', 628.08, '17:11:35', 0, 3, 0, '00000006', 1, '2021-07-25 22:11:35', 515.03, 113.05);
 
 -- --------------------------------------------------------
 
@@ -717,25 +748,25 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `comprobantedepago`
 --
 ALTER TABLE `comprobantedepago`
-  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteproducto`
 --
 ALTER TABLE `detallecomprobanteproducto`
-  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteservicio`
 --
 ALTER TABLE `detallecomprobanteservicio`
-  MODIFY `id_detallecomprobanteservicio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detallecomprobanteservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleprivilegio`
@@ -747,13 +778,13 @@ ALTER TABLE `detalleprivilegio`
 -- AUTO_INCREMENT de la tabla `detalleproformaproducto`
 --
 ALTER TABLE `detalleproformaproducto`
-  MODIFY `id_detalleProformaProducto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detalleProformaProducto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleproformaservicio`
 --
 ALTER TABLE `detalleproformaservicio`
-  MODIFY `id_detalleproformaservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_detalleproformaservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estadocomprobante`
@@ -813,7 +844,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
