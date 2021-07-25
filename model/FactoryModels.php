@@ -14,6 +14,7 @@ class FactoryModels{
         switch($name){
             case "usuario":
                 $model = new Usuario;
+                break;
             case "cliente":
                 $model = new Cliente;
                 break;

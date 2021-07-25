@@ -165,6 +165,24 @@ if(isset($_POST["btnEmitirProforma"])){
         <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
     </form>");
     }
+}elseif(isset($_POST["btnEmitir"])){
+    if(isset($_POST["nuevoCliente"])){
+
+    }else{
+        $idcliente = $_POST["idCliente"];
+        include_once("../shared/formAlerta.php");
+        $alert = new formAlerta;
+        $alert->formAlertaGeneralShow("¿Esta seguro que desea generar la proforma?","
+         <form action='getEmitirProforma' method='post'>
+         <input type='hidden' name='button' value='$idcliente'>
+         <button type='submit' name='btnConfirmarEmitir' >Continuar</button>
+         </form>
+         <form action='getEmitirProforma' method='post'>
+         <input type='hidden' name='button' value='$idcliente'>
+         <button type='submit' name='btnConfirmarEmitir' >Cancelar</button>
+         </form>
+        ");
+    }
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
     if(count($_SESSION["lista_proforma"]["productos"]) or count($_SESSION["lista_proforma"]["servicios"])){

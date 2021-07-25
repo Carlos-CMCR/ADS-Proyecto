@@ -9,7 +9,7 @@ class formAgregarCliente {
             <h1>Formulario Agregar Cliente</h1>
             <form style="display:flex;gap:10px;width: 100%;justify-content: center; height:30px;align-items: center;" method="post" action="getEmitirProforma.php">
                 <p>DNI</p>
-                <input type="text" name="dni" id="">
+                <input type="text" name="dni" id="" value="<?php echo count($cliente)?$cliente['dni'] : '' ?>">
                 <button type="submit" name="btnBuscarCliente">Buscar</button>
             </form>
 
@@ -23,7 +23,7 @@ class formAgregarCliente {
             <?php 
             if(!count($cliente)){
                 ?>
-                <input type="hidden" name="noExiste">
+                <input type="hidden" name="nuevoCliente">
                 <?php 
             }else{
                 ?>

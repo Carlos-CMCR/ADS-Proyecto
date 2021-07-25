@@ -38,5 +38,17 @@ include_once("formulario.php");
         <?php
         $this->piePaginaShow(); 
 		}
+        public function formAlertaGeneralShow($title,$body){
+        ?>
+        <div class="wrapper-actions">
+            <div>
+                <h3><?php  echo $title ?></h3>
+                <?php  echo $body?>
+            </div>
+        </div>
+        <?php 
+        }
 	}
+
+    
 ?>
