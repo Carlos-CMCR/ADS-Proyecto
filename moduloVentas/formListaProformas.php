@@ -35,8 +35,8 @@ class formListaProformas extends formulario{
                 ?>
                 <tr>
                 <form action="getComprobantePago.php" method= "post">
-                    <input type="hidden" name="idProforma" value="<?php echo $proforma["id_proforma"];?>">
-                    <input type="hidden" name="idCliente" value="<?php echo $proforma["id_cliente"];?>">
+                    <input type="hidden" name="idProforma" value='<?php echo $proforma["id_proforma"]?>'>
+                    <input type='hidden' name='idCliente' value='<?php echo $proforma["id_cliente"]?>'>
                     <td align="center" ><?php echo $proforma["codigo_proforma"]?></td>
                     <td align="center"><?php echo $proforma["fecha_emision"]?></td>
                     <td align="center"><?php echo $proforma["nombres"];?> <?php echo $proforma["apellido_paterno"];?> <?php echo $proforma["apellido_materno"]?></td>
