@@ -128,7 +128,7 @@ class controllerEmitirProforma {
         $total = (float) 0;
         if(count($objPreciosUnitariosProductos)){
             foreach ($objPreciosUnitariosProductos as $objProducto){
-                $total+= (double)$objProducto["precioUnitario"]*$_SESSION["lista"]["productos"][$objProducto["id_producto"]];
+                $total+= (double)$objProducto["precioUnitario"]*$_SESSION["lista_proforma"]["productos"][$objProducto["id_producto"]];
             }
         }
 

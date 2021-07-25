@@ -7,7 +7,7 @@ if(container_servicios){
         const form = new FormData()
         form.append("idservicio", idservicio)
         form.append(target.checked ? "btnAgregarServicio":"btnQuitarServicio", "")
-        await fetch("getEmitirProforma.php",{
+        const response = await fetch("getEmitirProforma.php",{
             method: 'POST',
             body: form
         });
