@@ -6,7 +6,7 @@ class Proforma {
     public function listarProformas(){
         try {
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
-            $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno  FROM proformas p 
+            $query = "SELECT p.id_proforma, p.codigo_proforma, p.fecha_emision, c.nombres, c.apellido_paterno, c.apellido_materno,c.id_cliente  FROM proformas p 
              INNER JOIN clientes c
              ON c.id_cliente = p.id_cliente
             WHERE  TIMESTAMPDIFF(HOUR,P.fechaYHora,CURRENT_TIMESTAMP) <= 12 and p.id_estadoProforma = 1";
