@@ -126,6 +126,25 @@ if(isset($_POST["btnEmitirProforma"])){
     $objTotal = $controller -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($objTotal);
+}else if(isset($_POST["btnCounterProducto"])){
+    $id_producto = ($_POST['idproducto']);
+    $cantidad = ($_POST['cantidad']);
+    session_start();
+    $_SESSION["lista_proforma"]["productos"][$id_producto] = (int)$cantidad;
+    include_once("controllerEmitirProforma.php");
+    $controller = new controllerEmitirProforma;
+    $objPreciosUnitariosProductos = [];
+    if(count($_SESSION["lista_proforma"]["productos"])){
+        $objPreciosUnitariosProductos = $controller -> obtenerPrecioUnitaciosProductos($_SESSION["lista_proforma"]["productos"]);
+    }
+    $objPreciosUnitariosServicios = [];
+    if(count($_SESSION["lista_proforma"]["servicios"])){
+        $objPreciosUnitariosServicios = $controller -> obtenerPrecioUnitaciosServicios($_SESSION["lista_proforma"]["servicios"]);
+    }
+    $objTotal = $controller -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($objTotal);
+
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
     if(count($_SESSION["lista_proforma"]["productos"]) or count($_SESSION["lista_proforma"]["servicios"])){
