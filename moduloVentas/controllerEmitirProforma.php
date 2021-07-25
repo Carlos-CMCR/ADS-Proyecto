@@ -140,6 +140,24 @@ class controllerEmitirProforma {
         $_SESSION["lista_proforma"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
         return $_SESSION["lista_proforma"];
     }
+
+    public function buscarClientePorDNI($dni){
+        include_once("../model/FactoryModels.php");
+        $objCliente = FactoryModels::getModel("cliente");
+        $cliente = $objCliente->buscarClientePorDNI($dni);
+        if($cliente["existe"]){
+            session_start();
+            include_once("formAgregarCliente.php");
+            $form = new formAgregarCliente;
+            $form->formAgregarClienteShow($_SESSION["informacion"],$cliente["data"]);
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow($cliente["mensaje"],"<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+        }
+    }
 }
 
 ?>

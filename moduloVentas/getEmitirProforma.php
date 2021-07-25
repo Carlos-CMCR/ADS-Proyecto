@@ -151,6 +151,20 @@ if(isset($_POST["btnEmitirProforma"])){
     $form = new formAgregarCliente;
     $form->formAgregarClienteShow($_SESSION["informacion"]);
 
+}elseif(isset($_POST["btnBuscarCliente"])){
+    $dni = trim($_POST["dni"]);
+    if(strlen($dni)==8){
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->buscarClientePorDNI($dni);
+    }else{
+        include_once("../shared/formMensajeSistema.php");
+        $nuevoMensaje = new formMensajeSistema;
+        $nuevoMensaje -> formMensajeSistemaShow("DNI incorrecto, intentelo otra ves","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='regresar' />
+        <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+    </form>");
+    }
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
     if(count($_SESSION["lista_proforma"]["productos"]) or count($_SESSION["lista_proforma"]["servicios"])){

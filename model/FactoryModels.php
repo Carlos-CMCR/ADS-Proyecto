@@ -3,6 +3,7 @@
 require_once __DIR__ ."/Usuario.php";
 require_once __DIR__ ."/Producto.php";
 require_once __DIR__ ."/Proforma.php";
+require_once __DIR__ ."/Cliente.php";
 require_once __DIR__ ."/ComprobanteDePago.php";
 require_once __DIR__ ."/TipoDeServicio.php";
 require_once __DIR__ ."/UsuarioPrivilegio.php";
@@ -13,6 +14,8 @@ class FactoryModels{
         switch($name){
             case "usuario":
                 $model = new Usuario;
+            case "cliente":
+                $model = new Cliente;
                 break;
             case "producto":
                 $model = new Producto;
