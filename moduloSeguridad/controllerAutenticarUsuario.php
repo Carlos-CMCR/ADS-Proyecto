@@ -6,8 +6,12 @@ class controllerAutenticarUsuario{
 			include_once("../model/FactoryModels.php");
 			$objUsuario = FactoryModels::getModel("usuario");
 			$respuesta = $objUsuario -> verificarUsuario($username,$password);
+
+			session_start();
+			session_unset();
+    		session_destroy();
+			session_start();
 			if($respuesta["existe"]){
-				session_start();
 				$objprivilegio = FactoryModels::getModel("usuarioPrivilegio");
 				$listaPrivilegios = $objprivilegio -> obtenerPrivilegios($username);
 				$informacion = $objUsuario->obtenerInformacionDelUsuario($username);

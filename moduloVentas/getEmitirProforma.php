@@ -53,16 +53,16 @@ if(isset($_POST["btnEmitirProforma"])){
 }elseif(isset($_POST["btnQuitarServicio"])){
     $id_servicio = $_POST["idservicio"];
     session_start();    
-    if(count($_SESSION["lista"]["servicios"])==1){
-        $_SESSION["lista"]["servicios"] = [];
-    }else if(count($_SESSION["lista"]["servicios"])==2){
-        if($_SESSION["lista"]["servicios"][0] == $id_servicio){
-            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][1]];
+    if(count($_SESSION["lista_proforma"]["servicios"])==1){
+        $_SESSION["lista_proforma"]["servicios"] = [];
+    }else if(count($_SESSION["lista_proforma"]["servicios"])==2){
+        if($_SESSION["lista_proforma"]["servicios"][0] == $id_servicio){
+            $_SESSION["lista_proforma"]["servicios"] = [$_SESSION["lista_proforma"]["servicios"][1]];
         }else{
-            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][0]];
+            $_SESSION["lista_proforma"]["servicios"] = [$_SESSION["lista_proforma"]["servicios"][0]];
         }
     }else{
-        $_SESSION["lista"]["servicios"] = [];
+        $_SESSION["lista_proforma"]["servicios"] = [];
     }
 }elseif(isset($_POST["btnBorrarLista"])){
     include_once("./controllerEmitirProforma.php");
