@@ -95,6 +95,17 @@ class formVerLista {
             </form>
         </div>
         </main>
+        <div class="modal-bg">
+            <div class="modal">
+                <img src="../img/alert.png" alt="" class="modal__img">
+                <h2 class="modal__title">Quitar Producto</h2>
+                <p class="modal__information">¿Estas seguro que desea quitar el producto <strong><span id="modal-nombre_producto"></span></strong> de la lista? </p>
+                <div class="modal-actions">
+                    <button class="modal__action modal__action--cancelar" type="button">Cancelar</button>
+                    <button class="modal__action modal__action--continuar" type="button">Continuar</button>
+                </div>
+            </div>
+        </div>
         <script src="../public/lista-proforma.js"></script>
         <?php
         var_dump($_SESSION["lista_proforma"]);
