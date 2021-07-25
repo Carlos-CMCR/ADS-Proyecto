@@ -69,9 +69,17 @@ class controllerEmitirProforma {
     }
 
     public function verLista(){
+        include_once("../model/FactoryModels.php");
+        $objProducto = FactoryModels::getModel("producto");
+        $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
+        $tiposServicio =  $objTipoDeServicios->listarServicios();
         include_once("formVerLista.php");
         $formulario = new formVerLista();
-        $formulario->formVerListaShow($_SESSION["informacion"]);
+        if(count($_SESSION["lista_proforma"]["servicios"])){
+            $formulario->formVerListaShow($_SESSION["informacion"],$tiposServicio,$_SESSION["lista_proforma"]["servicios"]);
+        }else{
+            $formulario->formVerListaShow($_SESSION["informacion"],$tiposServicio);
+        }
     }
 }
 
