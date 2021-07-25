@@ -31,7 +31,6 @@ class controllerEmitirComprobantePago{
                         <input name='btnEmitirComprobante'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
                     </form>");
         }
-        //var_dump($arrayProformas);
         
     }
 

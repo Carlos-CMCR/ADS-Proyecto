@@ -146,11 +146,7 @@ class formEmitirProforma {
         ?>
         <script src="../public/proforma.js"> </script>
         <?php
-        if(!isset($_SESSION)) 
-        { 
-            session_start(); 
-        }
-        var_dump($_SESSION["lista_proforma"]); 
+
         footerSingleton::getFooter("..");
 
     }

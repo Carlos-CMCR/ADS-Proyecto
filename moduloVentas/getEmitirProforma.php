@@ -203,7 +203,6 @@ if(isset($_POST["btnEmitirProforma"])){
                 <input type='hidden' name='celular' value='$celular'>
                 <input type='hidden' name='nombres' value='$nombres'>
                 <input type='hidden' name='email' value='$email'>
-                <input type='hidden' name='existe'>
                 <button type='submit' name='btnConfirmarEmitir' >Continuar</button>
                 </form>
                 <form action='getEmitirProforma.php' method='post'>
@@ -214,7 +213,6 @@ if(isset($_POST["btnEmitirProforma"])){
 
         }else{
             include_once("../shared/formMensajeSistema.php");
-            $nuevoMensaje = new formMensajeSistema;
             $nuevoMensaje -> formMensajeSistemaShow("Campos incorrectos, intentelo otra ves","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
             <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
         </form>");
@@ -245,8 +243,15 @@ if(isset($_POST["btnEmitirProforma"])){
         // insertar cliente
         include_once("./controllerEmitirProforma.php");
         $controller = new controllerEmitirProforma;
-        $controller->insertarCliente($_POST["dni"],$_POST["apellido_paterno"],$_POST["apellido_materno"],$_POST["celular"],$_POST["nombres"],$_POST["email"]);
-        $controller->insertarProforma($_POST["dni"]);
+        $respuesta = $controller->insertarCliente($_POST["dni"],$_POST["email"],$_POST["celular"],$_POST["nombres"],$_POST["apellido_paterno"],$_POST["apellido_materno"]);
+        if($respuesta["success"]){
+            $controller->insertarProforma($_POST["dni"]);
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje -> formMensajeSistemaShow($respuesta["mensaje"],"<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+        }
         
     }
 }elseif(isset($_POST["btnVerLista"])){

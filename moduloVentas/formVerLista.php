@@ -111,7 +111,6 @@ class formVerLista {
         </div>
         <script src="../public/lista-proforma.js"></script>
         <?php
-        var_dump($_SESSION["lista_proforma"]);
         footerSingleton::getFooter("..");
     }
 }

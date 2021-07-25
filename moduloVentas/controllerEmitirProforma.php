@@ -185,7 +185,7 @@ class controllerEmitirProforma {
 
             // mensjae sistema todo ok
             $exito = true;
-            $mensaje = "Comprobante de Pago registrada con éxito";+
+            $mensaje = "Proforma registrada con éxito";+
             include_once("../shared/formMensajeSistema.php");
 				$nuevoMensaje = new formMensajeSistema;
 				$nuevoMensaje -> formMensajeSistemaShow(
@@ -213,7 +213,7 @@ class controllerEmitirProforma {
     public function insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno){
         include_once("../model/FactoryModels.php");
         $objCliente = FactoryModels::getModel("cliente");
-        $objCliente->insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno);
+        return $objCliente->insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno);
     }
 }
 
