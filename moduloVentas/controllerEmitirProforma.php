@@ -146,7 +146,10 @@ class controllerEmitirProforma {
         $objCliente = FactoryModels::getModel("cliente");
         $cliente = $objCliente->buscarClientePorDNI($dni);
         if($cliente["existe"]){
-            session_start();
+            if(!isset($_SESSION)) 
+            { 
+                session_start(); 
+            }
             include_once("formAgregarCliente.php");
             $form = new formAgregarCliente;
             $form->formAgregarClienteShow($_SESSION["informacion"],$cliente["data"]);
@@ -157,6 +160,12 @@ class controllerEmitirProforma {
             <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
         </form>");
         }
+    }
+
+    public function insertarProforma($dni){
+        include_once("../model/FactoryModels.php");
+        $objCliente = FactoryModels::getModel("cliente");
+        $cliente = $objCliente->buscarClientePorDNI($dni);
     }
 }
 

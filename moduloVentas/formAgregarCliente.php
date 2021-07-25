@@ -13,7 +13,7 @@ class formAgregarCliente {
                 <button type="submit" name="btnBuscarCliente">Buscar</button>
             </form>
 
-        <form action="" style="display:flex;flex-wrap: wrap;width: 100%;gap:10px">
+        <form action="getEmitirProforma.php" method= "post" style="display:flex;flex-wrap: wrap;width: 100%;gap:10px">
             <input type="text" name="dni" value="<?php echo count($cliente)?$cliente['dni'] : '' ?>" id="" placeholder="DNI" style="width: calc(50% - 10px);">
             <input type="text" name="apellido_paterno" value="<?php echo count($cliente)?$cliente['apellido_paterno'] : '' ?>" id="" placeholder="Apellido Paterno" style="width: calc(50% - 10px);">
             <input type="text" name="apellido_materno" value="<?php echo count($cliente)?$cliente['apellido_materno'] : '' ?>" id="" placeholder="Apellido Materno" style="width: calc(50% - 10px);">
@@ -27,7 +27,7 @@ class formAgregarCliente {
                 <?php 
             }else{
                 ?>
-                <input type="hidden" name="idCliente" value="<?php echo $cliente['id_cliente'] ?>">
+                <input type="hidden" name="dni" value="<?php echo $cliente['dni'] ?>">
                 <?php 
                 
             }

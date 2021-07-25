@@ -147,6 +147,13 @@ if(isset($_POST["btnEmitirProforma"])){
 
 }elseif(isset($_POST["btnAgregarCliente"])){
     session_start();
+    if(isset($_POST["dni"])){
+        $dni = $_POST["dni"];
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->buscarClientePorDNI($dni);
+        return;
+    }
     include_once("formAgregarCliente.php");
     $form = new formAgregarCliente;
     $form->formAgregarClienteShow($_SESSION["informacion"]);
@@ -169,19 +176,26 @@ if(isset($_POST["btnEmitirProforma"])){
     if(isset($_POST["nuevoCliente"])){
 
     }else{
-        $idcliente = $_POST["idCliente"];
+        $dni = $_POST["dni"];
         include_once("../shared/formAlerta.php");
         $alert = new formAlerta;
         $alert->formAlertaGeneralShow("¿Esta seguro que desea generar la proforma?","
-         <form action='getEmitirProforma' method='post'>
-         <input type='hidden' name='button' value='$idcliente'>
+         <form action='getEmitirProforma.php' method='post'>
+         <input type='hidden' name='dni' value='$dni'>
+         <input type='hidden' name='existe'>
          <button type='submit' name='btnConfirmarEmitir' >Continuar</button>
          </form>
-         <form action='getEmitirProforma' method='post'>
-         <input type='hidden' name='button' value='$idcliente'>
-         <button type='submit' name='btnConfirmarEmitir' >Cancelar</button>
+         <form action='getEmitirProforma.php' method='post'>
+         <input type='hidden' name='dni' value='$dni'>
+         <button type='submit' name='btnAgregarCliente' >Cancelar</button>
          </form>
         ");
+    }
+}elseif(isset($_POST["btnConfirmarEmitir"])){
+    if(isset($_POST["existe"])){
+        
+    }else{
+
     }
 }elseif(isset($_POST["btnVerLista"])){
     session_start();

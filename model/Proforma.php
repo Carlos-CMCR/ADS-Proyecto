@@ -109,7 +109,77 @@ class Proforma {
             return ["success"=>false,"message"=>$ex->getMessage()];
         }
     }
-    
+    public function insertarProforma($id_cliente,$precioTotal,$id_usuario,$subtotal,$igv){
+        try{
+            date_default_timezone_set('America/Lima');
+            $fechaYhora = date('Y-m-d H:i:s', time());
+            $fechaemision = explode(" ", $fechaYhora)[0];
+            $hora_emision = explode(" ", $fechaYhora)[1];
+            $sql = "INSERT INTO proformas(fecha_emision,precioTotal,hora_emision,id_estadoProforma,id_cliente,id_estadoEntidad,id_usuario,fechaYhora,subtotal,igv)
+            VALUES (:fecha_emision,:precioTotal,:hora_emision,1,:id_cliente,0,:id_usuario,:fechaYhora,:subtotal,:igv)
+            ";
+            
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $consulta = $this->bd->prepare($sql);
+            $consulta->execute([
+                "fechaemision"=>$fechaemision,
+                "hora_emision"=>$hora_emision,
+                "precioTotal" => (double)$precioTotal,
+                "id_cliente" =>$id_cliente,
+                "id_usuario" => $id_usuario,
+                "fechaYhora"=>$fechaYhora,
+                "subtotal"=>(double)$subtotal,
+                "ibv"=>(double)$igv,
+            ]);
+            $id = $this->bd->lastInsertId();
+
+            $codigo_proforma = substr('00000000' . $id, -8);
+            $query = "UPDATE proformas SET codigo_proforma = :codigo_proforma where id_proforma = :id_proforma;";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "id_proforma"=>$id,
+                "codigo_proforma"=>$codigo_proforma,
+            ]);
+
+            return ["success"=>true,"id"=>$id];
+
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }
+    }
+
+    public function insetarDetalleProformaProducto($id_proforma,$productos = []){
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "INSERT INTO detalleproformaproducto (id_producto,id_proforma) VALUES ";
+            foreach ($productos as $idp => $cantidad) {
+                for ($i=0; $i < $cantidad ; $i++) { 
+                    $query.="($idp,$id_proforma),";
+                }
+            }
+            $query = substr_replace($query ,"",-1);
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return ["success"=>true]; 
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }
+    }
+    public function insetarDetalleProformaServicio($id_proforma,$servicios = []){
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "INSERT INTO detalleproformaservicio (id_tiposervicio,id_proforma) VALUES ";
+            for ($i=0; $i < count($servicios) ; $i++) { 
+                $query= $query . "($id_proforma, $servicios[$i]),";
+            }
+            $query = substr_replace($query ,"",-1);
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return ["success"=>true]; 
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }
+    }
 }
 
 ?>
