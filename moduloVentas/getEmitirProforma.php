@@ -83,8 +83,10 @@ if(isset($_POST["btnEmitirProforma"])){
 
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
-    if(count($_SESSION["lista_proforma"]["productos"]) and count($_SESSION["lista_proforma"]["servicios"])){
-
+    if(count($_SESSION["lista_proforma"]["productos"]) or count($_SESSION["lista_proforma"]["servicios"])){
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->verLista();
     }else{
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;

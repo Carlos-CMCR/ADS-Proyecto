@@ -67,6 +67,12 @@ class controllerEmitirProforma {
         }
 
     }
+
+    public function verLista(){
+        include_once("formVerLista.php");
+        $formulario = new formVerLista();
+        $formulario->formVerListaShow($_SESSION["informacion"]);
+    }
 }
 
 ?>
