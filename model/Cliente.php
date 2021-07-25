@@ -20,6 +20,45 @@ class Cliente{
         }
 
     }
+
+    public function validarSiExisteCliente($dni,$email,$celular){
+        $sql = "SELECT * FROM clientes WHERE dni = :dni OR celular = :celular OR email = :email";
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $consulta = $this->bd->prepare($sql);
+            $consulta->execute([
+                'dni' => $dni
+            ]);
+            if($consulta->rowCount()){ 
+                return ["existe"=>true,"data","mensaje"=>"Campo dni/email/celular estan registrados"];
+            }else{
+                return ["existe"=>false ];
+            }
+        }catch(Exception $ex){
+            return ["existe"=>false,"mensaje"=>$ex->getMessage() ];
+        }
+    }
+
+    public function insertarCliente($dni,$email,$celular,$nombres,$apellido_paterno,$apellido_materno){
+        $sql = "INSERT INTO clientes (dni,email,celular,nombres,apellido_paterno,apellido_materno) VALUES (:dni,:email,:celular,:nombres,:apellido_paterno,:apellido_materno)";
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $consulta = $this->bd->prepare($sql);
+            $consulta->execute([
+                'dni' => $dni,
+                'email' => $email,
+                'celular' => $celular,
+                'nombres' => $nombres,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno
+            ]);
+            $id = $this->bd->lastInsertId();
+            return ["success"=>true,"id"=>$id];
+        }catch(Exception $ex){
+            return ["success"=>false,"mensaje"=>$ex->getMessage() ];
+        }
+
+    }
 }
 
 
