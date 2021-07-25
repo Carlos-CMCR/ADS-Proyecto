@@ -165,7 +165,43 @@ class controllerEmitirProforma {
     public function insertarProforma($dni){
         include_once("../model/FactoryModels.php");
         $objCliente = FactoryModels::getModel("cliente");
+        $objProforma = FactoryModels::getModel("proforma");
         $cliente = $objCliente->buscarClientePorDNI($dni);
+        session_start();
+        $igv = (double)$_SESSION["lista_proforma"]["precioTotal"] * 0.18;
+        $subtotal = (double)$_SESSION["lista_proforma"]["precioTotal"] - $igv;
+
+        $igv = number_format( floatval($igv), 2, '.', '');
+        $subtotal = number_format( floatval($subtotal), 2, '.', '');
+        
+        $respuesta = $objProforma->insertarProforma($cliente["data"]["id_cliente"],$_SESSION["lista_proforma"]["precioTotal"],$_SESSION["id_usuario"],$subtotal,$igv);
+        if($respuesta["success"]){
+            if(count($_SESSION["lista_proforma"]["servicios"])){
+                $objProforma->insetarDetalleProformaServicio($respuesta["id"],$_SESSION["lista_proforma"]["servicios"]);
+            }
+            if(count($_SESSION["lista_proforma"]["productos"])){
+                $objProforma->insetarDetalleProformaProducto($respuesta["id"],$_SESSION["lista_proforma"]["productos"]);
+            }
+
+            // mensjae sistema todo ok
+            $exito = true;
+            $mensaje = "Comprobante de Pago registrada con éxito";+
+            include_once("../shared/formMensajeSistema.php");
+				$nuevoMensaje = new formMensajeSistema;
+				$nuevoMensaje -> formMensajeSistemaShow(
+                    $mensaje,
+                    "<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                    </form>",$exito);
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow(
+            $respuesta["message"],
+                "<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+                    <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                </form>");
+        }
     }
 }
 

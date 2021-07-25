@@ -116,20 +116,19 @@ class Proforma {
             $fechaemision = explode(" ", $fechaYhora)[0];
             $hora_emision = explode(" ", $fechaYhora)[1];
             $sql = "INSERT INTO proformas(fecha_emision,precioTotal,hora_emision,id_estadoProforma,id_cliente,id_estadoEntidad,id_usuario,fechaYhora,subtotal,igv)
-            VALUES (:fecha_emision,:precioTotal,:hora_emision,1,:id_cliente,0,:id_usuario,:fechaYhora,:subtotal,:igv)
-            ";
+            VALUES (:fecha_emision,:precioTotal,:hora_emision,1,:id_cliente,0,:id_usuario,:fechaYhora,:subtotal,:igv)";
             
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $consulta = $this->bd->prepare($sql);
             $consulta->execute([
-                "fechaemision"=>$fechaemision,
+                "fecha_emision"=>$fechaemision,
                 "hora_emision"=>$hora_emision,
                 "precioTotal" => (double)$precioTotal,
                 "id_cliente" =>$id_cliente,
                 "id_usuario" => $id_usuario,
                 "fechaYhora"=>$fechaYhora,
                 "subtotal"=>(double)$subtotal,
-                "ibv"=>(double)$igv,
+                "igv"=>(double)$igv,
             ]);
             $id = $this->bd->lastInsertId();
 

@@ -193,7 +193,9 @@ if(isset($_POST["btnEmitirProforma"])){
     }
 }elseif(isset($_POST["btnConfirmarEmitir"])){
     if(isset($_POST["existe"])){
-        
+        include_once("./controllerEmitirProforma.php");
+        $controller = new controllerEmitirProforma;
+        $controller->insertarProforma($_POST["dni"]);
     }else{
 
     }
