@@ -197,7 +197,12 @@ if(isset($_POST["btnEmitirProforma"])){
         $controller = new controllerEmitirProforma;
         $controller->insertarProforma($_POST["dni"]);
     }else{
-
+        $dni = trim($_POST["dni"]);
+        $apellido_paterno = trim($_POST["apellido_paterno"]);
+        $apellido_materno = trim($_POST["apellido_materno"]);
+        $celular = trim($_POST["celular"]);
+        $nombres = trim($_POST["nombres"]);
+        $email = trim($_POST["email"]);
     }
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
