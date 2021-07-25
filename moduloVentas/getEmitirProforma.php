@@ -174,7 +174,23 @@ if(isset($_POST["btnEmitirProforma"])){
     }
 }elseif(isset($_POST["btnEmitir"])){
     if(isset($_POST["nuevoCliente"])){
+        $dni = trim($_POST["dni"]);
+        $apellido_paterno = trim($_POST["apellido_paterno"]);
+        $apellido_materno = trim($_POST["apellido_materno"]);
+        $celular = trim($_POST["celular"]);
+        $nombres = trim($_POST["nombres"]);
+        $email = trim($_POST["email"]);
+        if(strlen($dni)==8 and strlen($apellido_paterno)>3 and strlen($apellido_materno)>3 and strlen($celular)==9 and strlen($nombres)>3 and strlen($email)>5){
 
+            // validar celular email dni
+
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+            $nuevoMensaje = new formMensajeSistema;
+            $nuevoMensaje -> formMensajeSistemaShow("Campos incorrectos, intentelo otra ves","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+        }
     }else{
         $dni = $_POST["dni"];
         include_once("../shared/formAlerta.php");
@@ -197,12 +213,11 @@ if(isset($_POST["btnEmitirProforma"])){
         $controller = new controllerEmitirProforma;
         $controller->insertarProforma($_POST["dni"]);
     }else{
-        $dni = trim($_POST["dni"]);
-        $apellido_paterno = trim($_POST["apellido_paterno"]);
-        $apellido_materno = trim($_POST["apellido_materno"]);
-        $celular = trim($_POST["celular"]);
-        $nombres = trim($_POST["nombres"]);
-        $email = trim($_POST["email"]);
+        
+        // insertar cliente
+        // traerme su dni
+        // luego repetir lo de arriba
+        
     }
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
