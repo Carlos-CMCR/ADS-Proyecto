@@ -169,7 +169,7 @@ class Proforma {
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "INSERT INTO detalleproformaservicio (id_tiposervicio,id_proforma) VALUES ";
             for ($i=0; $i < count($servicios) ; $i++) { 
-                $query= $query . "($id_proforma, $servicios[$i]),";
+                $query= $query . "($servicios[$i],$id_proforma),";
             }
             $query = substr_replace($query ,"",-1);
             $consulta = $this->bd->prepare($query);
