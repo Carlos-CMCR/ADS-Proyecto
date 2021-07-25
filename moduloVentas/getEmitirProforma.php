@@ -145,6 +145,12 @@ if(isset($_POST["btnEmitirProforma"])){
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($objTotal);
 
+}elseif(isset($_POST["btnAgregarCliente"])){
+    session_start();
+    include_once("formAgregarCliente.php");
+    $form = new formAgregarCliente;
+    $form->formAgregarClienteShow($_SESSION["informacion"]);
+
 }elseif(isset($_POST["btnVerLista"])){
     session_start();
     if(count($_SESSION["lista_proforma"]["productos"]) or count($_SESSION["lista_proforma"]["servicios"])){

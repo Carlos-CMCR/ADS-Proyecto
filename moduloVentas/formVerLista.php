@@ -93,6 +93,9 @@ class formVerLista {
                 <input type='hidden' name='regresar' />
                 <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
             </form>
+            <form action='getEmitirProforma.php'  method='post' style='padding:0;'>
+                <input name='btnAgregarCliente'  class='verde-form__button' style='width:100%;font-size:1.5em;padding:.5em;' value='Generar Proforma' type='submit'>
+            </form>
         </div>
         </main>
         <div class="modal-bg">
