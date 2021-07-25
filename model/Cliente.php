@@ -27,15 +27,17 @@ class Cliente{
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $consulta = $this->bd->prepare($sql);
             $consulta->execute([
-                'dni' => $dni
+                'dni' => $dni,
+                'celular' => $celular,
+                'email' => $email
             ]);
             if($consulta->rowCount()){ 
-                return ["existe"=>true,"data","mensaje"=>"Campo dni/email/celular estan registrados"];
+                return ["existe"=>true,"mensaje"=>"Campo dni/email/celular estan registrados"];
             }else{
                 return ["existe"=>false ];
             }
         }catch(Exception $ex){
-            return ["existe"=>false,"mensaje"=>$ex->getMessage() ];
+            return ["existe"=>true,"mensaje"=>$ex->getMessage() ];
         }
     }
 

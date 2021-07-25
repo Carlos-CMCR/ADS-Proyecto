@@ -183,6 +183,19 @@ if(isset($_POST["btnEmitirProforma"])){
         if(strlen($dni)==8 and strlen($apellido_paterno)>3 and strlen($apellido_materno)>3 and strlen($celular)==9 and strlen($nombres)>3 and strlen($email)>5){
 
             // validar celular email dni
+            include_once("./controllerEmitirProforma.php");
+            $controller = new controllerEmitirProforma;
+            $respuesta = $controller->validarCliente($dni,$email,$celular);
+            if($respuesta["existe"]){
+                include_once("../shared/formMensajeSistema.php");
+                $nuevoMensaje = new formMensajeSistema;
+                $nuevoMensaje -> formMensajeSistemaShow($respuesta["mensaje"],"<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+                <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+            </form>");
+            }else{
+                include_once("../shared/formAlerta.php");
+                $alert = new formAlerta;
+            }
 
         }else{
             include_once("../shared/formMensajeSistema.php");

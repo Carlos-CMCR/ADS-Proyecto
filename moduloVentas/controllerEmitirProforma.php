@@ -207,7 +207,7 @@ class controllerEmitirProforma {
     public function validarCliente($dni,$email,$celular){
         include_once("../model/FactoryModels.php");
         $objCliente = FactoryModels::getModel("cliente");
-        
+        return $objCliente->validarSiExisteCliente($dni,$email,$celular);
     }
 }
 
