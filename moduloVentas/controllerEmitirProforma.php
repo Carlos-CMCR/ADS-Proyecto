@@ -137,8 +137,8 @@ class controllerEmitirProforma {
                 $total+= (double)$objPreciosUnitariosServicios[$i]["precioDeServicio"];
             }
         }
-        $_SESSION["lista"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
-        return $_SESSION["lista"];
+        $_SESSION["lista_proforma"]["precioTotal"]=number_format( floatval($total), 2, '.', '');
+        return $_SESSION["lista_proforma"];
     }
 }
 
