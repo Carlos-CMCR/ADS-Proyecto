@@ -2,9 +2,8 @@
 if(isset($_POST["btnEmitirProforma"])){
     include_once("./controllerEmitirProforma.php");
     session_start();
-    if(!isset($_SESSION["lista_proforma"])){
+    if(!isset($_POST["regresar"]))
         $_SESSION["lista_proforma"] = ["productos"=>[],"servicios"=>[],"total"=>0];
-    }
     $controller = new controllerEmitirProforma;
     $controller->mostrarFormularioAddProductoYServicioAProforma();
 }elseif(isset($_POST["btnBuscarProducto"])){
@@ -18,6 +17,7 @@ if(isset($_POST["btnEmitirProforma"])){
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;
         $nuevoMensaje -> formMensajeSistemaShow("¡El nombre debe contener al menos un caracter!","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='regresar' />
         <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
     </form>");
     }
@@ -40,11 +40,30 @@ if(isset($_POST["btnEmitirProforma"])){
         include_once("../shared/formMensajeSistema.php");
         $nuevoMensaje = new formMensajeSistema;
         $nuevoMensaje -> formMensajeSistemaShow("¡INGRESE CANTIDAD VÁLIDO!","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+        <input type='hidden' name='regresar' />
         <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
     </form>");
 
     }
 
+}elseif(isset($_POST["btnAgregarServicio"])){
+    $id_servicio = $_POST["idservicio"];
+    session_start();
+    array_push($_SESSION["lista_proforma"]["servicios"],$id_servicio);
+}elseif(isset($_POST["btnQuitarServicio"])){
+    $id_servicio = $_POST["idservicio"];
+    session_start();    
+    if(count($_SESSION["lista"]["servicios"])==1){
+        $_SESSION["lista"]["servicios"] = [];
+    }else if(count($_SESSION["lista"]["servicios"])==2){
+        if($_SESSION["lista"]["servicios"][0] == $id_servicio){
+            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][1]];
+        }else{
+            $_SESSION["lista"]["servicios"] = [$_SESSION["lista"]["servicios"][0]];
+        }
+    }else{
+        $_SESSION["lista"]["servicios"] = [];
+    }
 }elseif(isset($_POST["btnBorrarLista"])){
     include_once("./controllerEmitirProforma.php");
     session_start();

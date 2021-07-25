@@ -67,11 +67,11 @@ class formEmitirProforma {
                             <?php 
                             if(count($serviciosElegidos)){
                                 if(count($serviciosElegidos) == 1){
-                                    if($tipo['id_tipo']==$serviciosElegidos[0]["id_tiposervicio"]){
+                                    if($tipo['id_tipo']==$serviciosElegidos[0]){
                                         echo "checked";
                                     }
                                 }else{
-                                    if($tipo['id_tipo']==$serviciosElegidos[0]["id_tiposervicio"] or $tipo['id_tipo']==$serviciosElegidos[1]["id_tiposervicio"]){
+                                    if($tipo['id_tipo']==$serviciosElegidos[0] or $tipo['id_tipo']==$serviciosElegidos[1]){
                                         echo "checked";
                                     }
                                 }
@@ -144,7 +144,13 @@ class formEmitirProforma {
         <?php
         echo "</main>";
         ?>
-        <?php 
+        <script src="../public/proforma.js"> </script>
+        <?php
+        if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        }
+        var_dump($_SESSION["lista_proforma"]); 
         footerSingleton::getFooter("..");
 
     }

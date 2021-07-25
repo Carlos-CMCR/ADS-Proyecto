@@ -6,9 +6,8 @@ class controllerEmitirProforma {
         $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         $formulario = new formEmitirProforma();
-
         if(count($_SESSION["lista_proforma"]["servicios"])){
-
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],[],'',$_SESSION["lista_proforma"]["servicios"]);
         }else{
             $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio);
         }
@@ -22,7 +21,7 @@ class controllerEmitirProforma {
         $datosProductos = $objProducto -> obtenerProductos($nombreProd);
         $formulario = new formEmitirProforma();
         if(count($_SESSION["lista_proforma"]["servicios"])){
-            
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$nombreProd,$_SESSION["lista_proforma"]["servicios"]);
         }else{
             $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$nombreProd);
         }
@@ -41,7 +40,7 @@ class controllerEmitirProforma {
 		$formulario = new formEmitirProforma();
 
         if(count($_SESSION["lista_proforma"]["servicios"])){
-            
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos,$_SESSION["lista_proforma"]["servicios"]);
         }else{
             $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,$datosProducto,$datosProductos,$productos);
         }
@@ -62,7 +61,7 @@ class controllerEmitirProforma {
         }
 
         if(count($_SESSION["lista_proforma"]["servicios"])){
-            
+            $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$productos,$_SESSION["lista_proforma"]["servicios"]);
         }else{
             $formulario->formEmitirProformaShow($_SESSION["informacion"],$tiposServicio,[],$datosProductos,$productos);
         }
