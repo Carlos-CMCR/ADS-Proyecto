@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2021 a las 00:14:32
+-- Tiempo de generación: 26-07-2021 a las 04:43:09
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -67,8 +67,7 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id_cliente`, `nombres`, `apellido_paterno`, `apellido_materno`, `dni`, `celular`, `email`) VALUES
 (1, 'Thom', 'Roman', 'Aguilar', '72847974', '998774412', 'thom@gmail.com'),
-(2, 'Esteban', 'Paucar', 'Drebeque', '45653245', '987745123', 'esteban@gmail.com'),
-(3, 'Thom Carlos', 'Roman', 'Oyola', '72847964', '152413698', 'carlos@gmail.com');
+(2, 'Esteban', 'Paucar', 'Drebeque', '45653245', '987745123', 'esteban@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -95,7 +94,7 @@ CREATE TABLE `comprobantedepago` (
 --
 
 INSERT INTO `comprobantedepago` (`id_comprobante`, `id_tipocomprobante`, `fechaemision`, `ruc`, `hora_emision`, `precioTotal`, `id_cliente`, `numero_comprobante`, `id_estadoComprobante`, `id_usuario`, `fechaYhora`) VALUES
-(2, 1, '2021-07-25', NULL, '17:13:45', 628.08, 3, '00000002', 1, 2, '2021-07-25');
+(2, 1, '2021-07-25', NULL, '21:42:06', 628.08, 1, '00000002', 1, 2, '2021-07-25');
 
 -- --------------------------------------------------------
 
@@ -385,7 +384,7 @@ INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `
 (5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', ''),
 (6, 'Agendar Servicio', 'btnAgendarServicio', ''),
 (7, 'Registrar Incidencia', 'btnRegistrarIncidencia', ''),
-(8, 'Emitir Reporte de Ventas del Dia', 'btnEmitirReporteDeVentasDelDia', NULL),
+(8, 'Emitir Reporte de Ventas del Dia', 'btnEmitirReporteDeVentasDelDia', '../moduloGestion/getReporteVentas.php'),
 (9, 'Gestionar Inventario', 'btnGestionarInventario', NULL),
 (11, 'Gestionar Datos del usuario', 'btnGestionarDatosDelUsuario', NULL);
 
@@ -452,7 +451,7 @@ INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_em
 (3, '2021-07-05', 574, '01:03:53', 1, 1, 0, '00000003', 1, '2021-07-05 06:03:53', 486.8, 87.62),
 (4, '2021-07-14', 683.27, '01:04:19', 1, 2, 0, '00000004', 1, '2021-07-14 06:04:19', 560.28, 122.98),
 (5, '2021-07-14', 625.88, '01:04:02', 1, 1, 0, '00000005', 1, '2021-07-14 06:04:02', 513.23, 112.65),
-(6, '2021-07-25', 628.08, '17:11:35', 0, 3, 0, '00000006', 1, '2021-07-25 22:11:35', 515.03, 113.05);
+(6, '2021-07-25', 628.08, '21:41:48', 0, 1, 0, '00000006', 1, '2021-07-26 02:41:48', 515.03, 113.05);
 
 -- --------------------------------------------------------
 
@@ -748,7 +747,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `comprobantedepago`
