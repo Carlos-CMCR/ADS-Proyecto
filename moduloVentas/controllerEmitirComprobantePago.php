@@ -47,6 +47,8 @@ class controllerEmitirComprobantePago{
         $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
 
         $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
+
+
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         

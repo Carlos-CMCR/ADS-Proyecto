@@ -63,7 +63,10 @@ class Proforma {
             $consulta->execute([
                 'id_proforma' => (int)$id_proforma
             ]);
-            return $consulta->fetchAll();          
+            if($consulta->rowCount()){
+                return $consulta->fetchAll();          
+            }
+            return [];
 
         }catch(Exception $ex){
             return $ex->getMessage();
@@ -73,7 +76,7 @@ class Proforma {
     public function obtenerServiciosDeproformaSeleccionada($id_proforma){
         try {
             $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
-            $query = "SELECT dps.id_tiposervicio,ts.nombre, ts.precioDeServicio FROM proformas as p
+            $query = "SELECT dps.id_tiposervicio,ts.nombre, ts.precioDeServicio,p.precioTotal FROM proformas as p
             INNER JOIN detalleproformaservicio as dps
                 on dps.id_proforma = p.id_proforma
             INNER JOIN tipodeservicios as ts
