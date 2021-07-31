@@ -292,7 +292,7 @@ class controllerEmitirComprobantePago{
                     $mensaje,
                     "
                     <form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;margin-bottom:1.2em;' target='_blank'>
-                        <input type='hidden' name='icComprobante' value='$id'>
+                        <input type='hidden' name='idComprobante' value='$id'>
                         <input name='btnImprimir'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;;background: #0e47a1' value='Imprimir' type='submit'>
                     </form>
                     <form action='getComprobantePago.php' class='form-message__link' method='post' style='padding:0;'>
@@ -310,10 +310,13 @@ class controllerEmitirComprobantePago{
         }
     }
 
-    public function insertarFactura($id_cliente,$id_usuario,$lista){
+    public function generarPDFComprobante($id){
         include_once("../model/FactoryModels.php");
         $objComprobante = FactoryModels::getModel("comprobante");
-        $objProducto = FactoryModels::getModel("producto");
+        $objUsuario = FactoryModels::getModel("usuario");
+        session_start();
+        $responsable = $objUsuario->obtenerResponsable($_SESSION['username']);
+        
     }
 
 }

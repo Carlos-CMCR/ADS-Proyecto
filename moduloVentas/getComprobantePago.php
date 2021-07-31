@@ -229,6 +229,11 @@ elseif(isset($_POST["btnSeleccionar"])){
     $objTotal = $controlComprobante -> obtenerTotal($objPreciosUnitariosProductos, $objPreciosUnitariosServicios);
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($objTotal);
+}else if(isset($_POST["btnImprimir"])){
+    $idComprobante = $_POST["idComprobante"];
+    include_once("./controllerEmitirComprobantePago.php");
+    $controller = new controllerEmitirComprobantePago;
+    $controller->generarPDFComprobante($idComprobante);
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
