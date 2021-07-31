@@ -10,7 +10,7 @@ class proforma_plantilla {
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>boleta</title>
+	<title>PROFORMA</title>
 	<style>
 		*{
 		margin: 0;
