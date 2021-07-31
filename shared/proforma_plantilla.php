@@ -253,7 +253,7 @@ class proforma_plantilla {
         <?php 
     }
 
-    public function generarPDF($html,$id = ''){
+    public function generarPDF($html,$codigo = ''){
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         //$pdfOptions->set('isHtml5ParserEnabled', true);
@@ -261,7 +261,7 @@ class proforma_plantilla {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("proforma_".$id.".pdf",array('Attachment'=>0));
+        $dompdf->stream("proforma_".$codigo.".pdf",array('Attachment'=>0));
     }
 }
 

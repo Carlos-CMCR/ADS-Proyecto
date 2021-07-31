@@ -248,7 +248,7 @@ class controllerEmitirProforma {
         ob_start();
         $pdf->obtenerHTML($proforma);
         $html = ob_get_clean();
-        $pdf->generarPDF($html);
+        $pdf->generarPDF($html,$productos[0]["codigo_proforma"]);
     }
 
     public function validarCliente($dni,$email,$celular){
