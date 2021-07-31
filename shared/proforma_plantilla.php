@@ -38,18 +38,18 @@ class proforma_plantilla {
 		margin: 15px auto 10px auto;
 	}
 
-	.proforma_head, .proforma_cliente, #boleta_detalle{
+	.proforma_head, .proforma_cliente, #proforma_detalle{
 		width: 100%;
 		margin-bottom: 10px;
 	}
-	.logo_boleta{
+	.logo_proforma{
 		width: 25%;
 	}
 	.info_empresa{
 		width: 50%;
 		text-align: center;
 	}
-	.info_boleta{
+	.info_proforma{
 		width: 25%;
 	}
 	.info_cliente{
@@ -91,10 +91,10 @@ class proforma_plantilla {
 		padding: 0 15px;
 	}
 	
-	#boleta_detalle{ 
+	#proforma_detalle{ 
 		border-collapse: collapse;
 	}
-	#boleta_detalle thead th{
+	#proforma_detalle thead th{
 		background: #058167;
 		color: #FFF;
 		padding: 5px;
@@ -122,7 +122,7 @@ class proforma_plantilla {
 <div class="page_pdf">
 	<table class="proforma_head">
 		<tr>
-			<td class="logo_boleta">
+			<td class="logo_proforma">
 				<div>
 					<!-- <img src="img/logo.jpg"> -->
 				<img src="https://github.com/TheNipsAreGettingBigger/recusos/blob/main/2560144.jpg?raw=true" style="width:200px" alt="Anulada">
@@ -138,7 +138,7 @@ class proforma_plantilla {
 					<p>Email: serviciotec.elias@gmail.com</p>
 				</div>
 			</td>
-			<td class="info_boleta">
+			<td class="info_proforma">
 				<div class="round">
 					<span class="h3">PROFORMA</span>
 					<p>No. Proforma: <strong><?php echo $proforma["meta_data"]["codigo"]?></strong></p>
@@ -171,7 +171,7 @@ class proforma_plantilla {
 	</table>
 
 	<h2 class="titulo1">Productos</h2>
-	<table id="boleta_detalle">
+	<table id="proforma_detalle">
 			<thead>
 				<tr>
 					<th width="50px">Cant.</th>
@@ -207,7 +207,7 @@ class proforma_plantilla {
 	 if(count($proforma["servicios"])){
 		 ?>
 <h2 class="titulo1">Servicios</h2>
-	<table id="boleta_detalle">
+	<table id="proforma_detalle">
 			<thead>
 				<tr>
 					<th class="textcenter">Nombre</th>
@@ -253,7 +253,7 @@ class proforma_plantilla {
         <?php 
     }
 
-    public function generarPDF($html){
+    public function generarPDF($html,$id = ''){
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
         //$pdfOptions->set('isHtml5ParserEnabled', true);
@@ -261,7 +261,7 @@ class proforma_plantilla {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("boleta.pdf",array('Attachment'=>0));
+        $dompdf->stream("proforma_".$id.".pdf",array('Attachment'=>0));
     }
 }
 
