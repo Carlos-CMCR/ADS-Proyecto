@@ -142,8 +142,8 @@ class proforma_plantilla {
 				<div class="round">
 					<span class="h3">PROFORMA</span>
 					<p>No. Proforma: <strong><?php echo $proforma["meta_data"]["codigo"]?></strong></p>
-					<p>Fecha: 20/01/2019</p>
-					<p>Hora: 10:30am</p>
+					<p>Fecha: <?php echo $proforma["meta_data"]["fecha"]?></p>
+					<p>Hora: <?php echo date('h:i:s a', strtotime($proforma["meta_data"]["hora"])) ?></p>
 					<p><?php echo $proforma["vendedor"]?></p>
 				</div>
 			</td>

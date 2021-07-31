@@ -232,6 +232,8 @@ class controllerEmitirProforma {
                 "total"=>number_format( floatval($productos[0]["precioTotal"]), 2, '.', ''),
                 "subtotal"=>number_format( floatval($productos[0]["subtotal"]), 2, '.', ''),
                 "igv"=>number_format( floatval($productos[0]["igv"]), 2, '.', ''),
+                "fecha"=>$productos[0]["fecha_emision"],
+                "hora"=>$productos[0]["hora_emision"],
             ],
             "cliente"=>[
                 "dni"=>$productos[0]["dni"],
