@@ -266,8 +266,13 @@ if(isset($_POST["btnEmitirProforma"])){
         $nuevoMensaje -> formMensajeSistemaShow("¡La lista debe de tener al menos un producto o un servicio!","<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
         <input type='hidden' name='regresar' />
         <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
-    </form>");
+        </form>");
     }
+}elseif(isset($_POST["btnImprimir"])){
+    $id = $_POST["idProforma"];
+    include_once("./controllerEmitirProforma.php");
+    $controller = new controllerEmitirProforma;
+    $controller->generarPDFProforma($id);
 }
 else{
     include_once("../shared/formMensajeSistema.php");

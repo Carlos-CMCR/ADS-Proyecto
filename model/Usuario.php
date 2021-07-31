@@ -71,6 +71,24 @@ class Usuario{
             return $e->getMessage();
         }
     }
+    public function obtenerResponsable($username){
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT CONCAT(UPPER(r.nombre_rol),' : ',u.apellido_paterno,' ',u.apellido_materno,' ',u.nombres) as responsable FROM usuarios as u 
+            INNER JOIN roles as r
+             ON r.id_rol = u.id_rol
+            WHERE u.username = :username";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username
+            ]);
+            return $consulta->fetch();
+            
+        }catch(Exception $e){
+            // TO DO manejar el error
+            return $e->getMessage();
+        }
+    }
 }
 
 ?>

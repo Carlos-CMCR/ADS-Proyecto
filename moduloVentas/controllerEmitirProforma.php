@@ -182,7 +182,8 @@ class controllerEmitirProforma {
             if(count($_SESSION["lista_proforma"]["productos"])){
                 $objProforma->insetarDetalleProformaProducto($respuesta["id"],$_SESSION["lista_proforma"]["productos"]);
             }
-
+            $id = $respuesta["id"];
+            
             // mensjae sistema todo ok
             $exito = true;
             $mensaje = "Proforma registrada con éxito";+
@@ -190,9 +191,15 @@ class controllerEmitirProforma {
 				$nuevoMensaje = new formMensajeSistema;
 				$nuevoMensaje -> formMensajeSistemaShow(
                     $mensaje,
-                    "<form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
+                    "
+                    <form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;margin-bottom:1.2em;' target='_blank'>
+                        <input type='hidden' name='idProforma' value='$id'>
+                        <input name='btnImprimir'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;;background: #0e47a1' value='Imprimir' type='submit'>
+                    </form>
+                    <form action='getEmitirProforma.php' class='form-message__link' method='post' style='padding:0;'>
                         <input name='btnEmitirProforma'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
-                    </form>",$exito);
+                    </form>
+                    ",$exito);
         }else{
             include_once("../shared/formMensajeSistema.php");
             $nuevoMensaje = new formMensajeSistema;
@@ -202,6 +209,43 @@ class controllerEmitirProforma {
                     <input name='btnAgregarCliente'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
                 </form>");
         }
+    }
+
+    public function generarPDFProforma($id){
+        include_once("../model/FactoryModels.php");
+        $objProforma = FactoryModels::getModel("proforma");
+        $objUsuario = FactoryModels::getModel("usuario");
+        session_start();
+        $responsable = $objUsuario->obtenerResponsable($_SESSION['username']); 
+        $productos = $objProforma->obtenerProductosDeproformaSeleccionada($id);
+        $servicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id);
+        
+        $proforma = [
+            "vendedor" => $responsable["responsable"],
+            "productos"=> $productos,
+            "servicios"=> [],
+            "meta_data"=>[
+                "codigo"=> $productos[0]["codigo_proforma"],
+                "total"=>number_format( floatval($productos[0]["precioTotal"]), 2, '.', ''),
+                "subtotal"=>number_format( floatval($productos[0]["subtotal"]), 2, '.', ''),
+                "igv"=>number_format( floatval($productos[0]["igv"]), 2, '.', ''),
+            ],
+            "cliente"=>[
+                "dni"=>$productos[0]["dni"],
+                "nombres"=>$productos[0]["apellido_paterno"]." "." ".$productos[0]["apellido_materno"]." ".$productos[0]["nom_client"],
+                "telefono"=>$productos[0]["celular"],
+                "email"=>$productos[0]["email"],
+            ]
+        ];
+        // var_dump($productos);
+        // var_dump($responsable);
+        
+        require_once __DIR__."/../shared/proforma_plantilla.php";
+        $pdf = new proforma_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($proforma);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html);
     }
 
     public function validarCliente($dni,$email,$celular){
