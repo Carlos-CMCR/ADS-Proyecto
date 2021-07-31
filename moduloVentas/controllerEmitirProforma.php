@@ -219,11 +219,14 @@ class controllerEmitirProforma {
         $responsable = $objUsuario->obtenerResponsable($_SESSION['username']); 
         $productos = $objProforma->obtenerProductosDeproformaSeleccionada($id);
         $servicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id);
-        
+        $data = [];
+        if($servicios["existe"]){
+            $data = $servicios["data"];
+        }
         $proforma = [
             "vendedor" => $responsable["responsable"],
             "productos"=> $productos,
-            "servicios"=> [],
+            "servicios"=> $data,
             "meta_data"=>[
                 "codigo"=> $productos[0]["codigo_proforma"],
                 "total"=>number_format( floatval($productos[0]["precioTotal"]), 2, '.', ''),

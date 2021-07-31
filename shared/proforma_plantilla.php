@@ -216,11 +216,11 @@ class proforma_plantilla {
 			</thead>
 			<tbody id="detalle_productos">
 				<?php 
-				foreach ($proforma["productos"] as $producto) {
+				foreach ($proforma["servicios"] as $servicio) {
 					?>
 					<tr>
-						<td class="textcenter" ><?php echo $producto["nom_product"]?></td>
-						<td >S/ <?php echo number_format( floatval($producto["precioProduct"]), 2, '.', '')?></td>
+						<td class="textcenter" ><?php echo $servicio["nombre"]?></td>
+						<td >S/ <?php echo number_format( floatval($servicio["precioDeServicio"]), 2, '.', '')?></td>
 					</tr>
 					<?php 
 				}
