@@ -110,6 +110,7 @@ class proforma_plantilla {
 		color : 058167;
 	}
 	.table_foot{
+		margin-top: 10px;
 		float: left;
 		margin-left: auto;
 		margin-right: -10px;
@@ -152,7 +153,7 @@ class proforma_plantilla {
 		<tr>
 			<td class="info_cliente">
 				<div class="round">
-					<span class="h3">Cliente</span>
+					<span class="h3">Información del Cliente</span>
 					<table class="datos_cliente">
 						<tr>
 							<td><label>DNI:</label><p><?php echo $proforma["cliente"]["dni"]?></p></td>
