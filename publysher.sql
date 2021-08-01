@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-08-2021 a las 09:04:50
+-- Tiempo de generación: 02-08-2021 a las 01:44:48
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -465,7 +465,7 @@ INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `
 (1, 'Cambiar constraseña', 'btnCambiarPassword', '../moduloSeguridad/getCambiarPassword.php'),
 (2, 'Emitir Proforma', 'btnEmitirProforma', '../moduloVentas/getEmitirProforma.php'),
 (3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', '../moduloVentas/getComprobantePago.php'),
-(4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', ''),
+(4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', '../moduloGestion/getIncidencia.php'),
 (5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', '../moduloVentas/getDespachoProducto.php'),
 (6, 'Agendar Servicio', 'btnAgendarServicio', ''),
 (7, 'Registrar Incidencia', 'btnRegistrarIncidencia', '../moduloVentas/getIncidencia.php'),
