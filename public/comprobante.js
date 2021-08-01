@@ -115,7 +115,7 @@ if(ruc){
             const response = await fetch("https://api.migo.pe/api/v1/ruc",{
                 method: 'POST',
                 body: JSON.stringify({
-                    "token": "rSdUJkM7rjvGAuzu3T2LnBrBAzOAnJ6miuvbG1ZwEpwJ7yM9OZgOT20bbNHh",
+                    "token": "vuFigN9LOUUSQ3eKzLXnwhfehaw2sWokOdsoVBBorGOR9PiUH7tQew3RL6HB",
                     "ruc": ruc+"",
                 }),
                 headers: {
