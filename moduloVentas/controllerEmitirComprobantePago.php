@@ -346,10 +346,10 @@ class controllerEmitirComprobantePago{
         ];
         require_once __DIR__."/../shared/comprobante_plantilla.php";
         $pdf = new comprobante_plantilla;
-        // ob_start();
+        ob_start();
         $pdf->obtenerHTML($comprobante);
-        // $html = ob_get_clean();
-        // $pdf->generarPDF($html,$productos[0]["numero_comprobante"]);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$productos[0]["numero_comprobante"]);
     }
 
 }

@@ -164,6 +164,16 @@ class comprobante_plantilla {
 							<td><label>Nombre:</label> <p><?php echo $comprobante["cliente"]["nombres"]?></p></td>
 							<td><label>Email:</label> <p><?php echo $comprobante["cliente"]["email"]?></p></td>
 						</tr>
+                        <?php 
+                        if(isset($comprobante["meta_data"]["ruc"])){
+                            ?>
+                            <tr>
+							<td><label>RUC:</label> <p><?php echo $comprobante["meta_data"]["ruc"]?></p></td>
+						    </tr>
+                            <?php 
+                        }
+                        
+                        ?>
 					</table>
 				</div>
 			</td>
