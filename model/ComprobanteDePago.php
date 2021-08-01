@@ -94,5 +94,56 @@ class ComprobanteDePago{
             return ["success"=>false,"message"=>$ex->getMessage()];
         }
     }
+
+    public function obtenerProductosDeComprobante($id){
+        try {
+            # code...
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT count(pr.id_producto) as cantidad,cb.id_comprobante,cb.fechaemision,cb.hora_emision,cb.ruc,cb.precioTotal,pr.nombre as nombre_producto,pr.codigo_producto,cb.numero_comprobante,c.dni,c.nombres as nombre_cliente,c.apellido_paterno,c.apellido_materno,c.email,c.celular, pr.precioUnitario as precioProduct FROM comprobantedepago cb 
+            INNER JOIN clientes c
+            ON c.id_cliente = cb.id_cliente
+            INNER JOIN detallecomprobanteproducto dcp
+                ON dcp.id_comprobante = cb.id_comprobante
+            INNER JOIN productos pr
+                ON pr.id_producto = dcp.id_producto
+            WHERE  cb.id_comprobante = :id_comprobante
+            GROUP BY pr.id_producto;";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_comprobante' => (int)$id
+            ]);
+            if($consulta->rowCount()){
+                return $consulta->fetchAll();          
+            }
+            return [];
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
+    public function obtenerServiciosDeComprobante($id){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT dcs.id_servicio,ts.nombre, ts.precioDeServicio,cdp.precioTotal FROM comprobantedepago as cdp
+            INNER JOIN detallecomprobanteservicio as dcs
+                on dcs.id_comprobante = cdp.id_comprobante
+            INNER JOIN tipodeservicios as ts
+            ON ts.id_tipo = dcs.id_servicio
+            WHERE cdp.id_comprobante = :id_comprobante";
+
+            $consulta = $this->bd->prepare($query);
+
+            $consulta->execute([
+                'id_comprobante' => (int)$id
+            ]);
+            if($consulta->rowCount()){ 
+                return ["existe"=>true, "data"=> $consulta->fetchAll()];
+            }else{
+                return ["existe"=>false];
+            }        
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+    }
 }
 ?>

@@ -316,7 +316,40 @@ class controllerEmitirComprobantePago{
         $objUsuario = FactoryModels::getModel("usuario");
         session_start();
         $responsable = $objUsuario->obtenerResponsable($_SESSION['username']);
-        
+        $productos = $objComprobante->obtenerProductosDeComprobante($id);
+        $servicios = $objComprobante->obtenerServiciosDeComprobante($id);
+        $data = [];
+        if($servicios["existe"]){
+            $data = $servicios["data"]; 
+        }
+        $igv = ((double)$productos[0]["precioTotal"])*0.18;
+        $subtotal = ((double)$productos[0]["precioTotal"]) - $igv;
+        $comprobante = [
+            "cajero" => $responsable["responsable"],
+            "productos"=> $productos,
+            "servicios"=> $data,
+            "cliente"=>[
+                "dni"=>$productos[0]["dni"],
+                "nombres"=>$productos[0]["apellido_paterno"]." "." ".$productos[0]["apellido_materno"]." ".$productos[0]["nombre_cliente"],
+                "telefono"=>$productos[0]["celular"],
+                "email"=>$productos[0]["email"],
+            ],
+            "meta_data"=>[
+                "codigo"=> $productos[0]["numero_comprobante"],
+                "total"=>number_format( floatval($productos[0]["precioTotal"]), 2, '.', ''),
+                "subtotal"=>number_format( floatval($subtotal), 2, '.', ''),
+                "igv"=>number_format( floatval($igv), 2, '.', ''),
+                "fecha"=>$productos[0]["fechaemision"],
+                "hora"=>$productos[0]["hora_emision"],
+                "ruc"=>$productos[0]["ruc"]
+            ],
+        ];
+        require_once __DIR__."/../shared/comprobante_plantilla.php";
+        $pdf = new comprobante_plantilla;
+        // ob_start();
+        $pdf->obtenerHTML($comprobante);
+        // $html = ob_get_clean();
+        // $pdf->generarPDF($html,$productos[0]["numero_comprobante"]);
     }
 
 }
