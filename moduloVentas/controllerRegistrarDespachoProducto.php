@@ -43,6 +43,32 @@ class controllerRegistrarDespacho{
         $objObtenerComprobante = new formDespacho($_SESSION["informacion"]);
         $objObtenerComprobante -> formComprobanteGeneradoShow($datosComprobanteProductos);  
     }
-}
 
-?>
+    public function actualizarComprobante($id_comprobante){
+        include_once("../model/ComprobanteDePago.php");
+        $objComprobante = new ComprobanteDePago();
+        $respuesta = $objComprobante->actualizarComprobante($id_comprobante);
+        
+        if($respuesta["success"]){
+            $exito = true;
+            $mensaje = "Modificado con exito";
+            include_once("../shared/formMensajeSistema.php");
+                $nuevoMensaje = new formMensajeSistema;
+                $nuevoMensaje -> formMensajeSistemaShow(
+                    $mensaje,
+                    "<form action='getDespachoProducto.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnRegistrarDespacho'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                    </form>",$exito);
+        }else{
+            $mensaje = "Ocurrió un error en la base de datos comuníquese con el administrador";
+            include_once("../shared/formMensajeSistema.php");
+                $nuevoMensaje = new formMensajeSistema;
+                $nuevoMensaje -> formMensajeSistemaShow(
+                    $mensaje,
+                    "<form action='getDespachoProducto.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnRegistrarDespacho'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+                    </form>");
+        }
+            
+    }
+}

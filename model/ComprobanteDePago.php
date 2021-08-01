@@ -224,5 +224,19 @@ class ComprobanteDePago{
             return $ex->getMessage();
         }
     }
+    public function actualizarComprobante($id_comprobante){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "UPDATE comprobantedepago SET id_estadoComprobante=0
+            where id_comprobante = :id_comprobante";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_comprobante' => (int)$id_comprobante
+            ]);          
+            return ["success"=>true];
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }
+    }
 }
 ?>
