@@ -18,7 +18,7 @@ class ReporteVentas extends Conexion{
             if($consulta->rowCount()){ 
                 return ["existe"=>true, "data"=> $consulta->fetchAll()];
             }else{
-                return ["existe"=>false,"mensaje"=>"No se encontrado ningun Reporte de Venta " ];
+                return ["existe"=>false,"mensaje"=>"No se ha encontrado algun Reporte de Venta, ingrese otra fecha " ];
             }   
 
         }catch(Exception $ex){

@@ -15,9 +15,10 @@ if(isset($_POST["btnEmitirReporteDeVentasDelDia"])){
     $controlComprobante = new controllerEmitirReporteVentas;
     $controlComprobante -> obtenerReporteFecha($fecha_seleccionada);
 }elseif(isset($_POST["btnImprimir"])){
+    $fecha_seleccionada = ($_POST['fecha']);
     include_once("./controllerEmitirReporteVentas.php");
     $controlReporteVentas = new controllerEmitirReporteVentas;
-    // $controlReporteVentas -> imprimirReporteVentas();
+    $controlReporteVentas -> generarPDFReporteVentas($fecha_seleccionada);
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

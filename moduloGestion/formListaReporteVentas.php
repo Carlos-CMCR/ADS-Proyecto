@@ -5,8 +5,11 @@ class formListaReporteVentas extends formulario{
         $this->path = "..";
         $this->encabezadoShow("Formulario Emitir Reporte de Ventas del dia",$informacion);
     } 
- public function formListaReporteVentasShow($cantidadBoletas,$cantidadFacturas,$datosFacturas,$datosBoletas, $total){
+ public function formListaReporteVentasShow($cantidadBoletas,$cantidadFacturas,$datosFacturas,$datosBoletas, $total,$fecha_seleccionada){
         echo "<main class='wrapper-actions'>"; ?>
+        <div style="width:100% ">
+                <h1 align="center">REPORTES DE VENTAS DEL DIA </h1>
+        </div>
         <div style="width:100% ">
                 <h2 align="center">Detalles Boletas </h2>
         </div>
@@ -76,8 +79,13 @@ class formListaReporteVentas extends formulario{
  </div>
         <div  align="center" class="lista-form">
         <form action='getReporteVentas.php'  method='post'>
-            <button class="volver-form__button" name="btnEmitirReporteDeVentasDelDia" type="submit" >Volver</button>
-            <button class="verde-form__button" name="btnImprimir" type="submit" >Imprimir</button>
+            <button class="volver-form__button" name="btnEmitirReporteDeVentasDelDia" type="submit"  >Volver</button>
+            
+        </form>
+        <br>
+    <form action='getReporteVentas.php'  method='post' target="_blank">
+            <input type="hidden" name="fecha"  value="<?php echo $fecha_seleccionada ?>" >
+            <button class="verde-form__button" name="btnImprimir"  type="submit" >Imprimir</button>
         </form>
         </div>
         <?php
