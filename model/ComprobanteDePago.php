@@ -197,5 +197,32 @@ class ComprobanteDePago{
             return $ex->getMessage();
         }
     }
+    public function obtenerProductosDecomprobanteSeleccionada($id_comprobante){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT count(pr.id_producto) as cantidad,cp.id_comprobante,c.nombres as nom_client,c.celular,c.apellido_paterno, c.apellido_materno, c.dni,dp.id_producto, dp.id_detallecomprobantes
+            ,pr.nombre as nom_product,pr.codigo_producto FROM comprobantedepago cp 
+                INNER JOIN estadocomprobante ec
+                ON cp.id_estadoComprobante = ec.id_estadoComprobante
+                INNER JOIN clientes c
+                ON c.id_cliente = cp.id_cliente
+                INNER JOIN detallecomprobanteproducto dp
+                    ON dp.id_comprobante = cp.id_comprobante
+                INNER JOIN productos pr
+                    ON pr.id_producto = dp.id_producto
+                WHERE  cp.id_comprobante = :id_comprobante and cp.id_estadoComprobante = 1
+                GROUP BY pr.id_producto
+            ";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_comprobante' => (int)$id_comprobante
+            ]);
+
+            return $consulta->fetchAll();         
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+    }
 }
 ?>

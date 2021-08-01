@@ -34,6 +34,15 @@ class controllerRegistrarDespacho{
         //var_dump($arrayComprobantes);
         
     }
+    public function obtenerComprobante($id_comprobante){
+        include_once("../model/ComprobanteDePago.php");
+        $objComprobante = new ComprobanteDePago();
+        $datosComprobanteProductos = $objComprobante->obtenerProductosDecomprobanteSeleccionada($id_comprobante);
+        Session_start();
+        include_once("formDespacho.php"); 
+        $objObtenerComprobante = new formDespacho($_SESSION["informacion"]);
+        $objObtenerComprobante -> formComprobanteGeneradoShow($datosComprobanteProductos);  
+    }
 }
 
 ?>

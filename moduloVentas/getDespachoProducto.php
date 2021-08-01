@@ -13,6 +13,12 @@ if(isset($_POST["btnRegistrarDespacho"])){
     include_once("./controllerRegistrarDespachoProducto.php");
     $controlComprobante = new controllerRegistrarDespacho ;
     $controlComprobante -> obtenerComprobantesFecha($fecha_seleccionada);
+}elseif(isset($_POST["btnSeleccionar"])){
+    $id_comprobante = $_POST['idComprobante'];
+    echo $id_comprobante;   
+    include_once("./controllerRegistrarDespachoProducto.php");
+    $controlComprobante = new controllerRegistrarDespacho;
+    $controlComprobante -> obtenerComprobante($id_comprobante);
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
