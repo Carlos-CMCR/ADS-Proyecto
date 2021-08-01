@@ -145,5 +145,57 @@ class ComprobanteDePago{
             return $ex->getMessage();
         }
     }
+
+    public function listarComprobantes(){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT cp.numero_comprobante, tp.nombre,c.nombres,c.apellido_paterno,c.apellido_materno,ec.nombre_estado,cp.fechaemision,cp.id_comprobante
+            FROM comprobantedepago cp 
+            INNER JOIN tipocomprobante tp
+            ON cp.id_tipoComprobante = tp.id_tipocomprobante
+            INNER JOIN estadocomprobante ec
+            ON cp.id_estadoComprobante = ec.id_estadoComprobante
+            INNER JOIN clientes c
+            ON cp.id_cliente = c.id_cliente
+            WHERE TIMESTAMPDIFF(HOUR,cp.fechaYHora,CURRENT_TIMESTAMP) <= 12 AND cp.id_estadoComprobante = 1
+            ";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+
+            return $consulta->fetchAll();
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+    }
+    public function listarComprobantesFecha($fecha_seleccionada){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT cp.numero_comprobante, tp.nombre,c.nombres,c.apellido_paterno,c.apellido_materno,ec.nombre_estado,cp.fechaemision,cp.id_comprobante
+            FROM comprobantedepago cp 
+            INNER JOIN tipocomprobante tp
+            ON cp.id_tipoComprobante = tp.Id_tipocomprobante
+            INNER JOIN estadocomprobante ec
+            ON cp.id_estadoComprobante = ec.id_estadoComprobante
+            INNER JOIN clientes c
+            ON cp.id_cliente = c.Id_cliente
+            WHERE  cp.fechaemision = :fecha_seleccionada and cp.id_estadoComprobante = 1";
+            
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'fecha_seleccionada' => $fecha_seleccionada
+            ]);
+            if($consulta->rowCount()){ 
+                return ["existe"=>true, "data"=> $consulta->fetchAll()];
+            }else{
+                return ["existe"=>false,"mensaje"=>"No se encontrado ninguna comprobante habilitada" ];
+            }
+
+            
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+    }
 }
 ?>
