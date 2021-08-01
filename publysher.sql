@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2021 a las 04:43:09
+-- Tiempo de generación: 01-08-2021 a las 09:04:50
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -86,7 +86,7 @@ CREATE TABLE `comprobantedepago` (
   `numero_comprobante` varchar(8) DEFAULT NULL,
   `id_estadoComprobante` int(10) NOT NULL,
   `id_usuario` int(10) NOT NULL,
-  `fechaYhora` date NOT NULL
+  `fechaYhora` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -94,7 +94,9 @@ CREATE TABLE `comprobantedepago` (
 --
 
 INSERT INTO `comprobantedepago` (`id_comprobante`, `id_tipocomprobante`, `fechaemision`, `ruc`, `hora_emision`, `precioTotal`, `id_cliente`, `numero_comprobante`, `id_estadoComprobante`, `id_usuario`, `fechaYhora`) VALUES
-(2, 1, '2021-07-25', NULL, '21:42:06', 628.08, 1, '00000002', 1, 2, '2021-07-25');
+(2, 1, '2021-07-25', NULL, '21:42:06', 628.08, 1, '00000002', 1, 2, '2021-07-26 02:42:06'),
+(3, 1, '2021-07-31', NULL, '18:33:27', 309.36, 1, '00000003', 1, 2, '2021-07-31 23:33:27'),
+(4, 0, '2021-07-31', '10713117761', '23:35:26', 2719.54, 1, '00000004', 0, 2, '2021-08-01 05:07:49');
 
 -- --------------------------------------------------------
 
@@ -115,7 +117,10 @@ CREATE TABLE `detallecomprobanteproducto` (
 INSERT INTO `detallecomprobanteproducto` (`id_detallecomprobantes`, `id_producto`, `id_comprobante`) VALUES
 (4, 1, 2),
 (5, 1, 2),
-(6, 1, 2);
+(6, 1, 2),
+(7, 1, 3),
+(8, 7, 4),
+(9, 7, 4);
 
 -- --------------------------------------------------------
 
@@ -135,7 +140,10 @@ CREATE TABLE `detallecomprobanteservicio` (
 
 INSERT INTO `detallecomprobanteservicio` (`id_detallecomprobanteservicio`, `id_servicio`, `id_comprobante`) VALUES
 (1, 0, 2),
-(2, 1, 2);
+(2, 1, 2),
+(3, 0, 3),
+(4, 1, 3),
+(5, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -204,7 +212,70 @@ INSERT INTO `detalleproformaproducto` (`id_detalleProformaProducto`, `id_product
 (5, 6, 5),
 (6, 1, 6),
 (7, 1, 6),
-(8, 1, 6);
+(8, 1, 6),
+(9, 1, 7),
+(10, 1, 8),
+(11, 1, 9),
+(12, 1, 10),
+(13, 1, 11),
+(14, 1, 12),
+(15, 1, 13),
+(16, 1, 14),
+(17, 1, 15),
+(18, 1, 16),
+(19, 1, 17),
+(20, 1, 18),
+(21, 1, 19),
+(22, 2, 20),
+(23, 2, 21),
+(24, 2, 22),
+(25, 1, 23),
+(26, 7, 24),
+(27, 7, 25),
+(28, 7, 26),
+(29, 7, 27),
+(30, 7, 28),
+(31, 7, 29),
+(32, 7, 30),
+(33, 7, 31),
+(34, 7, 32),
+(35, 7, 33),
+(36, 7, 34),
+(37, 1, 35),
+(38, 1, 36),
+(39, 1, 37),
+(40, 1, 38),
+(41, 1, 39),
+(42, 1, 40),
+(43, 1, 41),
+(44, 1, 42),
+(45, 1, 43),
+(46, 3, 44),
+(47, 3, 45),
+(48, 3, 46),
+(49, 3, 47),
+(50, 3, 48),
+(51, 3, 49),
+(52, 3, 50),
+(53, 1, 51),
+(54, 1, 51),
+(55, 1, 51),
+(56, 1, 51),
+(57, 4, 51),
+(58, 4, 51),
+(59, 4, 51),
+(60, 1, 52),
+(61, 1, 52),
+(62, 4, 52),
+(63, 4, 52),
+(64, 7, 52),
+(65, 6, 53),
+(66, 6, 53),
+(67, 6, 53),
+(68, 7, 53),
+(69, 1, 54),
+(70, 7, 55),
+(71, 7, 55);
 
 -- --------------------------------------------------------
 
@@ -225,7 +296,12 @@ CREATE TABLE `detalleproformaservicio` (
 INSERT INTO `detalleproformaservicio` (`id_detalleproformaservicio`, `id_proforma`, `id_tiposervicio`) VALUES
 (1, 5, 1),
 (3, 6, 0),
-(4, 6, 1);
+(4, 6, 1),
+(5, 52, 0),
+(6, 52, 1),
+(7, 54, 0),
+(8, 54, 1),
+(9, 55, 0);
 
 -- --------------------------------------------------------
 
@@ -316,9 +392,18 @@ CREATE TABLE `incidencias` (
   `asunto` varchar(30) NOT NULL,
   `descripcion` text NOT NULL,
   `id_estadoincidencia` int(10) NOT NULL,
-  `fecha_resolucion` date NOT NULL,
+  `fecha_resolucion` date DEFAULT NULL,
   `id_usuario` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `incidencias`
+--
+
+INSERT INTO `incidencias` (`id_incidencias`, `hora_notificada`, `fecha_notificada`, `asunto`, `descripcion`, `id_estadoincidencia`, `fecha_resolucion`, `id_usuario`) VALUES
+(1, '01:53:00', '2021-07-14', 'Perdi', 'Perdi', 1, NULL, 2),
+(2, '01:53:00', '2021-07-14', 'Perdi', 'Perdi', 1, NULL, 2),
+(3, '14:53:00', '2021-07-07', 'Perdi 2', 'perdi 2', 1, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -381,9 +466,9 @@ INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `
 (2, 'Emitir Proforma', 'btnEmitirProforma', '../moduloVentas/getEmitirProforma.php'),
 (3, 'Emitir Comprobante de Pago', 'btnEmitirComprobante', '../moduloVentas/getComprobantePago.php'),
 (4, 'Emitir reporte de incidencias', 'btnEmitirReporteIncidencias', ''),
-(5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', ''),
+(5, 'Registrar Despacho de productos', 'btnRegistrarDespacho', '../moduloVentas/getDespachoProducto.php'),
 (6, 'Agendar Servicio', 'btnAgendarServicio', ''),
-(7, 'Registrar Incidencia', 'btnRegistrarIncidencia', ''),
+(7, 'Registrar Incidencia', 'btnRegistrarIncidencia', '../moduloVentas/getIncidencia.php'),
 (8, 'Emitir Reporte de Ventas del Dia', 'btnEmitirReporteDeVentasDelDia', '../moduloGestion/getReporteVentas.php'),
 (9, 'Gestionar Inventario', 'btnGestionarInventario', NULL),
 (11, 'Gestionar Datos del usuario', 'btnGestionarDatosDelUsuario', NULL);
@@ -412,13 +497,13 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `codigo_producto`, `nombre`, `stock`, `precioUnitario`, `id_categoria`, `id_marca`, `descripcion`, `id_observacion`, `id_estadoEntidad`) VALUES
-(1, 'C-1', 'Cámara IP WIFI 720P interior, lente 2.8mm', 7, 159.36, 1, 1, ' Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 720p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.\r\n', 0, 0),
+(1, 'C-1', 'Cámara IP WIFI 720P interior, lente 2.8mm', 6, 159.36, 1, 1, ' Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 720p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.\r\n', 0, 0),
 (2, 'C-3', 'Cámara IP WIFI 1080P interior, lente 2.8mm', 10, 196.47, 1, 1, 'Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 1080p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.', 0, 0),
 (3, 'C-25', 'DOMO IP 2MP HD 1080p 30fps | CMOS 1/2.8\" ICR| IR 20 a 30m | IP67 | PoE | ANTIVANDALICO IK10.', 10, 327.44, 2, 2, 'Resolución: 1920x1080@30 fps • Lente: 2.8mm@F2.0 •Iluminación:0.01Lux@1.2 | 0Lux IR On • D-WDR. 3D DNR, BLC •Almacenamiento en red: NAS (NFS,SMB/CIFS) • Compresión: H.265+, H.265,H.264+, H.264 • Dual Stream • Alimentación: 12Vdc +/- 25%, PoE (802.3af).\r\nTCP/IP: 10/100Mbps • Compatible Software IVMS 4200. Sin fuente', 0, 0),
 (4, 'C-26', 'DOMO EXTERIOR IP 2MP 1080p 30fps. Lente: 2.8-12MM | CMOS 1/2.8\" ICR |IR 20 a 30m', 10, 618.5, 2, 2, ' D-WDR |Slot Micro SD/SDHC/ SDXC | IP67 | IK10| PoE .Resolución: 1920x1080@30 fps •Lente: 2.8-12mm@F1.4 • Iluminación: 0.01Lux@1.2 | 0Lux IR On • D-WDR, 3DDNR, BLC •Compresión: H.265+, H.265, H.264+, H.264 •Dual Stream • Soporta Tarjeta SD hasta 128Gb •Alimentación: 12Vdc +/- 25%, PoE (802.3af). TCP/IP:10/100Mbps • Compatible Software IVMS 4200. Sin fuente', 0, 0),
 (5, 'C-5', 'Cámara IP + PIR - WIFI 1080P interior, lente 2.8mm IR 6M.', 10, 265.59, 1, 1, 'Incluye fuente 220V. Con una base magnética, el C1C está diseñado para una instalación simple y rápida. Monitoreo de seguridad interior simplificado con su video HD de 1080p, audio bidireccional y una visión nocturna clara, equilibrando el costo y el rendimiento de primera calidad.', 0, 0),
 (6, 'C-6', 'Tubo IP WIFI 720P', 10, 287.94, 1, 1, '1920x1080, ICR, 0lux con IR, H.264, dual- stream, DC5V, DWDR, 3D DNR, BLC, detección de movimiento, Slot para tarjeta micro SD(hasta 128GB), Up to 30m IR, con EZVIZ smart-config. IP66. Incluye micrófono y altavoz. Luz estroboscópica y sirena', 0, 0),
-(7, 'C-28', 'DOMO EXTERIOR IP 2MP LENTE VARIFOCAL 2.8-12MM', 10, 1309.77, 3, 2, 'M • 1/2.8\" Progressive Scan CMOS • 1920 × 1080 resolution • 2.8 to 12 mm focal length • Powered by Darkfighter • H.265,H.265+, H.264+, H.264 • 120dB Wide Dynamic Range •BLC/3D DNR/ROI/HLC • IP66, IK10', 0, 0);
+(7, 'C-28', 'DOMO EXTERIOR IP 2MP LENTE VARIFOCAL 2.8-12MM', 8, 1309.77, 3, 2, 'M • 1/2.8\" Progressive Scan CMOS • 1920 × 1080 resolution • 2.8 to 12 mm focal length • Powered by Darkfighter • H.265,H.265+, H.264+, H.264 • 120dB Wide Dynamic Range •BLC/3D DNR/ROI/HLC • IP66, IK10', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -451,7 +536,56 @@ INSERT INTO `proformas` (`id_proforma`, `fecha_emision`, `precioTotal`, `hora_em
 (3, '2021-07-05', 574, '01:03:53', 1, 1, 0, '00000003', 1, '2021-07-05 06:03:53', 486.8, 87.62),
 (4, '2021-07-14', 683.27, '01:04:19', 1, 2, 0, '00000004', 1, '2021-07-14 06:04:19', 560.28, 122.98),
 (5, '2021-07-14', 625.88, '01:04:02', 1, 1, 0, '00000005', 1, '2021-07-14 06:04:02', 513.23, 112.65),
-(6, '2021-07-25', 628.08, '21:41:48', 0, 1, 0, '00000006', 1, '2021-07-26 02:41:48', 515.03, 113.05);
+(6, '2021-07-25', 628.08, '21:41:48', 0, 1, 0, '00000006', 1, '2021-07-26 02:41:48', 515.03, 113.05),
+(7, '2021-07-30', 159.36, '23:23:04', 1, 1, 0, '00000007', 1, '2021-07-31 04:23:04', 130.68, 28.68),
+(8, '2021-07-30', 159.36, '23:24:00', 1, 1, 0, '00000008', 1, '2021-07-31 04:24:00', 130.68, 28.68),
+(9, '2021-07-30', 159.36, '23:27:26', 1, 1, 0, '00000009', 1, '2021-07-31 04:27:26', 130.68, 28.68),
+(10, '2021-07-30', 159.36, '23:28:04', 1, 1, 0, '00000010', 1, '2021-07-31 04:28:04', 130.68, 28.68),
+(11, '2021-07-30', 159.36, '23:28:22', 1, 1, 0, '00000011', 1, '2021-07-31 04:28:22', 130.68, 28.68),
+(12, '2021-07-30', 159.36, '23:28:57', 1, 1, 0, '00000012', 1, '2021-07-31 04:28:57', 130.68, 28.68),
+(13, '2021-07-30', 159.36, '23:31:42', 1, 1, 0, '00000013', 1, '2021-07-31 04:31:42', 130.68, 28.68),
+(14, '2021-07-30', 159.36, '23:33:40', 1, 1, 0, '00000014', 1, '2021-07-31 04:33:40', 130.68, 28.68),
+(15, '2021-07-30', 159.36, '23:34:56', 1, 1, 0, '00000015', 1, '2021-07-31 04:34:56', 130.68, 28.68),
+(16, '2021-07-30', 159.36, '23:40:38', 1, 1, 0, '00000016', 1, '2021-07-31 04:40:38', 130.68, 28.68),
+(17, '2021-07-30', 159.36, '23:41:32', 1, 1, 0, '00000017', 1, '2021-07-31 04:41:32', 130.68, 28.68),
+(18, '2021-07-30', 159.36, '23:41:44', 1, 1, 0, '00000018', 1, '2021-07-31 04:41:44', 130.68, 28.68),
+(19, '2021-07-30', 159.36, '23:49:08', 1, 1, 0, '00000019', 1, '2021-07-31 04:49:08', 130.68, 28.68),
+(20, '2021-07-30', 196.47, '23:49:21', 1, 1, 0, '00000020', 1, '2021-07-31 04:49:21', 161.11, 35.36),
+(21, '2021-07-30', 196.47, '23:50:10', 1, 1, 0, '00000021', 1, '2021-07-31 04:50:10', 161.11, 35.36),
+(22, '2021-07-30', 196.47, '23:50:15', 1, 1, 0, '00000022', 1, '2021-07-31 04:50:15', 161.11, 35.36),
+(23, '2021-07-30', 159.36, '23:50:38', 1, 1, 0, '00000023', 1, '2021-07-31 04:50:38', 130.68, 28.68),
+(24, '2021-07-30', 1309.77, '23:51:56', 1, 1, 0, '00000024', 1, '2021-07-31 04:51:56', 1074.01, 235.76),
+(25, '2021-07-31', 1309.77, '00:22:55', 1, 1, 0, '00000025', 1, '2021-07-31 05:22:55', 1074.01, 235.76),
+(26, '2021-07-31', 1309.77, '00:30:49', 1, 1, 0, '00000026', 1, '2021-07-31 05:30:49', 1074.01, 235.76),
+(27, '2021-07-31', 1309.77, '00:31:20', 1, 1, 0, '00000027', 1, '2021-07-31 05:31:20', 1074.01, 235.76),
+(28, '2021-07-31', 1309.77, '00:31:28', 1, 1, 0, '00000028', 1, '2021-07-31 05:31:28', 1074.01, 235.76),
+(29, '2021-07-31', 1309.77, '00:31:36', 1, 1, 0, '00000029', 1, '2021-07-31 05:31:36', 1074.01, 235.76),
+(30, '2021-07-31', 1309.77, '00:32:10', 1, 1, 0, '00000030', 1, '2021-07-31 05:32:10', 1074.01, 235.76),
+(31, '2021-07-31', 1309.77, '00:32:12', 1, 1, 0, '00000031', 1, '2021-07-31 05:32:12', 1074.01, 235.76),
+(32, '2021-07-31', 1309.77, '00:32:22', 1, 1, 0, '00000032', 1, '2021-07-31 05:32:22', 1074.01, 235.76),
+(33, '2021-07-31', 1309.77, '00:32:36', 1, 1, 0, '00000033', 1, '2021-07-31 05:32:36', 1074.01, 235.76),
+(34, '2021-07-31', 1309.77, '00:34:07', 1, 1, 0, '00000034', 1, '2021-07-31 05:34:07', 1074.01, 235.76),
+(35, '2021-07-31', 159.36, '00:34:45', 1, 1, 0, '00000035', 1, '2021-07-31 05:34:45', 130.68, 28.68),
+(36, '2021-07-31', 159.36, '00:36:06', 1, 1, 0, '00000036', 1, '2021-07-31 05:36:06', 130.68, 28.68),
+(37, '2021-07-31', 159.36, '01:15:53', 1, 1, 0, '00000037', 1, '2021-07-31 06:15:53', 130.68, 28.68),
+(38, '2021-07-31', 159.36, '01:28:37', 1, 1, 0, '00000038', 1, '2021-07-31 06:28:37', 130.68, 28.68),
+(39, '2021-07-31', 159.36, '01:28:49', 1, 1, 0, '00000039', 1, '2021-07-31 06:28:49', 130.68, 28.68),
+(40, '2021-07-31', 159.36, '01:33:39', 1, 1, 0, '00000040', 1, '2021-07-31 06:33:39', 130.68, 28.68),
+(41, '2021-07-31', 159.36, '01:33:56', 1, 1, 0, '00000041', 1, '2021-07-31 06:33:56', 130.68, 28.68),
+(42, '2021-07-31', 159.36, '01:34:53', 1, 1, 0, '00000042', 1, '2021-07-31 06:34:53', 130.68, 28.68),
+(43, '2021-07-31', 159.36, '01:34:55', 1, 1, 0, '00000043', 1, '2021-07-31 06:34:55', 130.68, 28.68),
+(44, '2021-07-31', 327.44, '01:36:18', 1, 1, 0, '00000044', 1, '2021-07-31 06:36:18', 268.5, 58.94),
+(45, '2021-07-31', 327.44, '01:36:40', 1, 1, 0, '00000045', 1, '2021-07-31 06:36:40', 268.5, 58.94),
+(46, '2021-07-31', 327.44, '01:39:22', 1, 1, 0, '00000046', 1, '2021-07-31 06:39:22', 268.5, 58.94),
+(47, '2021-07-31', 327.44, '01:41:33', 1, 1, 0, '00000047', 1, '2021-07-31 06:41:33', 268.5, 58.94),
+(48, '2021-07-31', 327.44, '01:48:54', 1, 1, 0, '00000048', 1, '2021-07-31 06:48:54', 268.5, 58.94),
+(49, '2021-07-31', 327.44, '01:49:10', 1, 1, 0, '00000049', 1, '2021-07-31 06:49:10', 268.5, 58.94),
+(50, '2021-07-31', 327.44, '01:50:35', 1, 1, 0, '00000050', 1, '2021-07-31 06:50:35', 268.5, 58.94),
+(51, '2021-07-31', 2492.94, '02:05:19', 1, 1, 0, '00000051', 1, '2021-07-31 07:05:19', 2044.21, 448.73),
+(52, '2021-07-31', 3015.49, '03:08:29', 1, 1, 0, '00000052', 1, '2021-07-31 08:08:29', 2472.7, 542.79),
+(53, '2021-07-31', 2173.59, '03:09:55', 1, 1, 0, '00000053', 1, '2021-07-31 08:09:55', 1782.34, 391.25),
+(54, '2021-07-31', 309.36, '16:17:27', 0, 1, 0, '00000054', 1, '2021-07-31 21:17:27', 253.68, 55.68),
+(55, '2021-07-31', 2719.54, '23:34:23', 0, 1, 0, '00000055', 1, '2021-08-01 04:34:23', 2230.02, 489.52);
 
 -- --------------------------------------------------------
 
@@ -565,7 +699,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `nombres`, `password`, `apellido_paterno`, `apellido_materno`, `username`, `id_rol`, `id_estadoEntidad`, `dni`, `celular`, `email`, `secreta`) VALUES
 (1, 'Liset', 'eafa3b33aec9ae55e278929d6144f35f', 'Rincon', 'Sanchez', 'lisetRincon', 1, 0, '44653245', '974106988', 'liset@gmail.com', 'lisettumami'),
-(2, 'Jorge', 'd67326a22642a324aa1b0745f2f17abb', 'Hoyos', 'Reyna', 'jorgeTheLord', 2, 0, '47943385', '991112010', 'jorge@gmail.com', 'darla');
+(2, 'Jorge', 'd67326a22642a324aa1b0745f2f17abb', 'Hoyos', 'Reyna', 'jorgeTheLord', 2, 0, '47943385', '991112010', 'jorge@gmail.com', 'darla'),
+(3, 'Paul', '6c63212ab48e8401eaf6b59b95d816a9', 'Del Aguilar', 'Caute', 'paulDC', 3, 0, '75284156', '921881548', 'paul@gmail.com', 'poolvaso'),
+(5, 'Carlos', 'dc599a9972fde3045dab59dbd1ae170b', 'Carbajal', 'Rojas', 'carlos', 4, 0, '70693593', '932015412', 'carlos@gmail.com', '');
 
 --
 -- Índices para tablas volcadas
@@ -753,19 +889,19 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `comprobantedepago`
 --
 ALTER TABLE `comprobantedepago`
-  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_comprobante` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteproducto`
 --
 ALTER TABLE `detallecomprobanteproducto`
-  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_detallecomprobantes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `detallecomprobanteservicio`
 --
 ALTER TABLE `detallecomprobanteservicio`
-  MODIFY `id_detallecomprobanteservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_detallecomprobanteservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleprivilegio`
@@ -777,13 +913,13 @@ ALTER TABLE `detalleprivilegio`
 -- AUTO_INCREMENT de la tabla `detalleproformaproducto`
 --
 ALTER TABLE `detalleproformaproducto`
-  MODIFY `id_detalleProformaProducto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detalleProformaProducto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT de la tabla `detalleproformaservicio`
 --
 ALTER TABLE `detalleproformaservicio`
-  MODIFY `id_detalleproformaservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detalleproformaservicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `estadocomprobante`
@@ -813,7 +949,7 @@ ALTER TABLE `estadoproformas`
 -- AUTO_INCREMENT de la tabla `incidencias`
 --
 ALTER TABLE `incidencias`
-  MODIFY `id_incidencias` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_incidencias` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -843,7 +979,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `proformas`
 --
 ALTER TABLE `proformas`
-  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_proforma` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -873,7 +1009,7 @@ ALTER TABLE `tipodeservicios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
