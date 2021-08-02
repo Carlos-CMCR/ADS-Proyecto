@@ -1,13 +1,17 @@
 <?php 
 
-// include_once("formulario.php");
+include_once("formulario.php");
 include_once("headIniSingleton.php");
 include_once("footerSingleton.php");
-class formMensajeSistema
-{
+class formMensajeSistema extends formulario
+{public function __construct()
+	{   
+		$this->path = "..";
+		$this -> encabezadoShowIni("Mensaje Sistema");
+	}
 	public function formMensajeSistemaShow($mensaje,$enlace,$exito = false)
 	{
-		headIniSingleton::getHead("Mensaje del sistema","..");
+		// headIniSingleton::getHead("Mensaje del sistema","..");
 		?>
 		<div class="form-message">
 			<img src="../img/<?php echo $exito?'exito.png':'alert.png' ?>" alt="" class="form-message__img">
@@ -18,7 +22,8 @@ class formMensajeSistema
 		</div>
 
 		<?php
-		footerSingleton::getFooter('..');
+		// footerSingleton::getFooter('..');
+		$this->piePaginaShow();
 	}
 }
 ?>
