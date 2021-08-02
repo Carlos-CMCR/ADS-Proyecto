@@ -1,8 +1,8 @@
 <?php 
 
 include_once("formulario.php");
-include_once("headIniSingleton.php");
-include_once("footerSingleton.php");
+// include_once("headIniSingleton.php");
+// include_once("footerSingleton.php");
 class formMensajeSistema extends formulario
 {public function __construct()
 	{   
