@@ -104,4 +104,32 @@ class controllerGestionarInventario
         $form = new formModificarProducto($_SESSION["informacion"]);
         $form->formModificarProductoShow($arrayDatosProducto,$observaciones,$categorias,$marcas,$estados);
     }
+
+    public function actualizarProducto($id_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion ,$id_estadoEntidad){
+        session_start();
+        include_once "../model/FactoryModels.php";
+        $objDatosProducto = FactoryModels::getModel("producto");
+        $respuesta = $objDatosProducto ->modificarProducto($id_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad);
+       // $arrayProductos = $objDatosProducto ->obtenerProductosConObservaciones();
+        if($respuesta["success"]){
+            include_once("../shared/formMensajeSistema.php");
+             $nuevoMensaje = new formMensajeSistema;
+             $nuevoMensaje -> formMensajeSistemaShow(
+            "Se actualizo el producto con exito",
+            "<form action='getGestionarInventario.php' class='form-message__link' method='post' style='padding:0;'>
+                <input type='hidden' name='idProducto'  value='$id_producto' />
+                <input name='btnGestionarInventario'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+            </form>", true);
+        }else{
+            include_once("../shared/formMensajeSistema.php");
+             $nuevoMensaje = new formMensajeSistema;
+             $nuevoMensaje -> formMensajeSistemaShow(
+            "Ocurrió un error en la base de datos, comuníquese con el administrador
+            ",
+            "<form action='getGestionarInventario.php' class='form-message__link' method='post' style='padding:0;'>
+                <input name='btnGestionarInventario'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+            </form>");
+        }
+        		
+    }
 }

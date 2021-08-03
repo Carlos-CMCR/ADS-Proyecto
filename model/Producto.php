@@ -244,4 +244,27 @@ class Producto
 
     }
 
+    public function modificarProducto($id_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "UPDATE productos SET nombre = '$nombre', stock = '$stock' , precioUnitario = '$precioUnitario', descripcion = '$descripcion' , id_categoria = $id_categoria,
+            id_marca = $id_marca, id_observacion = $id_observacion, id_estadoEntidad = $id_estadoEntidad
+            WHERE id_producto = :id_producto";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'id_producto' => (int)$id_producto
+                 
+            ]);
+            return ["success"=>true]; ;          
+
+        }catch(Exception $ex){
+            return ["success"=>false,"message"=>$ex->getMessage()];
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }  
+
+        
+    }
+
 }

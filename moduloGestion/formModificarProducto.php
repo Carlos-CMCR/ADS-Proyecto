@@ -73,8 +73,7 @@ class formModificarProducto extends formulario{
                     </tr>
                     <tr>
                         <th>Descripción:</th>
-                        <td><textarea name="descripcion" id="" cols="30" rows="10"><?php echo $producto['descripcion'] ?>
-                        </textarea></td>
+                        <td><textarea name="descripcion" id="" cols="30" rows="10"><?php echo $producto['descripcion'] ?></textarea></td>
                     </tr>
                     <tr> 
                         <th>Observación:</th>
