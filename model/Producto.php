@@ -110,6 +110,58 @@ class Producto{
             return $ex->getMessage();
         }
     }
+    public function ListaDeProductos(){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT p.id_producto, p.codigo_producto, p.nombre,p.stock, p.precioUnitario, ca.nombre_categoria, ma.marca_nombre ,
+            p.descripcion,ob.nombre_observacion,  es.nombre_estado  
+            FROM productos p 
+            INNER JOIN observaciones as ob
+            ON p.id_observacion = ob.id_observacion
+            INNER JOIN estadoentidad as es
+            ON p.id_estadoentidad = es.id_estadoentidad
+            INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
+            INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria 
+            ORDER BY p.id_producto LIMIT 50;";
+            
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return $consulta->fetchAll();          
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
+
+    }
+    //bucar
+    public function obtenerProductosB($producto){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT p.id_producto, p.codigo_producto, p.nombre,p.stock, p.precioUnitario, ca.nombre_categoria, ma.marca_nombre ,
+            p.descripcion,ob.nombre_observacion,  es.nombre_estado  
+            FROM productos p 
+            INNER JOIN observaciones as ob
+            ON p.id_observacion = ob.id_observacion
+            INNER JOIN estadoentidad as es
+            ON p.id_estadoentidad = es.id_estadoentidad
+            INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
+            INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria 
+            AND p.stock > 0 AND p.nombre LIKE '$producto%' OR ma.marca_nombre LIKE '$producto%' OR ca.nombre_categoria 
+            LIKE '$producto%' OR p.codigo_producto LIKE '$producto%'
+            GROUP BY p.id_producto 
+            ";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return $consulta->fetchAll();          
+
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }finally{
+            // Conexion::closeConnection();
+            $this->bd = null;
+        }
+
+    }
 
 }
 ?>
