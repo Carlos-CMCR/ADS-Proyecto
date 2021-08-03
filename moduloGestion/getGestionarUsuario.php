@@ -88,6 +88,83 @@ if (isset($_POST["btnGestionarDatosDelUsuario"])) {
     include_once("./controllerGestionarDatosUsuario.php");
     $controlEditar = new controllerGestionarDatosUsuario;
     $controlEditar->registrarDatosUsuario();
+} else if (isset($_POST["btnAgregarUsuario"])) {
+    include_once("./controllerGestionarDatosUsuario.php");
+    session_start();
+    $nombre = trim($_POST['nombre']);
+    $apaterno = trim($_POST['apaterno']);
+    $amaterno = trim($_POST['amaterno']);
+    $username = trim($_POST['username']);
+    $estado = $_POST['estado'];
+    $email = trim($_POST['email']);
+    $dni = trim($_POST['dni']);
+    $celular = trim($_POST['celular']);
+    $secreta = trim($_POST['secreta']);
+    $password = trim($_POST['password']);
+    $rol = $_POST['rol'];
+    $password2 = trim($_POST['password2']);
+    
+    include_once("../shared/formMensajeSistema.php");
+    $nuevoMensaje = new formMensajeSistema;
+    if (strlen($nombre) < 2) {
+        $nuevoMensaje->formMensajeSistemaShow("El nombre debe tener como minimo 2 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+        <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+    } else {
+        if (strlen($apaterno) < 4) {
+            $nuevoMensaje->formMensajeSistemaShow("El Apellido Paterno debe tener como minimo 4 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+        <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+        </form>");
+        } else {
+            if (strlen($amaterno) < 4) {
+                $nuevoMensaje->formMensajeSistemaShow("El Apellido Materno debe tener como minimo 4 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                </form>");
+            } else {
+                if (strlen($username) < 4) {
+                    $nuevoMensaje->formMensajeSistemaShow("El username debe tener como minimo 4 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                </form>");
+                } else {
+                    if (strlen($dni) == 8) {
+                        if (strlen($celular) == 9) {
+                            if (strlen($password) < 4) {
+                                $nuevoMensaje->formMensajeSistemaShow("La contraseña debe tener como minimo 4 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                        </form>");
+                            } else {
+                                if (strlen($secreta) < 2){
+                                    $nuevoMensaje->formMensajeSistemaShow("La palabra secreta debe tener como minimo 2 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                                    <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                                    </form>");
+                                }
+                                else{
+                                    if ($password == $password2) {
+                                        
+                                        $controlEditar = new controllerGestionarDatosUsuario;
+                                        $controlEditar->agregarDatosUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $password, $rol);
+                                    } else {
+                                        $nuevoMensaje->formMensajeSistemaShow("Las dos contraseñas deben ser iguales", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                                         <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                                         </form>");
+                                    }
+                                }
+                                
+                            }
+                        } else {
+                            $nuevoMensaje->formMensajeSistemaShow("El celular debe tener 9", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                    <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                    </form>");
+                        }
+                    } else {
+                        $nuevoMensaje->formMensajeSistemaShow("El DNI debe tener 8 digitos", "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+            </form>");
+                    }
+                }
+            }
+        }
+    }
 }else {
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

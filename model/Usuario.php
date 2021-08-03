@@ -179,6 +179,28 @@ class Usuario{
             return ["success"=>false,"mensaje"=>$e->getMessage() ];
         }
     }
+    public function verificarDatosUsuario($username,$email,$dni,$celular){
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT username, email, dni, celular FROM usuarios  WHERE username = :username or email = :email or dni = :dni or celular= :celular";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "username"=>$username,
+                "email"=>$email,
+                "dni"=>$dni,
+                "celular"=>$celular
+            ]);
+            if($consulta->rowCount()){ 
+                return ["existe"=>true , "data" => $consulta->fetchAll()];
+            }else{
+                return ["existe"=>false];
+            }
+        }catch(Exception $e){
+            // TO DO manejar el error
+            return ["mensaje"=>$e->getMessage() ];
+        }
+
+    }
 }
 
 ?>

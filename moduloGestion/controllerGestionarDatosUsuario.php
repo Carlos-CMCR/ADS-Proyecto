@@ -119,6 +119,54 @@ class controllerGestionarDatosUsuario{
         $objeditarDatos = new formRegistrarUsuario($_SESSION["informacion"]);
         $objeditarDatos ->formRegistrarUsuarioShow($datosRoles,$datosEstado);
     }
+    public function agregarDatosUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $password, $rol){
+        include_once("../model/FactoryModels.php");
+        include_once("../shared/formMensajeSistema.php");
+        $objUsuario = FactoryModels::getModel("usuario");
+        $nuevoMensaje = new formMensajeSistema;
+        $verificarDatosUsuario = $objUsuario -> verificarDatosUsuario($username,$email,$dni,$celular);
+        $verificador="";
+        if($verificarDatosUsuario["existe"]){
+            foreach($verificarDatosUsuario["data"] as $datos){ 
+                if($datos['username']==$username){
+                        $verificador = "username";
+                    }else if($datos['email']==$email){
+                        $verificador = "email";
+                    }else if($datos['dni']==$dni){
+                        $verificador = "DNI";
+                    }else if($datos['celular']==$celular){
+                        $verificador = "celular";
+                    }}        
+            $nuevoMensaje -> formMensajeSistemaShow("¡El $verificador esta siendo usado, por favor ingrese otro $verificador !","<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+            <input name='btnRegistrar'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Aceptar' type='submit'>
+            </form>");
+        }
+        else{
+            include_once("../shared/formAlerta.php");
+                    $alert = new formAlerta;
+                    $alert->formAlertaGeneralShow("¿Esta seguro que desea agregar el Usuario?","
+                    <form action='getGestionarUsuario.php' method='post'>
+                    <input type='hidden' name='nombre' value='$nombre'>
+                    <input type='hidden' name='apaterno' value='$apaterno'>
+                    <input type='hidden' name='amaterno' value='$amaterno'>
+                    <input type='hidden' name='username' value='$username'>
+                    <input type='hidden' name='estado' value='$estado'>
+                    <input type='hidden' name='email' value='$email'>
+                    <input type='hidden' name='dni' value='$dni'>
+                    <input type='hidden' name='celular' value='$celular'>
+                    <input type='hidden' name='secreta' value='$secreta'>
+                    <input type='hidden' name='password' value='$password'>
+                    <input type='hidden' name='rol' value='$rol'>
+    
+                    <button type='submit' name='btnContinuarNuevo' >Continuar</button>
+                    </form>
+                    <form action='getGestionarUsuario.php' method='post'>
+                    <button type='submit' name='btnRegistrar' >Cancelar</button>
+                    </form>
+                    ");
+            
+        } 
+    }
 }
 
 ?>
