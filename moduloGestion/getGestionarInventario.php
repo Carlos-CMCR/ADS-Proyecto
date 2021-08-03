@@ -156,8 +156,9 @@ elseif(isset($_POST["btnNuevo"])){
 
 }
 elseif(isset($_POST["btnImprimirReporteInventario"])){
-
-    
+    include_once("./controllerGestionarInventario.php");
+    $controlGestionarInventario = new controllerGestionarInventario;
+    $controlGestionarInventario->generarPDFinventario();
 }
 else{
     include_once("../shared/formMensajeSistema.php");

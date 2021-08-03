@@ -141,4 +141,28 @@ class controllerGestionarInventario
 		$objListaProductos = new formListaDeProductos($_SESSION["informacion"]);
 		$objListaProductos -> formListaDeProductosShow($arrayProductos,true,'');
     }
+    public function generarPDFinventario(){
+        include_once "../model/FactoryModels.php";
+        $objDatosUsuario = FactoryModels::getModel("usuario");
+        $objDatosProducto = FactoryModels::getModel("producto");
+        $month = date('m');
+        $day = date('d');
+        $year = date('Y');
+
+        $fecha = $year . '-' . $month . '-' . $day;
+        session_start();
+        $responsable = $objDatosUsuario -> obtenerResponsable($_SESSION['username']);
+        $listaProductos = $objDatosProducto -> ListaDeProductos();
+        $reporteInventario = [
+            "fecha" => $fecha,
+            "despachador" => $responsable["responsable"],
+            "inventario" => $listaProductos
+        ];
+        require_once __DIR__."/../shared/reporteInventario_plantilla.php";
+        $pdf = new reporteInventario_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteInventario);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }
 }
