@@ -77,7 +77,18 @@ class formListarIncidencias extends formulario{
              <button class="modal__action modal__action--cancelar" type="submit" name="btnInicio">Volver</button>
           </form>
           <form action='getIncidencia.php'  method='post'>
-            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir">Imprimir</button>
+              <?php 
+                if(count($listarIncidencias)){
+                    ?>
+                    <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir">Imprimir</button>
+                    <?php 
+                }else{ 
+                    ?>
+                    <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir" disabled>Imprimir</button>
+                    <?php
+                }
+              ?>
+            
           </form>
         </div>
         
