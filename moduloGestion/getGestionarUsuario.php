@@ -165,6 +165,24 @@ if (isset($_POST["btnGestionarDatosDelUsuario"])) {
             }
         }
     }
+}elseif(isset($_POST["btnContinuarNuevo"])){
+    session_start();
+    $nombre = trim($_POST['nombre']);
+    $apaterno = trim($_POST['apaterno']);
+    $amaterno = trim($_POST['amaterno']);
+    $username = trim($_POST['username']);
+    $estado = $_POST['estado'];
+    $email = trim($_POST['email']);
+    $dni = trim($_POST['dni']);
+    $celular = trim($_POST['celular']);
+    $secreta = trim($_POST['secreta']);
+    $password = trim($_POST['password']);
+    $rol = $_POST['rol'];
+    $md5Password = md5($password);
+    include_once("./controllerGestionarDatosUsuario.php");
+    $objUsuario = new controllerGestionarDatosUsuario;
+    $objUsuario-> agregarUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $md5Password, $rol);
+
 }else {
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

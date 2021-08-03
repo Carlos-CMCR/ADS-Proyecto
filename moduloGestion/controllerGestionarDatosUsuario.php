@@ -167,6 +167,27 @@ class controllerGestionarDatosUsuario{
             
         } 
     }
+    public function agregarUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $md5Password, $rol){
+        include_once("../model/FactoryModels.php");
+        include_once("../shared/formMensajeSistema.php");
+        $objUsuario = FactoryModels::getModel("usuario");
+        $nuevoMensaje = new formMensajeSistema;
+        $insertarUsuario = $objUsuario -> registrarUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $md5Password, $rol);
+        if($insertarUsuario["success"]){
+            $nuevoMensaje -> formMensajeSistemaShow(
+            $insertarUsuario["mensaje"],
+                "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                    <input name='btnGestionarDatosDelUsuario'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                </form>",true);
+            }
+        else{
+            $nuevoMensaje -> formMensajeSistemaShow(
+                $insertarUsuario["mensaje"],
+                    "<form action='getGestionarUsuario.php' class='form-message__link' method='post' style='padding:0;'>
+                        <input name='btnGestionarDatosDelUsuario'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='Volver' type='submit'>
+                    </form>");
+        }
+    }
 }
 
 ?>

@@ -201,6 +201,30 @@ class Usuario{
         }
 
     }
+    public function registrarUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $dni, $celular, $secreta, $md5Password, $rol){
+        try{
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "INSERT INTO usuarios(nombres,password,apellido_paterno,apellido_materno,username,id_rol,id_estadoentidad,dni,celular,email,secreta)
+                    VALUES(:nombre,:password,:apaterno,:amaterno,:username,:rol,:estado,:dni,:celular,:email,:secreta)";
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "nombre" => $nombre,
+                "password" => $md5Password,
+                "apaterno" => $apaterno,
+                "amaterno" => $amaterno,
+                "username" => $username,
+                "rol" => (int)$rol,
+                "estado" => (int)$estado,
+                "dni" => $dni,
+                "celular" => $celular,
+                "email" => $email,
+                "secreta" => $secreta
+            ]);
+            return ["success"=>true,"mensaje"=>"Usuario agregado con exito" ];
+        }catch(Exception $e){
+            return ["success"=>false,"mensaje"=>$e->getMessage() ];
+        }
+    }
 }
 
 ?>
