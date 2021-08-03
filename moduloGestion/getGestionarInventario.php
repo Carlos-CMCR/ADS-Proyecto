@@ -21,6 +21,66 @@ elseif(isset($_POST["btnNuevo"])){
     include_once("./controllerGestionarInventario.php");
     $controlGestionarInventario = new controllerGestionarInventario;
     $controlGestionarInventario->obtenerOpcionProducto();
+}elseif(isset($_POST["btnAgregar"])){
+    $codigo_producto = $_POST['codigo_producto'];
+    $nombre = $_POST['nombre'];
+    $stock = (int)$_POST['stock'];
+    $precioUnitario = (double)$_POST['precioUnitario'];
+    $id_categoria = $_POST['idCategoria'];
+    $id_marca = $_POST['idMarca'];
+    $descripcion = $_POST['descripcion'];
+    $id_observacion = $_POST['idObservacion'];
+    $id_estadoEntidad = $_POST['idEstadoEntidad']; 
+
+   if ( strlen(trim($codigo_producto))>=2 && strlen(trim($nombre))>=4  && 
+   strlen(trim($precioUnitario))>=1 &&strlen(trim($stock))>=1 && strlen(trim($descripcion))>=4){
+    include_once("../shared/formAlerta.php");
+    $alert = new formAlerta;
+    $alert->formAlertaGeneralShow("¿Esta seguro que desea agregar el producto?","
+    <form action='getGestionarInventario.php' method='post'>
+    <input type='hidden' name='codigo_producto' value='$codigo_producto'>
+    <input type='hidden' name='nombre' value='$nombre'>
+    <input type='hidden' name='stock' value='$stock'>
+    <input type='hidden' name='precioUnitario' value='$precioUnitario'>
+    <input type='hidden' name='idMarca' value='$id_marca'>
+    <input type='hidden' name='idCategoria' value='$id_categoria'>
+    <input type='hidden' name='descripcion' value='$descripcion'>
+    <input type='hidden' name='idObservacion' value='$id_observacion'>
+     <input type='hidden' name='idEstadoEntidad' value='$id_estadoEntidad'>
+    <button type='submit' name='btnConfirmar' >Confirmar</button>
+    </form>
+    <form action='getGestionarInventario.php' method='post'>
+    <button type='submit' name='btnNuevo' >Cancelar</button>
+    </form>
+    ");
+    
+   }
+   else{
+    
+    $mensaje = "Error algun campo vacío";
+    include_once("../shared/formMensajeSistema.php");
+        $nuevoMensaje = new formMensajeSistema;
+        $nuevoMensaje -> formMensajeSistemaShow(
+            $mensaje,
+            "<form action='getGestionarInventario.php' class='form-message__link' method='post' style='padding:0;'>    
+                <input name='btnNuevo'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
+            </form>");
+   } 
+
+    
+}elseif(isset($_POST["btnConfirmar"])){
+    $codigo_producto = $_POST['codigo_producto'];
+    $nombre = $_POST['nombre'];
+    $stock = (int)$_POST['stock'];
+    $precioUnitario = (double)$_POST['precioUnitario'];
+    $id_categoria = $_POST['idCategoria'];
+    $id_marca = $_POST['idMarca'];
+    $descripcion = $_POST['descripcion'];
+    $id_observacion = $_POST['idObservacion'];
+    $id_estadoEntidad = $_POST['idEstadoEntidad']; 
+    Include_once("./controllerGestionarInventario.php");
+    $controlGestionarInventario = new controllerGestionarInventario;
+    $controlGestionarInventario -> agregarNuevoProducto($codigo_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad );
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

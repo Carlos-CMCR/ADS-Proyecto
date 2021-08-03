@@ -67,8 +67,7 @@ class formNuevoProducto extends formulario{
                     </tr>
                     <tr>
                         <th>Descripción:</th>
-                        <td><textarea type="text" name="descripcion" id="" cols="30" rows="10">
-                        </textarea></td>
+                        <td><textarea type="text" name="descripcion" id="" cols="30" rows="10"></textarea></td>
                     </tr>
                     <tr> 
                         <th>Observación:</th>

@@ -156,9 +156,57 @@ class Producto{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
+        }
+
+    }
+    public function validarSiExiteCodigoProducto($codigo_producto){
+        $query = "SELECT * FROM productos WHERE codigo_producto = :codigo_producto ";
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                'codigo_producto' => $codigo_producto,
+            ]);
+
+            if($consulta->rowCount()){ 
+                return ["existe"=>true,"mensaje"=>"El codigo de producto ya esta registrado"];
+            }else{
+                return ["existe"=>false ];
+            }
+
+        }catch(Exception $ex){
+            return ["existe"=>true,"mensaje"=>$ex->getMessage() ];
+
+        }
+    }
+    public function insertarNuevoProducto($codigo_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad ){
+       
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "INSERT INTO 
+            productos (codigo_producto,nombre,stock,precioUnitario, id_categoria , id_marca , descripcion , id_observacion , id_estadoEntidad )
+             VALUES ( :codigo_producto, :nombre, :stock, :precioUnitario, :idCategoria, :idMarca, :descripcion, :idObservacion ,   :idEstadoEntidad ) ";
+
+
+            $consulta = $this->bd->prepare($query);
+            $consulta->execute([
+                "codigo_producto" => $codigo_producto,
+                "nombre" => $nombre,
+                "stock" => (int)$stock,
+                "precioUnitario" => (double)$precioUnitario,
+                "idCategoria" => $id_categoria,
+                "idMarca" => $id_marca,
+                "descripcion" => $descripcion,
+                "idObservacion" => $id_observacion,
+                "idEstadoEntidad" => $id_estadoEntidad,        
+            ]);
+
+            $id = $this->bd->lastInsertId();
+
+            return ["success"=>true,"id"=>$id];       
+
+        }catch(Exception $ex){
+            return ["success"=>false,"mensaje"=>$ex->getMessage() ];
         }
 
     }
