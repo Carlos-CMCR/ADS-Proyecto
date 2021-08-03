@@ -11,7 +11,7 @@ class Incidencia extends Conexion{
         try{
             $this->bd = $this->conectar();
             $query = "INSERT into incidencias ( hora_notificada,fecha_notificada,asunto, descripcion,id_estadoincidencia,id_usuario)
-            VALUES ( :hora_notificada, :fecha_notificada, :asunto, :descripcion, 1, :id_usuario);";
+            VALUES ( :hora_notificada, :fecha_notificada, :asunto, :descripcion, 0, :id_usuario);";
             $consulta = $this->bd->prepare($query);
             $consulta->execute([
                 "hora_notificada" => $hora,
