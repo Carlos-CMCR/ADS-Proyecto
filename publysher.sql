@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-08-2021 a las 04:58:54
+-- Tiempo de generación: 03-08-2021 a las 05:36:17
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -474,7 +474,7 @@ INSERT INTO `privilegios` (`id_privilegio`, `nombre_proceso`, `boton_proceso`, `
 (7, 'Registrar Incidencia', 'btnRegistrarIncidencia', '../moduloVentas/getIncidencia.php'),
 (8, 'Emitir Reporte de Ventas del Dia', 'btnEmitirReporteDeVentasDelDia', '../moduloGestion/getReporteVentas.php'),
 (9, 'Gestionar Inventario', 'btnGestionarInventario', '../moduloGestion/getGestionarInventario.php'),
-(11, 'Gestionar Datos del usuario', 'btnGestionarDatosDelUsuario', NULL);
+(11, 'Gestionar Datos del usuario', 'btnGestionarDatosDelUsuario', '../moduloGestion/getGestionarUsuario.php');
 
 -- --------------------------------------------------------
 
@@ -705,7 +705,8 @@ INSERT INTO `usuarios` (`id_usuario`, `nombres`, `password`, `apellido_paterno`,
 (1, 'Liset', 'eafa3b33aec9ae55e278929d6144f35f', 'Rincon', 'Sanchez', 'lisetRincon', 1, 0, '44653245', '974106988', 'liset@gmail.com', 'lisettumami'),
 (2, 'Jorge', 'd67326a22642a324aa1b0745f2f17abb', 'Hoyos', 'Reyna', 'jorgeTheLord', 2, 0, '47943385', '991112010', 'jorge@gmail.com', 'darla'),
 (3, 'Paul', '6c63212ab48e8401eaf6b59b95d816a9', 'Del Aguilar', 'Caute', 'paulDC', 3, 0, '75284156', '921881548', 'paul@gmail.com', 'poolvaso'),
-(5, 'Carlos', 'dc599a9972fde3045dab59dbd1ae170b', 'Carbajal', 'Rojas', 'carlos', 4, 0, '70693593', '932015412', 'carlos@gmail.com', '');
+(5, 'Carlos', 'dc599a9972fde3045dab59dbd1ae170b', 'Carbajal', 'Rojas', 'carlos', 4, 0, '70693593', '932015412', 'carlos@gmail.com', ''),
+(6, 'Yesenia', '185dc6bf1647f6ac04bb51e42c559854', 'Raqui', 'Martinez', 'yesenia13', 5, 0, '45698712', '999852123', 'yes@gmail.com', '');
 
 --
 -- Índices para tablas volcadas
@@ -1013,7 +1014,7 @@ ALTER TABLE `tipodeservicios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
