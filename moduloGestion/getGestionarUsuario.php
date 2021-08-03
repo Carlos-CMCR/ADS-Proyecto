@@ -84,6 +84,10 @@ if (isset($_POST["btnGestionarDatosDelUsuario"])) {
     include_once("./controllerGestionarDatosUsuario.php");
     $objUsuario = new controllerGestionarDatosUsuario;
     $objUsuario-> editarUsuario($nombre, $apaterno, $amaterno, $username, $estado, $email, $celular, $rol);
+} else if (isset($_POST["btnRegistrar"])) {
+    include_once("./controllerGestionarDatosUsuario.php");
+    $controlEditar = new controllerGestionarDatosUsuario;
+    $controlEditar->registrarDatosUsuario();
 }else {
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

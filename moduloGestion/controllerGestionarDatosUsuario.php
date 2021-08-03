@@ -105,7 +105,20 @@ class controllerGestionarDatosUsuario{
                     </form>");
         }
 
-    } 
+    }
+    public function registrarDatosUsuario(){
+        include_once("../model/FactoryModels.php");
+        $objUsuario = FactoryModels::getModel("usuario");
+        $datosRoles = $objUsuario -> obtenerRoles();
+        $datosEstado = $objUsuario -> obtenerEstado();
+        include_once("formRegistrarUsuario.php");
+        if(!isset($_SESSION)) 
+        { 
+            session_start(); 
+        }
+        $objeditarDatos = new formRegistrarUsuario($_SESSION["informacion"]);
+        $objeditarDatos ->formRegistrarUsuarioShow($datosRoles,$datosEstado);
+    }
 }
 
 ?>
