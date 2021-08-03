@@ -56,7 +56,7 @@ class Servicio{
             if($consulta->rowCount()){ 
                 return ["existe"=>true, "data"=> $consulta->fetchAll()];
             }else{
-                return ["existe"=>false,"mensaje"=>"No se encontrado ningun dni habilitado" ];
+                return ["existe"=>false,"mensaje"=>"No se encontrado ningun servicio agendado con el dni ingresado" ];
             }
 
         }catch(Exception $ex){

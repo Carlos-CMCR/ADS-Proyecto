@@ -302,5 +302,66 @@ public function obtenerReporteFacturas($fecha_seleccionada){
         $this->bd = null;
     }
 }
+
+ //modelo comprobante
+ public function obtenerComprobanteC($num_comprobante){
+    try {
+        $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+        $query = "SELECT cp.numero_comprobante, c.nombres, c.dni, ts.nombre as tipo, ds.id_detallecomprobanteservicio,
+         ts.id_tipo, c.id_cliente 
+        FROM comprobantedepago as cp 
+                   INNER JOIN detallecomprobanteservicio as ds
+                   ON ds.id_comprobante = cp.id_comprobante
+                   INNER JOIN clientes as c
+                   ON c.id_cliente = cp.id_cliente
+                   INNER JOIN tipodeservicios as ts
+                   ON ts.id_tipo = ds.id_servicio
+                   WHERE cp.numero_comprobante = :num_comprobante;
+        ";
+        $consulta = $this->bd->prepare($query);
+        $consulta->execute([
+            'num_comprobante' => $num_comprobante
+        ]);
+        if($consulta->rowCount()){ 
+            return ["existe"=>true, "data"=> $consulta->fetchAll()];
+        }else{
+            return ["existe"=>false,"mensaje"=>"No se encontrado ningun comprobante habilitado" ];
+        }
+        
+        
+
+    }catch(Exception $ex){
+        return $ex->getMessage();
+    }
+}
+
+public function verificarComprobante($num_comprobante){
+    try {
+        $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+        $query = "SELECT  cp.id_comprobante  FROM comprobantedepago as cp 
+        INNER JOIN detallecomprobanteservicio as ds
+        ON ds.id_comprobante = cp.id_comprobante
+        INNER JOIN servicios as ts
+        ON ts.id_detallecomprobanteservicio = ds.id_detallecomprobanteservicio
+        WHERE cp.numero_comprobante = :num_comprobante;
+        ";
+        $consulta = $this->bd->prepare($query);
+        $consulta->execute([
+            'num_comprobante' => $num_comprobante
+        ]);
+        if($consulta->rowCount()){ 
+            return ["existe"=>true,"mensaje"=>"Comprobante ya agendado"];
+        }else{
+            return ["existe"=>false,"mensaje"=>"No hay Comprobante" ];
+        }
+        
+        
+
+    }catch(Exception $ex){
+        return $ex->getMessage();
+    }
+}
+
+
 }
 ?>
