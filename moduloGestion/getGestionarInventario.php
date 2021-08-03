@@ -154,7 +154,12 @@ elseif(isset($_POST["btnNuevo"])){
     $controlGestionarInventario = new controllerGestionarInventario;
     $controlGestionarInventario->obtenerProductosConObservaciones();
 
-}else{
+}
+elseif(isset($_POST["btnImprimirReporteInventario"])){
+
+    
+}
+else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;
     $nuevoMensaje -> formMensajeSistemaShow("¡ACCESO NO PERMITIDO!","<a href='../index.php' class='form-message__link'>Volver</a>");

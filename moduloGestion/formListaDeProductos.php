@@ -88,7 +88,7 @@ class formListaDeProductos extends formulario{
                  <?php
              }
             ?>       
-            <button type="submit" class="verde-form__button" >Imprimir Reporte Inventario</button>
+            <button type="submit" name="btnImprimirReporteInventario"class="verde-form__button" >Imprimir Reporte Inventario</button>
         </form>
 
         
