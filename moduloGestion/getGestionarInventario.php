@@ -149,7 +149,11 @@ elseif(isset($_POST["btnNuevo"])){
     Include_once("./controllerGestionarInventario.php");
     $controlGestionarInventario = new controllerGestionarInventario;
     $controlGestionarInventario -> actualizarProducto($id_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad );
-     
+}elseif(isset($_POST["btnObservaciones"])){
+    include_once("./controllerGestionarInventario.php");
+    $controlGestionarInventario = new controllerGestionarInventario;
+    $controlGestionarInventario->obtenerProductosConObservaciones();
+
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

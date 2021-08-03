@@ -259,12 +259,28 @@ class Producto
 
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
-        }  
+        }
+    }
+    public function obtenerProductosConObservaciones(){
+        try {
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
+            $query = "SELECT p.id_producto, p.codigo_producto, p.nombre,p.stock, p.precioUnitario, ca.nombre_categoria, ma.marca_nombre ,
+            p.descripcion,ob.nombre_observacion,  es.nombre_estado  
+            FROM productos p 
+            INNER JOIN observaciones as ob
+            ON p.id_observacion = ob.id_observacion
+            INNER JOIN estadoentidad as es
+            ON p.id_estadoentidad = es.id_estadoentidad
+            INNER JOIN marcas ma ON p.id_marca = ma.id_marca 
+            INNER JOIN categorias ca ON p.id_categoria = ca.id_categoria
+            WHERE ob.id_observacion IN (1,2) ;";
+                $consulta = $this->bd->prepare($query);
+            $consulta->execute();
+            return $consulta->fetchAll();          
 
-        
+        }catch(Exception $ex){
+            return $ex->getMessage();
+        }
     }
 
 }

@@ -130,6 +130,15 @@ class controllerGestionarInventario
                 <input name='btnGestionarInventario'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
             </form>");
         }
-        		
+    }
+    public function obtenerProductosConObservaciones(){
+        session_start();
+        include_once "../model/FactoryModels.php";
+        $objDatosProducto = FactoryModels::getModel("producto");
+        $arrayProductos = $objDatosProducto ->obtenerProductosConObservaciones();
+        
+        include_once("formListaDeProductos.php");
+		$objListaProductos = new formListaDeProductos($_SESSION["informacion"]);
+		$objListaProductos -> formListaDeProductosShow($arrayProductos,true,'');
     }
 }
