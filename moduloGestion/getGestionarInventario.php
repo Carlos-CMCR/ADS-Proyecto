@@ -81,6 +81,14 @@ elseif(isset($_POST["btnNuevo"])){
     Include_once("./controllerGestionarInventario.php");
     $controlGestionarInventario = new controllerGestionarInventario;
     $controlGestionarInventario -> agregarNuevoProducto($codigo_producto,$nombre,$stock,$precioUnitario,$descripcion,$id_categoria,$id_marca,$id_observacion,$id_estadoEntidad );
+}elseif(isset($_POST["btnModificar"])){
+   
+    $id_producto = ($_POST['idProducto']);
+    include_once("./controllerGestionarInventario.php");
+    $controlGestionarInventario = new controllerGestionarInventario;
+    $controlGestionarInventario -> obtenerDatosProducto($id_producto);
+    
+    
 }else{
     include_once("../shared/formMensajeSistema.php");
     $nuevoMensaje = new formMensajeSistema;

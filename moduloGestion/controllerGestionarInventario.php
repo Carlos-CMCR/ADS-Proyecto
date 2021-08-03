@@ -83,4 +83,25 @@ class controllerGestionarInventario
         }
 
     }
+
+    public function obtenerDatosProducto($id_producto){
+        include_once "../model/FactoryModels.php";
+
+        $objDatosProducto = FactoryModels::getModel("producto");
+        $objObservaciones = FactoryModels::getModel("observacion");
+        $objCategorias = FactoryModels::getModel("categoria"); 
+        $objMarcas = FactoryModels::getModel("marca");; 
+        $objEstados = FactoryModels::getModel("estado_entidad"); 
+
+        $arrayDatosProducto=  $objDatosProducto->obtenerDatosProducto($id_producto);
+        $observaciones = $objObservaciones->listarObservaciones();
+        $categorias = $objCategorias->listarCategorias();
+        $marcas = $objMarcas->listarMarcas();
+        $estados = $objEstados->listarEstadoEntidad();
+       
+        include_once("formModificarProducto.php");
+        session_start();
+        $form = new formModificarProducto($_SESSION["informacion"]);
+        $form->formModificarProductoShow($arrayDatosProducto,$observaciones,$categorias,$marcas,$estados);
+    }
 }
