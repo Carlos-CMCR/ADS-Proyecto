@@ -7,6 +7,10 @@ require_once __DIR__ ."/Cliente.php";
 require_once __DIR__ ."/ComprobanteDePago.php";
 require_once __DIR__ ."/TipoDeServicio.php";
 require_once __DIR__ ."/UsuarioPrivilegio.php";
+require_once __DIR__ ."/Observacion.php";
+require_once __DIR__ ."/Categoria.php";
+require_once __DIR__ ."/Marca.php";
+require_once __DIR__ ."/EstadoEntidad.php";
 
 class FactoryModels{
     public static function getModel($name){
@@ -32,6 +36,18 @@ class FactoryModels{
                 break;
             case "usuarioPrivilegio":
                 $model = new UsuarioPrivilegio;
+                break;
+            case "observacion":
+                $model = new Observacion;
+                break;
+            case "categoria":
+                $model = new Categoria;
+                break;
+            case "marca":
+                $model = new Marca;
+                break;
+            case "estado_entidad":
+                $model = new EstadoEntidad;
                 break;
         }
         return $model;
