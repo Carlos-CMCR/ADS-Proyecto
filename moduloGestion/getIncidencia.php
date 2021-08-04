@@ -6,19 +6,16 @@ if(isset($_POST["btnEmitirReporteIncidencias"])){
     $controlIncidencias -> obtenerIncidencias();
 
 }elseif(isset($_POST["btnBuscar"])){
+    //CON FECHA
     if (isset($_POST["fecha"])) {
         $fecha_seleccionada = ($_POST['fecha']);
         ?>
         <form action="formListarIncidencias.php" method="post" >
         <input type="hidden" class="form-date" value ="<?php echo $fecha_seleccionada; ?>" name = "fecha"></form>
         <?php 
-        if(!isset($_POST['pendiente']) && !isset($_POST['realizado'])){
-            include_once("./controllerEmitirReporteIncidencias.php");
-            $controlIncidencias = new controllerEmitirReporteIncidencias;
-            $controlIncidencias -> obtenerIncidenciasFecha($fecha_seleccionada);
-        }
+        
 
-        elseif(isset(($_POST['pendiente'])) xor isset($_POST['realizado'])){
+        if(isset(($_POST['pendiente'])) xor isset($_POST['realizado'])){
             if (isset($_POST['pendiente']) ) {
                 $estado = $_POST["pendiente"];
             }else{
@@ -28,9 +25,15 @@ if(isset($_POST["btnEmitirReporteIncidencias"])){
             $controlIncidencias = new controllerEmitirReporteIncidencias;
             $controlIncidencias -> obtenerIncidenciasFechayEstado($fecha_seleccionada,$estado);
         }
+
+        else{
+            include_once("./controllerEmitirReporteIncidencias.php");
+            $controlIncidencias = new controllerEmitirReporteIncidencias;
+            $controlIncidencias -> obtenerIncidenciasFecha($fecha_seleccionada);
+        }
     }
-    
-    elseif(isset($_POST["sinFecha"])){
+    //SIN FECHA
+    else{
         if(isset($_POST['pendiente']) xor isset($_POST['realizado'])){
             
             if (isset($_POST['pendiente']) ) {
@@ -42,22 +45,12 @@ if(isset($_POST["btnEmitirReporteIncidencias"])){
             $controlIncidencias = new controllerEmitirReporteIncidencias;
             $controlIncidencias -> obtenerIncidenciasTotalEstado($estado);
         }
-        
-        elseif(isset($_POST['realizado']) && isset($_POST['pendiente']) ){
+        else{
+
             include_once("./controllerEmitirReporteIncidencias.php");
             $controlIncidencias = new controllerEmitirReporteIncidencias;
             $controlIncidencias -> obtenerIncidenciasTotal();
-        }
-        else{
-            $mensaje = "Debe eligir un estado o ambos";
-            include_once("../shared/formMensajeSistema.php");
-                $nuevoMensaje = new formMensajeSistema;
-                $nuevoMensaje -> formMensajeSistemaShow(
-                    $mensaje,
-                    "<form action='getIncidencia.php' class='form-message__link' method='post' style='padding:0;'>
-                        <input name='btnEmitirReporteIncidencias'  class='form-message__link' style='width:100%;font-size:1.5em;padding:.5em;' value='volver' type='submit'>
-                    </form>");
-    
+         
         }
 
     }
@@ -95,7 +88,37 @@ if(isset($_POST["btnEmitirReporteIncidencias"])){
                             
     Include_once("./controllerEmitirReporteIncidencias.php");
     $controlIncidencias = new controllerEmitirReporteIncidencias;
-    $controlIncidencias -> actualizarDatosIncidencia($fecha_resolucion, $estado,$id_incidencias);          
+    $controlIncidencias -> actualizarDatosIncidencia($fecha_resolucion, $estado,$id_incidencias);
+    
+}else if(isset($_POST["btnImprimir1"])){ 
+    include_once("./controllerEmitirReporteIncidencias.php");
+    $controlIncidencias = new controllerEmitirReporteIncidencias;
+    $controlIncidencias -> generarPDFIncidencias1();
+
+}else if(isset($_POST["btnImprimir2"])){ 
+    $fecha_seleccionada = $_POST['fecha_seleccionada'];
+    include_once("./controllerEmitirReporteIncidencias.php");
+    $controlIncidencias = new controllerEmitirReporteIncidencias;
+    $controlIncidencias -> generarPDFIncidencias2($fecha_seleccionada);
+    
+
+}else if(isset($_POST["btnImprimir3"])){ 
+    $estado = $_POST['btnImprimir3'];
+    $fecha_seleccionada = $_POST['fecha_seleccionada'];
+    include_once("./controllerEmitirReporteIncidencias.php");
+    $controlIncidencias = new controllerEmitirReporteIncidencias;
+    $controlIncidencias -> generarPDFIncidencias3($fecha_seleccionada,$estado);
+
+}else if(isset($_POST["btnImprimir4"])){ 
+    $estado = $_POST['btnImprimir4'];
+    include_once("./controllerEmitirReporteIncidencias.php");
+    $controlIncidencias = new controllerEmitirReporteIncidencias;
+    $controlIncidencias -> generarPDFIncidencias4($estado);
+
+}else if(isset($_POST["btnImprimir5"])){ 
+    include_once("./controllerEmitirReporteIncidencias.php");
+    $controlIncidencias = new controllerEmitirReporteIncidencias;
+    $controlIncidencias -> generarPDFIncidencias5();
 
 }else{
     include_once("../shared/formMensajeSistema.php");

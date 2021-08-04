@@ -22,10 +22,10 @@ class formListarIncidencias extends formulario{
         <div class="lista-form">
             <h3>Seleccionar búsqueda :</h3>
             <form action="getIncidencia.php" method="post" >
-            <label><input type="checkbox" name="sinFecha" value="1" onClick="habilitaDeshabilita(this.form)">Sin Fecha</label>
+            <label><input type="checkbox" name="sinFecha" value="1" >Sin Fecha</label>
             <input type="date" class="form-date" value="<?php echo $today; ?>" name = "fecha" >
-            <label><input type="checkbox" name="pendiente" value="0" onClick="habilitaestado(this.form)">Pendiente</label>
-            <label><input type="checkbox" name="realizado" value="1" onClick="deshabilitaestado(this.form)">Realizado</label>
+            <label><input type="checkbox" name="pendiente" value="0" >Pendiente</label>
+            <label><input type="checkbox" name="realizado" value="1" >Realizado</label>
             <button type="submit" class="buscar-form__button" name="btnBuscar">Buscar</button>
             </form>
         </div>
@@ -41,7 +41,7 @@ class formListarIncidencias extends formulario{
                 <th>Acción</th>
             </tr>
             
-            <?php
+            <?php 
             foreach ($listarIncidencias as $incidencias) {
                 ?>
                 <form action="getIncidencia.php" method= "post">
@@ -76,12 +76,65 @@ class formListarIncidencias extends formulario{
           <form action='../moduloSeguridad/getUsuario.php'  method='post'>
              <button class="modal__action modal__action--cancelar" type="submit" name="btnInicio">Volver</button>
           </form>
-          <form action='getIncidencia.php'  method='post'>
+          
               <?php 
                 if(count($listarIncidencias)){
-                    ?>
-                    <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir">Imprimir</button>
-                    <?php 
+                    
+                        if(!isset($_POST["fecha"]) && !isset($_POST['pendiente']) && !isset($_POST['realizado'])){
+                        ?><form action='getIncidencia.php'  method='post' target="_blank">
+                        <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir1" >Imprimir</button></form>
+                        <?php 
+                        }
+                        
+                        elseif(isset($_POST["fecha"]) && !isset($_POST['pendiente']) && !isset($_POST['realizado'])){
+                            $fecha_seleccionada = ($_POST['fecha']);
+                            ?><form action='getIncidencia.php'  method='post' target="_blank">
+                            <input type="hidden" value="<?php echo $fecha_seleccionada?>" name = "fecha_seleccionada">
+                            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir2" >Imprimir</button></form>
+                            <?php 
+                        }
+                        
+                        elseif(isset($_POST["fecha"]) && (isset(($_POST['pendiente'])) xor isset($_POST['realizado']))){
+                            $fecha_seleccionada = ($_POST['fecha']);
+                            if (isset($_POST['pendiente']) ) {
+                                $estado = $_POST["pendiente"];
+                            }else{
+                                $estado = $_POST["realizado"];
+                            }
+                            ?><form action='getIncidencia.php'  method='post' target="_blank">
+                            <input type="hidden" value="<?php echo $fecha_seleccionada?>" name = "fecha_seleccionada">
+                            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir3" value="<?php echo $estado?>">Imprimir</button></form>
+                            <?php 
+                        }
+                    
+                    
+                    
+                        elseif(isset($_POST["sinFecha"]) && (isset($_POST['pendiente'])xor isset($_POST['realizado']))){
+                            
+                            if (isset($_POST['pendiente']) ) {
+                                $estado = $_POST["pendiente"];
+                            }else{
+                                $estado = $_POST["realizado"];
+                            }
+                            ?><form action='getIncidencia.php'  method='post' target="_blank">
+                            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir4" value="<?php echo $estado?>">Imprimir</button></form>
+                            <?php
+                        }
+                        
+                        elseif(isset($_POST["sinFecha"]) && isset($_POST['realizado']) && isset($_POST['pendiente']) ){
+                            
+                            ?><form action='getIncidencia.php'  method='post' target="_blank">
+                            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir5" >Imprimir</button></form>
+                            <?php 
+                        }
+                        elseif(isset($_POST["fecha"]) && isset($_POST['pendiente']) && isset($_POST['realizado'])) {
+                            $fecha_seleccionada = ($_POST['fecha']);
+                            ?><form action='getIncidencia.php'  method='post' target="_blank">
+                            <input type="hidden" value="<?php echo $fecha_seleccionada?>" name = "fecha_seleccionada">
+                            <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir2" >Imprimir</button></form>
+                            <?php 
+                        } 
+                    
                 }else{ 
                     ?>
                     <button class="modal__action modal__action--continuar" type="submit" name="btnImprimir" disabled>Imprimir</button>
@@ -89,15 +142,15 @@ class formListarIncidencias extends formulario{
                 }
               ?>
             
-          </form>
+          
         </div>
         
         
         <?php
         echo "</main>";
         $this->piePaginaShow(); 
-    }
+    
 }
-
+}
 
 ?>

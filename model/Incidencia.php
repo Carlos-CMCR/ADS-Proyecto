@@ -144,14 +144,14 @@ class Incidencia extends Conexion{
     public function listarIncidenciasTotal(){
         try {
             $this->bd = $this->conectar();
-            $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno,inc.asunto, inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
+            $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno, inc.asunto , inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
              inc.hora_notificada, inc.fecha_resolucion, inc.id_estadoincidencia, ei.nombre_estado 
             from incidencias as inc
             INNER JOIN estadoincidencia as ei
             USING(id_estadoincidencia)
             inner join usuarios as u
             USING(id_usuario)
-            LIMIT 50
+            
             ";
             $consulta = $this->bd->prepare($query);
             $consulta->execute();
@@ -172,13 +172,13 @@ class Incidencia extends Conexion{
     }   
 
     
-
+//
     public function listarDetalleIncidencia($id_incidencias){
         try {
             $this->bd = $this->conectar();
-            $query = "SELECT inc.id_incidencias,inc.asunto, inc.descripcion, inc.fecha_notificada, inc.hora_notificada, inc.fecha_resolucion,inc.id_estadoincidencia, 
-            ei.nombre_estado   from incidencias as inc INNER JOIN estadoincidencia as ei USING(id_estadoincidencia)
-            where inc.id_incidencias = :id_incidencia
+            $query = "SELECT id_incidencias,asunto, descripcion, fecha_notificada, hora_notificada, fecha_resolucion,id_estadoincidencia 
+            from incidencias
+            where id_incidencias = :id_incidencia
             
             ";
             $consulta = $this->bd->prepare($query);

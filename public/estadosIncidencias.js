@@ -1,5 +1,5 @@
 
-function habilitaestado(form)
+/*function habilitaestado(form)
 
 { if(form.sinFecha.checked == false){
         form.realizado.checked = false;}
@@ -33,4 +33,4 @@ function habilitaDeshabilita(form)
     }
 }
 
-
+*/

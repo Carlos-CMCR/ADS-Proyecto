@@ -140,7 +140,119 @@ class controllerEmitirReporteIncidencias{
                         </form>");
             }
         }
-            
+    public function GenerarPDFIncidencias1(){
+        session_start();
+        include_once("../model/Incidencia.php");
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $objIncidencia = new Incidencia;
+        $responsable = $objUsuario -> obtenerResponsable($_SESSION['username']);
+        $resultado = $objIncidencia -> listarIncidencias();
+        
+        $fecha = date('Y-m-d');
+        $reporteIncidencias = [
+            "tecnico" => $responsable["responsable"],
+            "incidencia" => $resultado,
+            "fecha" => $fecha
+        ];
+        require_once __DIR__."/../shared/reporteIncidencias_plantilla.php";
+        $pdf = new reporteIncidencias_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteIncidencias);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }
+
+    public function GenerarPDFIncidencias2($fecha_seleccionada){
+        session_start();
+        include_once("../model/Incidencia.php");
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $objIncidencia = new Incidencia;
+        $responsable = $objUsuario -> obtenerResponsable($_SESSION['username']);
+        $resultado = $objIncidencia -> listarIncidenciasFecha($fecha_seleccionada);
+        
+        $fecha = $fecha_seleccionada;
+        $reporteIncidencias = [
+            "tecnico" => $responsable["responsable"],
+            "incidencia" => $resultado["data"],
+            "fecha" => $fecha
+        ];
+        require_once __DIR__."/../shared/reporteIncidencias_plantilla.php";
+        $pdf = new reporteIncidencias_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteIncidencias);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }
+
+    public function GenerarPDFIncidencias3($fecha_seleccionada,$estado){
+        session_start();
+        include_once("../model/Incidencia.php");
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $objIncidencia = new Incidencia;
+        $responsable = $objUsuario -> obtenerResponsable($_SESSION['username']);
+        $resultado = $objIncidencia -> listarIncidenciasFechayEstado($fecha_seleccionada,$estado);
+        $fecha = $fecha_seleccionada;
+        $reporteIncidencias = [
+            "tecnico" => $responsable["responsable"],
+            "incidencia" => $resultado['data'],
+            "fecha" => $fecha
+        ];
+        require_once __DIR__."/../shared/reporteIncidencias_plantilla.php";
+        $pdf = new reporteIncidencias_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteIncidencias);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }
+
+    public function GenerarPDFIncidencias4($estado){
+        session_start();
+        include_once("../model/Incidencia.php");
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $objIncidencia = new Incidencia;
+        $responsable = $objUsuario -> obtenerResponsable($_SESSION['username']);
+        $resultado = $objIncidencia -> listarIncidenciasTotalEstado($estado);
+        
+        $fecha = date('Y-m-d');
+        $reporteIncidencias = [
+            "tecnico" => $responsable["responsable"],
+            "incidencia" => $resultado['data'],
+            "fecha" => $fecha
+        ];
+        require_once __DIR__."/../shared/reporteIncidencias_plantilla.php";
+        $pdf = new reporteIncidencias_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteIncidencias);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }       
+    
+    public function GenerarPDFIncidencias5(){
+        session_start();
+        include_once("../model/Incidencia.php");
+        include_once("../model/Usuario.php");
+        $objUsuario = new Usuario;
+        $objIncidencia = new Incidencia;
+        $responsable = $objUsuario -> obtenerResponsable($_SESSION['username']);
+        $resultado = $objIncidencia -> listarIncidenciasTotal();
+        
+        $fecha = date('Y-m-d');
+        $reporteIncidencias = [
+            "tecnico" => $responsable["responsable"],
+            "incidencia" => $resultado['data'],
+            "fecha" => $fecha
+        ];
+        require_once __DIR__."/../shared/reporteIncidencias_plantilla.php";
+        $pdf = new reporteIncidencias_plantilla;
+        ob_start();
+        $pdf->obtenerHTML($reporteIncidencias);
+        $html = ob_get_clean();
+        $pdf->generarPDF($html,$fecha);
+    }       
 }
    
 ?>
