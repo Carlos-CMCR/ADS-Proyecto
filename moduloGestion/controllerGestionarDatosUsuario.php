@@ -44,9 +44,9 @@ class controllerGestionarDatosUsuario{
         include_once("../model/FactoryModels.php");
         include_once("../shared/formMensajeSistema.php");
         $objUsuario = FactoryModels::getModel("usuario");
-        $nuevoMensaje = new formMensajeSistema;
         $verificarEditarUsuario = $objUsuario -> verificarEditarUsuario($username,$email,$celular);
         $verificador="";
+        $nuevoMensaje = new formMensajeSistema;
         if($verificarEditarUsuario["existe"]){
             foreach($verificarEditarUsuario["data"] as $datos){ 
                 if($datos['email']==$email){

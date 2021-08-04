@@ -45,13 +45,12 @@ class controllerEmitirComprobantePago{
         include_once("../model/FactoryModels.php");
         $objProforma = FactoryModels::getModel("proforma");
         $objTipoDeServicios = FactoryModels::getModel("tipodeservicio");
-
         $datosProformaProductos = $objProforma->obtenerProductosDeproformaSeleccionada($id_proforma);
-
-
         $datosProformaServicios = $objProforma->obtenerServiciosDeproformaSeleccionada($id_proforma);
         $tiposServicio =  $objTipoDeServicios->listarServicios();
         
+
+        //sesion
         session_start();
         $_SESSION["lista"] = ["productos"=>[],"servicios"=>[],"precioTotal"=>0.0];
         $productos = [];
@@ -122,11 +121,15 @@ class controllerEmitirComprobantePago{
         $datosProductos = $objProducto -> obtenerProductos($productos);
         include_once("formAgregarProducto.php");
         session_start();
+
+        //sesion
         if(isset($_SESSION["lista"]["productos"][$id_producto])){
             $_SESSION["lista"]["productos"][$id_producto]+= $cantidad;
         }else{
             $_SESSION["lista"]["productos"][$id_producto]= $cantidad;
         }
+
+        
         $objAgregarProducto = new formAgregarProducto($_SESSION["informacion"]);
 		$objAgregarProducto -> formAgregarProductoShow($button,[],$datosProductos, $id_proforma,$id_cliente,$productos);
     }
