@@ -1,15 +1,11 @@
 <?php 
-require_once __DIR__."/Conexion.php";
-class Incidencia extends Conexion{
+require_once __DIR__."/ConexionSingleton.php";
+class Incidencia{
     private $bd = null;
-    public function __construct(){
-        parent::__construct();
-        $this->bd = $this->conectar();
-    }
-
+   
     public function insertarIncidencia($fecha,$hora,$asunto,$descripcion,$id_usuario){
         try{
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "INSERT into incidencias ( hora_notificada,fecha_notificada,asunto, descripcion,id_estadoincidencia,id_usuario)
             VALUES ( :hora_notificada, :fecha_notificada, :asunto, :descripcion, 0, :id_usuario);";
             $consulta = $this->bd->prepare($query);
@@ -27,7 +23,7 @@ class Incidencia extends Conexion{
     }
     public function listarIncidencias(){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno,inc.asunto,inc.id_incidencias, inc.descripcion,inc.fecha_notificada, 
             inc.hora_notificada, inc.fecha_resolucion,inc.id_estadoincidencia, ei.nombre_estado FROM incidencias as inc
             INNER JOIN estadoincidencia as ei USING(id_estadoincidencia)
@@ -40,14 +36,11 @@ class Incidencia extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
     public function listarIncidenciasFecha($fecha_seleccionada){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno,inc.asunto, inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
              inc.hora_notificada, inc.fecha_resolucion, inc.id_estadoincidencia, ei.nombre_estado 
             from incidencias as inc
@@ -71,15 +64,12 @@ class Incidencia extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 
     public function listarIncidenciasFechayEstado($fecha_seleccionada,$estado){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno,inc.asunto, inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
              inc.hora_notificada, inc.fecha_resolucion, inc.id_estadoincidencia, ei.nombre_estado 
             from incidencias as inc
@@ -104,14 +94,11 @@ class Incidencia extends Conexion{
 
             }catch(Exception $ex){
             return $ex->getMessage();
-            }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
-        }
+            }
     }
     public function listarIncidenciasTotalEstado($estado){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno,inc.asunto, inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
              inc.hora_notificada, inc.fecha_resolucion, inc.id_estadoincidencia, ei.nombre_estado 
             from incidencias as inc
@@ -136,14 +123,11 @@ class Incidencia extends Conexion{
 
             }catch(Exception $ex){
             return $ex->getMessage();
-            }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
-        }
+            }
     }
     public function listarIncidenciasTotal(){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT u.nombres, u.apellido_paterno, u.apellido_materno, inc.asunto , inc.descripcion, inc.id_incidencias,inc.fecha_notificada,
              inc.hora_notificada, inc.fecha_resolucion, inc.id_estadoincidencia, ei.nombre_estado 
             from incidencias as inc
@@ -165,17 +149,14 @@ class Incidencia extends Conexion{
 
             }catch(Exception $ex){
             return $ex->getMessage();
-            }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
-        }
+            }
     }   
 
     
 //
     public function listarDetalleIncidencia($id_incidencias){
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "SELECT id_incidencias,asunto, descripcion, fecha_notificada, hora_notificada, fecha_resolucion,id_estadoincidencia 
             from incidencias
             where id_incidencias = :id_incidencia
@@ -189,15 +170,12 @@ class Incidencia extends Conexion{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
     public function modificarDetalleIncidencia($fecha_resolucion, $estado,$id_incidencias){
         
         try {
-            $this->bd = $this->conectar();
+            $this->bd = ConexionSingleton::getInstanceDB()->getConnection();
             $query = "UPDATE incidencias SET fecha_resolucion = '$fecha_resolucion', id_estadoincidencia=$estado
             where id_incidencias = :id_incidencias ";
             $consulta = $this->bd->prepare($query);
@@ -207,9 +185,6 @@ class Incidencia extends Conexion{
             return ["success"=>true];
         }catch(Exception $ex){
             return ["success"=>false,"message"=>$ex->getMessage()];
-        }finally{
-            // Conexion::closeConnection();
-            $this->bd = null;
         }
     }
 

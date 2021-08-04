@@ -259,8 +259,6 @@ class ComprobanteDePago{
 
         }catch(Exception $ex){
             return $ex->getMessage();
-        }finally{
-            $this->bd = null;
         }
     }
 public function obtenerReporteBoletas($fecha_seleccionada){
@@ -279,8 +277,6 @@ public function obtenerReporteBoletas($fecha_seleccionada){
         
     }catch(Exception $ex){
         return $ex->getMessage();
-    }finally{
-        $this->bd = null;
     }
 }
 
@@ -298,8 +294,6 @@ public function obtenerReporteFacturas($fecha_seleccionada){
         return $consulta->fetchAll();
     }catch(Exception $ex){
         return $ex->getMessage();
-    }finally{
-        $this->bd = null;
     }
 }
 
